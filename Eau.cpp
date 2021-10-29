@@ -3,3 +3,4 @@
 
 
 Eau::Eau()
+	:Matiere() /*, argument propre à eau*/

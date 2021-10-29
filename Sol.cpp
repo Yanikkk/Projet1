@@ -3,3 +3,4 @@
 
 
 Sol::Sol()
+	:Matiere() /*, argument propre à sol*/

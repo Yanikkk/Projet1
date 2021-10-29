@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Matiere.hpp" // ???? ou exactement ? dans cpp plutot peut être ???????????????
+#include "Case.hpp"
 
 /*!
  * @class Env
@@ -20,6 +21,16 @@ public :
      * @param longueur; nombre de case dans le tableau représentant la longueur de la rivière
      */
 	Env(int largeur, int hauteur, int longueur);
+	
+	
+	/*!
+    * @brief initie le tableau représentant la rivière
+    *
+    * @param largeur; nombre de case dans le tableau représentant la largeur de la rivière
+    * @param hauteur; nombre de case dans le tableau représentant la hauteur de la rivière
+    * @param longueur; nombre de case dans le tableau représentant la longueur de la rivière
+    */
+	void init_tableau(int largeur, int hauteur, int longueur)
 		
 	
 private : 
@@ -27,6 +38,9 @@ private :
 	int largeur_; 		///< largeur de la rivière
 	int hauteur_;  	    ///< hauteur de la rivière 
 	int longueur_;      ///< lonugueur de la rivière
+	int pente_;			///< pente du fond de la rivière 
+	int debit_;			///< débit de la rivière
+	Case* tableau_;		///< tableau contenant des pointeurs sur des cases
 }; 
 
 #endif // Env_HPP

@@ -1,12 +1,15 @@
 #include <iostream>
+#include <new>
 #include "Env.hpp"
 
 
 Env::Env(int largeur, int hauteur, int longueur)
 	:largeur_(largeur), hauteur_(hauteur), longueur_(longueur) 
 {
+	tableau_ = new case[hauteur*largeur*longueur];
 	init_tableau(largeur_, hauteur_, longueur_); 
 	// initie le tableau représentant la rivière
+	
 }
 
 
@@ -16,8 +19,6 @@ void Env::init_tableau(int largeur, int hauteur, int longueur) {
 	//tableau de structure en 3D
 	int i = (z * (largeur) + y) + largeur * hauteur * x;
 	// z vers le haut, y vers la largeur, x vers la longueur
-
-	case * tableau = new case[hauteur*largeur*longueur];
 
 	//initialisation du tableau
 	int pente = 0.06; // basé sur la pente moyenne du rhône

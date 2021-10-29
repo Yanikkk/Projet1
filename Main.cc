@@ -8,6 +8,7 @@ int main() {
 	// créer un objet Env avec les dimensions x, y, z passées en paramètres.
 	
 	
+	/*delete[] tableau_;*/ // pas oublier de supprimer le tableau -> ici ?
 	return 0;
 }
 

@@ -17,7 +17,7 @@ public :
      *
      * @param ..........
      */
-	Case();
+	Case(int x, int y, int z, Matiere matiere);
 		
 	
 private :

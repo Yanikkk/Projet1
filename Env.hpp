@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "Matiere.hpp" // ???? ou exactement ? dans cpp plutot peut être ???????????????
 #include "Case.hpp"
 
 /*!
@@ -32,7 +31,6 @@ public :
     */
 	void init_tableau(int largeur, int hauteur, int longueur)
 		
-	dcfce
 private : 
 
 	int largeur_; 		///< largeur de la rivière

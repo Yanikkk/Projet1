@@ -9,9 +9,11 @@ Env::Env(int largeur, int hauteur, int longueur)
 	tableau_ = new case[hauteur*largeur*longueur];
 	init_tableau(largeur_, hauteur_, longueur_); 
 	// initie le tableau représentant la rivière
-	
 }
 
+void Env::setPente(const double value) {
+	pente_ = value;
+}	
 
 void Env::init_tableau(int largeur, int hauteur, int longueur) {
 	
@@ -20,8 +22,7 @@ void Env::init_tableau(int largeur, int hauteur, int longueur) {
 	int i = (z * (largeur) + y) + largeur * hauteur * x;
 	// z vers le haut, y vers la largeur, x vers la longueur
 
-	//initialisation du tableau
-	int pente = 0.06; // basé sur la pente moyenne du rhône
+	setPente(0.06); // basé sur la pente moyenne du rhône
 
 	/* double pente();
 	double h_eau = hauteur_eau(pente, debit); */

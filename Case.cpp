@@ -2,6 +2,6 @@
 #include "Case.hpp"
 
 
-Case::Case(int x, int y, int z, Matiere matiere)
-	: x_(x), y_(y), z_(z), Matiere_(matiere) 
+Case::Case(int x, int y, int z)
+	: x_(x), y_(y), z_(z), Matiere_() // appel au constructeur de matiere 
 {}

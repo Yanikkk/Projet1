@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Case.hpp"
+#include <vector>
 
 /*!
  * @class Env
@@ -26,7 +27,9 @@ public :
      *
      * @param value; sera la nouvelle valeure de l'attribut pente.
      */
-	void setPente(const double value);
+	void setPenteCsv(const double value); //vérifier qu'on l'utilises
+	
+	void readCsv();
 	
 	
 	/*!
@@ -36,7 +39,7 @@ public :
      * @param hauteur; nombre de case dans le tableau représentant la hauteur de la rivière
      * @param longueur; nombre de case dans le tableau représentant la longueur de la rivière
      */
-	void init_tableau(int largeur, int hauteur, int longueur)
+	void initTableau(int largeur, int hauteur, int longueur)
 	
 		
 private : 
@@ -47,6 +50,7 @@ private :
 	double pente_;		///< pente du fond de la rivière 
 	int debit_;			///< débit de la rivière
 	Case* tableau_;		///< tableau contenant des pointeurs sur des cases
+	vector<double*> data_pente_; ///< données csv
 }; 
 
 #endif // Env_HPP

@@ -1,28 +1,61 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <new>
 #include "Env.hpp"
 
 
 Env::Env(int largeur, int hauteur, int longueur)
-	:largeur_(largeur), hauteur_(hauteur), longueur_(longueur) 
+	:largeur_(largeur), hauteur_(hauteur), longueur_(longueur)
 {
 	tableau_ = new case[hauteur*largeur*longueur];
-	init_tableau(largeur_, hauteur_, longueur_); 
+	
+	pente_ = setPenteCsv();
+	
 	// initie le tableau représentant la rivière
+	initTableau(largeur_, hauteur_, longueur_); 
 }
 
-void Env::setPente(const double value) {
-	pente_ = value;
+//mettre main sûrement?
+void Env::readCsv(int x, int y, string filename, vector<double*&> data, int colonne = -1, int ligne = -1) { // Mettre dans main ? 
+	
+	ifstream myFile;
+	myFile.open(filename);
+	int x_size = x;
+	int y_size = y;
+	
+	for(int i = 0; i < x_size * y_size; i++) {
+		double line; 
+		if (myFile.good()) {
+			
+			getline(myFile, line, ',');			
+		}
+		
+		
+		if ((i % x_size == colonne) && i != colonne) {
+			data.push_back(line);
+		}
+	}
+	
+	//colonne 9 (8) 36 x 23 (cases tableau
+	
+}
+
+void Env::setPenteCsv() { 
+	string filename = "donnée-cours-d'eau.csv"
+	int x_size = 36;
+	int y_size = 23;
+	
+	readCsv(x_size, y_size, filename);
 }	
 
-void Env::init_tableau(int largeur, int hauteur, int longueur) {
+void Env::initTableau(int largeur, int hauteur, int longueur) {
 	
-	int grandeur = hauteur * longueur * largeur;
 	//tableau de structure en 3D
-	int i = (z * (largeur) + y) + largeur * hauteur * x;
+	int grandeur = hauteur * longueur * largeur;
+	
 	// z vers le haut, y vers la largeur, x vers la longueur
-
-	setPente(0.06); // basé sur la pente moyenne du rhône
+	int i = (z * (largeur) + y) + largeur * hauteur * x;
 
 	/* double pente();
 	double h_eau = hauteur_eau(pente, debit); */

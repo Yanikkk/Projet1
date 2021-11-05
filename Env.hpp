@@ -29,7 +29,18 @@ public :
      */
 	void setPenteCsv(const double value); //vérifier qu'on l'utilises
 	
-	void readCsv();
+	
+	/*!
+     * @brief permet d'ouvrir et lire un fichier csv avec différents paramètre rentré en argument 
+     *
+     * @param x; nombre de colonne du fichier.
+     * @param y; nombre de ligne du fichier.
+     * @param filename; nom du fichier.
+     * @param data; tableau dynamique de double dans lequel on souhaite stocker les valeurs désirées
+     * @param colonne; colonne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les colonnes)
+     * @param ligne; ligne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les lignes)
+     */	
+	void readCsv(int x, int y, string filename, vector<double*&> data, int colonne = -1, int ligne = -1);
 	
 	
 	/*!

@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <new>
 #include "Env.hpp"
 
@@ -21,32 +20,49 @@ void Env::readCsv(int x, int y, string filename, vector<double*&> data, int colo
 	
 	ifstream myFile;
 	myFile.open(filename);
-	int x_size = x;
-	int y_size = y;
+	double line;
 	
-	for(int i = 0; i < x_size * y_size; i++) {
-		double line; 
+	for(int i = 0; i < x * y; i++) { 
+		
 		if (myFile.good()) {
-			
 			getline(myFile, line, ',');			
+		} else {
+			break; // si c'est pas good on veut que ça finisse la boucle for
 		}
 		
-		
-		if ((i % x_size == colonne) && i != colonne) {
+		if (colonne == -1 and ligne == -1) {
+			
 			data.push_back(line);
+			
+		} else if (colonne == -1) {
+			
+			if ((i / y == ligne) && i != ligne) { //vérifier
+				data.push_back(line);
+			}
+			
+		} else if (ligne == -1) {
+			
+			if (i % x == colonne && i != colonne) { // le i != colonne pour éviter la première ligne de titre mais un peu trop spécifique à ce fichier ? est ce qu'il compte  dans le fichier csv ? 
+				data.push_back(line);
+			}
+			
+		} else { // plus que l'option ou ligne et colonne != -1
+			
+			if (i % x == colonne and i / y == ligne and i != colonne and i != ligne) { // corriger si on change les conditions précédentes
+				data.push_back(line);
+			}	
 		}
 	}
-	
-	//colonne 9 (8) 36 x 23 (cases tableau
-	
 }
 
 void Env::setPenteCsv() { 
-	string filename = "donnée-cours-d'eau.csv"
-	int x_size = 36;
-	int y_size = 23;
 	
-	readCsv(x_size, y_size, filename);
+	/*string filename = "donnée-cours-d'eau.csv"
+	int x_size = 36;
+	int y_size = 23;*/ //Pas besoin de ça en faite
+	
+	//colonne 9 (8) 36 x 23 (cases tableau)
+	readCsv(36, 23, "donnée-cours-d'eau.csv", data_pente_, 9); //le paramètre ligne est par défaut -1 donc on prend toutes les lignes
 }	
 
 void Env::initTableau(int largeur, int hauteur, int longueur) {

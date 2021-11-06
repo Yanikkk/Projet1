@@ -36,19 +36,19 @@ void Env::readCsv(int x, int y, string filename, vector<double*&> data, int colo
 			
 		} else if (colonne == -1) {
 			
-			if ((i / y == ligne) && i != ligne) { //vérifier
+			if (i / y == ligne) { //vérifier
 				data.push_back(line);
 			}
 			
 		} else if (ligne == -1) {
 			
-			if (i % x == colonne && i != colonne) { // le i != colonne pour éviter la première ligne de titre mais un peu trop spécifique à ce fichier ? est ce qu'il compte  dans le fichier csv ? 
+			if (i % x == colonne) { // le i != colonne pour éviter la première ligne de titre mais un peu trop spécifique à ce fichier ? est ce qu'il compte  dans le fichier csv ? 
 				data.push_back(line);
 			}
 			
 		} else { // plus que l'option ou ligne et colonne != -1
 			
-			if (i % x == colonne and i / y == ligne and i != colonne and i != ligne) { // corriger si on change les conditions précédentes
+			if (i % x == colonne and i / y == ligne) { // corriger si on change les conditions précédentes
 				data.push_back(line);
 			}	
 		}
@@ -62,7 +62,9 @@ void Env::setPenteCsv() {
 	int y_size = 23;*/ //Pas besoin de ça en faite
 	
 	//colonne 9 (8) 36 x 23 (cases tableau)
-	readCsv(36, 23, "donnée-cours-d'eau.csv", data_pente_, 9); //le paramètre ligne est par défaut -1 donc on prend toutes les lignes
+	for (int i = 1; i < 23 - 1; i++) { // la boucle permet d'appeler readCsv pour toutes les lignes sauf la première (comme ça la fonction readCsv est plus général, pas besoin d'y enlever la première ligne)
+	readCsv(36, 23, "donnée-cours-d'eau.csv", data_pente_, 9, i);	
+	}
 }	
 
 void Env::initTableau(int largeur, int hauteur, int longueur) {

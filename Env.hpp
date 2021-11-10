@@ -6,6 +6,7 @@
 #include "Case.hpp"
 #include <vector>
 #include <string>
+using namespace std;
 
 /*!
  * @class Env
@@ -41,7 +42,7 @@ public :
      * @param colonne; colonne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les colonnes)
      * @param ligne; ligne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les lignes)
      */	
-	void readCsv(int x, int y, std::string filename, std::vector<double*&> data, int colonne = -1, int ligne = -1);
+	void readCsv(int x, int y, std::string filename, std::vector<double*>& data, int colonne = -1, int ligne = -1);
 	
 	
 	/*!
@@ -62,7 +63,7 @@ private :
 	double pente_;		///< pente du fond de la rivière 
 	int debit_;			///< débit de la rivière
 	Case* tableau_;		///< tableau contenant des pointeurs sur des cases
-	std::vector<double*> data_pente_; ///< données csv
+	vector<double*> data_pente_; ///< données csv
 }; 
 
 #endif // Env_HPP

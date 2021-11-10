@@ -4,6 +4,7 @@
 #include "Env.hpp"
 
 
+
 Env::Env(int largeur, int hauteur, int longueur)
 	:largeur_(largeur), hauteur_(hauteur), longueur_(longueur)
 {
@@ -16,46 +17,50 @@ Env::Env(int largeur, int hauteur, int longueur)
 }
 
 //mettre main sûrement?
-void Env::readCsv(int x, int y, std::string filename, std::vector<double*&> data, int colonne, int ligne) { // Mettre dans main ?
+void Env::readCsv(int x, int y, string filename, vector<double*>& data, int colonne, int ligne) { // Mettre dans main ?
 
 	ifstream myFile;
 	myFile.open(filename); // mettre que si pas ouvert erreur
-	double cell;
+	string cell;
 
 	for(int i = 0; i < x * y; i++) {
 
 		if (myFile.good()) {
 			getline(myFile, cell, ',');
+			
 		} else {
 			break; // si c'est pas good on veut que ça finisse la boucle for
 		}
+		double* cell_d = new double stod(cell);
+		
 
 		if (colonne == -1 and ligne == -1) {
-
-			data.push_back(cell);
+			
+			data.push_back(&cell_d);
+			
 
 		} else if (colonne == -1) {
 
 			if (i / x == ligne) { //vérifier
-				data.push_back(cell);
+				data.push_back(&cell_d);
 			}
 
 		} else if (ligne == -1) {
 
 			if (i % x == colonne) { // le i != colonne pour éviter la première ligne de titre mais un peu trop spécifique à ce fichier ? est ce qu'il compte  dans le fichier csv ?
-				data.push_back(cell);
+				data.push_back(&cell_d);
 			}
 
 		} else { // plus que l'option ou ligne et colonne != -1
 
 			if (i % x == colonne and i / x == ligne) { // corriger si on change les conditions précédentes
-				data.push_back(cell);
+				data.push_back(&cell_d);
 			}
 		}
 	}
 }
 
-void Env::setPenteCsv(std:string filename) {
+void Env::setPenteCsv(string filename) {
 	int x_size = 36;
 	int y_size = 23;
 	//colonne 9 (8) 36 x 23 (cases tableau)
@@ -63,7 +68,8 @@ void Env::setPenteCsv(std:string filename) {
 	readCsv(x_size, y_size, filename, data_pente_, 8, i);
 	}
 	double somme = 0;
-	for(int i = 0; i< data_pente_.size(); i++){
+	for(unsigned int i = 0; i< data_pente_.size(); i++){
+			
 			somme = somme + data_pente_[i];
 	}
 	pente_ = somme / (y_size-1);

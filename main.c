@@ -7,7 +7,7 @@
 #include "sol.c"
 #include "air.c"
 //tableau initialiser
-// largeur 
+// largeur
 
 int largeur = 2000; // y
 int hauteur = 3000; // z
@@ -49,7 +49,7 @@ for(int i = 0; i <= grandeur; i++){
 	}
 	if(z == hauteur + 1){//une fois le haut du tableau atteint
 		z = 0;
-		x =+ 1;	
+		x =+ 1;
 				  // on avance selon x et on commence en bas
 	}
 	if(z <= h_sol){
@@ -71,5 +71,3 @@ for(int i = 0; i <= grandeur; i++){
 		model[i].matiere_.air_.z_ = z;
 	}
 }
-
-

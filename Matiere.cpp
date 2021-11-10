@@ -2,12 +2,13 @@
 #include "Matiere.hpp"
 
 
-Matiere::Matiere()
+Matiere::Matiere(){}
 
-void Matiere::setCouleur(const sf::color value) {
+/*void Matiere::setCouleur(const sf::color value) {
 	couleur = value;
 }	
 	
 sf::color Matiere::getCouleur() const {
 	return couleur;
 }
+*/

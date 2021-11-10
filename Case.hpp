@@ -17,7 +17,7 @@ public :
      *
      * @param x, y et z sont les coordonées du tableau représentant la rivière, respectivement la longueur, la largeur et la hauteur.
      */
-	Case(int x, int y, int z);
+	Case(int x = 0, int y = 0, int z = 0);
 		
 	
 private :

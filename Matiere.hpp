@@ -13,7 +13,7 @@
  * Super classe des différentes matières : eau, sol et air.
  */
 
-class Matiere : {
+class Matiere{
 public : 
 
     /*!
@@ -28,17 +28,17 @@ public :
     *
     * @param value nouvelle valeur que l'on souhaite associer à l'attribut couleur.
     */
-    void setCouleur(const sf::color value);	
+    //void setCouleur(const sf::color value);	
 		
 	/*!
     * @brief Permet d'accéder à a couleur qui est un attribut privé 
     *
     * @return la couleur de la matière.
     */	
-	sf::color getCouleur() const;
+	//sf::color getCouleur() const;
 	
 private : 
-sf::color couleur; // voir comment on peut faire la couleure, peut être qu'il faudra plûtot choisir en python quand on fait le graph -> sinon la sf je sais plus... il faut créer une classe couleur maybe (internet)
+//sf::color couleur; // voir comment on peut faire la couleure, peut être qu'il faudra plûtot choisir en python quand on fait le graph -> sinon la sf je sais plus... il faut créer une classe couleur maybe (internet)
 
 }; 
 

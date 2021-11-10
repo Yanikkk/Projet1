@@ -5,12 +5,13 @@
 
 #include "Case.hpp"
 #include <vector>
+#include <string>
 
 /*!
  * @class Env
  */
 
-class Env : {
+class Env {
 public : 
 
     /*!
@@ -27,7 +28,7 @@ public :
      *
      * @param value; sera la nouvelle valeure de l'attribut pente.
      */
-	void setPenteCsv(const double value); //vérifier qu'on l'utilises
+	void setPenteCsv(std::string filename); //vérifier qu'on l'utilises
 	
 	
 	/*!
@@ -40,7 +41,7 @@ public :
      * @param colonne; colonne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les colonnes)
      * @param ligne; ligne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les lignes)
      */	
-	void readCsv(int x, int y, string filename, vector<double*&> data, int colonne = -1, int ligne = -1);
+	void readCsv(int x, int y, std::string filename, std::vector<double*&> data, int colonne = -1, int ligne = -1);
 	
 	
 	/*!
@@ -50,7 +51,7 @@ public :
      * @param hauteur; nombre de case dans le tableau représentant la hauteur de la rivière
      * @param longueur; nombre de case dans le tableau représentant la longueur de la rivière
      */
-	void initTableau(int largeur, int hauteur, int longueur)
+	void initTableau(int largeur, int hauteur, int longueur);
 	
 		
 private : 
@@ -61,7 +62,7 @@ private :
 	double pente_;		///< pente du fond de la rivière 
 	int debit_;			///< débit de la rivière
 	Case* tableau_;		///< tableau contenant des pointeurs sur des cases
-	vector<double*> data_pente_; ///< données csv
+	std::vector<double*> data_pente_; ///< données csv
 }; 
 
 #endif // Env_HPP

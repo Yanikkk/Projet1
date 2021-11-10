@@ -3,4 +3,4 @@
 
 
 Air::Air()
-	:Matiere() /*, argument propre à air*/
+	:Matiere(){} /*, argument propre à air*/

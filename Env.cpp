@@ -19,37 +19,37 @@ Env::Env(int largeur, int hauteur, int longueur)
 void Env::readCsv(int x, int y, string filename, vector<double*&> data, int colonne = -1, int ligne = -1) { // Mettre dans main ? 
 	
 	ifstream myFile;
-	myFile.open(filename);
-	double line;
+	myFile.open(filename); // mettre que si pas ouvert erreur
+	double cell;
 	
 	for(int i = 0; i < x * y; i++) { 
 		
 		if (myFile.good()) {
-			getline(myFile, line, ',');			
+			getline(myFile, cell, ',');			
 		} else {
 			break; // si c'est pas good on veut que ça finisse la boucle for
 		}
 		
 		if (colonne == -1 and ligne == -1) {
 			
-			data.push_back(line);
+			data.push_back(cell);
 			
 		} else if (colonne == -1) {
 			
-			if (i / y == ligne) { //vérifier
-				data.push_back(line);
+			if (i / x == ligne) { //vérifier
+				data.push_back(cell);
 			}
 			
 		} else if (ligne == -1) {
 			
 			if (i % x == colonne) { // le i != colonne pour éviter la première ligne de titre mais un peu trop spécifique à ce fichier ? est ce qu'il compte  dans le fichier csv ? 
-				data.push_back(line);
+				data.push_back(cell);
 			}
 			
 		} else { // plus que l'option ou ligne et colonne != -1
 			
-			if (i % x == colonne and i / y == ligne) { // corriger si on change les conditions précédentes
-				data.push_back(line);
+			if (i % x == colonne and i / x == ligne) { // corriger si on change les conditions précédentes
+				data.push_back(cell);
 			}	
 		}
 	}
@@ -57,13 +57,9 @@ void Env::readCsv(int x, int y, string filename, vector<double*&> data, int colo
 
 void Env::setPenteCsv() { 
 	
-	/*string filename = "donnée-cours-d'eau.csv"
-	int x_size = 36;
-	int y_size = 23;*/ //Pas besoin de ça en faite
-	
 	//colonne 9 (8) 36 x 23 (cases tableau)
-	for (int i = 1; i < 23 - 1; i++) { // la boucle permet d'appeler readCsv pour toutes les lignes sauf la première (comme ça la fonction readCsv est plus général, pas besoin d'y enlever la première ligne)
-	readCsv(36, 23, "donnée-cours-d'eau.csv", data_pente_, 9, i);	
+	for (int i = 1; i < 23; i++) { // la boucle permet d'appeler readCsv pour toutes les lignes sauf la première (comme ça la fonction readCsv est plus général, pas besoin d'y enlever la première ligne)
+	readCsv(36, 23, "donnée-cours-d'eau.csv", data_pente_, 8, i);	
 	}
 }	
 

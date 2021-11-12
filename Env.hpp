@@ -63,7 +63,7 @@ private :
 	double pente_;		///< pente du fond de la rivière 
 	int debit_;			///< débit de la rivière
 	Case* tableau_;		///< tableau contenant des pointeurs sur des cases
-	vector<double*> data_pente_; ///< données csv
+	
 }; 
 
 #endif // Env_HPP

@@ -118,7 +118,9 @@ void Env::initTableau(int largeur, int hauteur, int longueur) {
 			z = 0;
 			x =+ 1;
 			// on avance selon x et on commence en bas
-			//ici h_sol change
+			// ici h_sol change
+			// mettre pente en % puis pente(%) * longueur = hauteur (en case) à la fin du tableau
+			// longueur / la hauteur = nombre de case en longueur (x) avant que ça augmente d'une case en hauteur (z).
 		}
 
 		if(z <= h_sol){

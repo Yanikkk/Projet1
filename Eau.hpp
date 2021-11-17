@@ -25,7 +25,7 @@ public :
 		
 	
 private : 
-
+	double vitesse_;
 
 }; 
 

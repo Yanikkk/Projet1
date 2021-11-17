@@ -8,6 +8,8 @@
 Env::Env(int largeur, int hauteur, int longueur)
 	:largeur_(largeur), hauteur_(hauteur), longueur_(longueur)
 {
+	h_sol = 0;
+	h_eau = 0;
 	tableau_ = new Case[hauteur*largeur*longueur];
 	
 	setPenteCsv("donnee-cours-deau.csv");
@@ -15,10 +17,26 @@ Env::Env(int largeur, int hauteur, int longueur)
 	// initie le tableau représentant la rivière
 	initTableau(largeur_, hauteur_, longueur_);
 }
+int Env::getLargeur() const{
+	return largeur_;
+	
+int Env::getH() const {
+	return hauteur_;
+}
 
+int Env::getH_eau() const{
+	return h_eau;
+}
+
+int Env::getH_sol() const{
+	return h_sol;
+}
+
+int Env::getPente() const{
+	return pente_;
+}
 //mettre main sûrement?
-// fonction pour read des csv séparé par des ";" et pouvant prendre des "double"
-// penser si on veut faire fonction générale (mettre un char en argument ou autre)
+
 void Env::readCsv(int x, int y, string filename, vector<double*>& data, int colonne, int ligne) { // Mettre dans main ?
 
 	ifstream myFile;
@@ -92,8 +110,12 @@ void Env::initTableau(int largeur, int hauteur, int longueur) {
 
 	//tableau de structure en 3D
 	int grandeur = hauteur * longueur * largeur;
+	
+	
+	int palier_pente = pente_/100.0 * longueur; // affiche l'arrondis de l'entier le plus bas
 
-	int h_sol = 1; // initialement, une couche de terre au minimum
+	//h_sol = 0 initialement, une couche de terre au minimum
+	h_eau = hauteur/2;
 	int x = 0;
 	int y = 0;
 	int z = 0;
@@ -106,6 +128,7 @@ void Env::initTableau(int largeur, int hauteur, int longueur) {
 	
 
 	for(int i = 0; i <= grandeur; i++){
+		tableau_[i] = Case(x,y,z);
 		y =+ 1;
 
 		if(i == (largeur-1) + z * largeur + x * largeur + hauteur){ // à chaque largeur finit, on monte dans le tableau
@@ -117,31 +140,11 @@ void Env::initTableau(int largeur, int hauteur, int longueur) {
 		//une fois le haut du tableau atteint
 			z = 0;
 			x =+ 1;
-			// on avance selon x et on commence en bas
-			// ici h_sol change
-			// mettre pente en % puis pente(%) * longueur = hauteur (en case) à la fin du tableau
-			// longueur / la hauteur = nombre de case en longueur (x) avant que ça augmente d'une case en hauteur (z).
-		}
-
-		if(z <= h_sol){
-			model[i].matiere_.sol_.etat = true;
-			model[i].matiere_.sol_.x_ = x;
-			model[i].matiere_.sol_.y_ = y;
-			model[i].matiere_.sol_.z_ = z;
-		}
-
-		if(h_eau > z and z > h_sol){
-			model[i].matiere_.eau_.etat = true;
-			model[i].matiere_.eau_.x_ = x;
-			model[i].matiere_.eau_.y_ = y;
-			model[i].matiere_.eau_.z_ = z;
-		}
-		if(z > h_eau){
-			model[i].matiere_.air_.etat = true;
-			model[i].matiere_.air_.x_ = x;
-			model[i].matiere_.air_.y_ = y;
-			model[i].matiere_.air_.z_ = z;
+			//modélisation pente
+			if( (x + 1) % palier_pente !=0){
+				h_sol =+ 1;
+				h_eau =+ 1;
+			}
 		}
 	}
-	tableau_ = &tableau;
 }

@@ -54,12 +54,19 @@ public :
      */
 	void initTableau(int largeur, int hauteur, int longueur);
 	
+	int getH() const;
+	int getLargeur() const;
+	int getH_sol() const;
+	int getH_eau() const;
+	int getPente() const;
 		
 private : 
 
 	int largeur_; 		///< largeur de la rivière
 	int hauteur_;  	    ///< hauteur de la rivière 
 	int longueur_;      ///< lonugueur de la rivière
+	int h_sol;
+	int h_eau;
 	double pente_;		///< pente du fond de la rivière 
 	int debit_;			///< débit de la rivière
 	Case* tableau_;		///< tableau contenant des pointeurs sur des cases

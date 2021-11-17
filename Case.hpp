@@ -19,12 +19,14 @@ public :
      */
 	Case(int x = 0, int y = 0, int z = 0);
 		
+	void setMatiere();
 	
 private :
-
+	
 	int x_;
 	int y_;
 	int z_;
+	
 	Matiere matiere_; 
 }; 
 

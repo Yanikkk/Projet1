@@ -17,10 +17,11 @@ Env::Env(int largeur, int hauteur, int longueur)
 	// initie le tableau représentant la rivière
 	initTableau(largeur_, hauteur_, longueur_);
 }
+
 int Env::getLargeur() const{
 	return largeur_;
 	
-int Env::getH() const {
+int Env::getHauteur() const {
 	return hauteur_;
 }
 
@@ -35,8 +36,8 @@ int Env::getH_sol() const{
 int Env::getPente() const{
 	return pente_;
 }
-//mettre main sûrement?
 
+//mettre main sûrement?
 void Env::readCsv(int x, int y, string filename, vector<double*>& data, int colonne, int ligne) { // Mettre dans main ?
 
 	ifstream myFile;

@@ -39,7 +39,6 @@ public :
 	
 private : 
 
-
 //sf::color couleur; // voir comment on peut faire la couleure, peut être qu'il faudra plûtot choisir en python quand on fait le graph -> sinon la sf je sais plus... il faut créer une classe couleur maybe (internet)
 
 }; 

@@ -8,14 +8,18 @@ Case::Case(int x, int y, int z)
 		setMatiere();
 	}
 	
-void Case::setMatiere(){
-	if( z_ <= getH_sol()){
+void Case::setMatiere() {
+	
+	if(z_ <= getH_sol()) {
+		
 		matiere_ = Sol();
-	}else if( z_ <= getH_eau()){
+		
+	} else if( z_ <= getH_eau()) {
+		
 		matiere_ = Eau();
-	}else{
+		
+	} else {
+		
 		matiere_ = Air();
 	}
-
-
 }

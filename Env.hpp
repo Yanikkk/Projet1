@@ -54,10 +54,17 @@ public :
      */
 	void initTableau(int largeur, int hauteur, int longueur);
 	
-	int getH() const;
-	int getLargeur() const;
-	int getH_sol() const;
+	/*!
+     * @brief Les méthodes get permettent d'accéder aux attributs privés de cette classe en dehors de celle-ci.
+     *
+     * Elles sont définies const car elles ne modifient pas d'attributs.
+     * 
+     * @return Elles retournent les attributs privé de la classe
+    */
+    int getLargeur() const;
+	int getHauteur() const;
 	int getH_eau() const;
+	int getH_sol() const;
 	int getPente() const;
 		
 private : 
@@ -65,8 +72,8 @@ private :
 	int largeur_; 		///< largeur de la rivière
 	int hauteur_;  	    ///< hauteur de la rivière 
 	int longueur_;      ///< lonugueur de la rivière
-	int h_sol;
-	int h_eau;
+	int h_sol;			///< hauteur du sol (en cases)
+	int h_eau;			///< hauteur de l'eau (en cases)
 	double pente_;		///< pente du fond de la rivière 
 	int debit_;			///< débit de la rivière
 	Case* tableau_;		///< tableau contenant des pointeurs sur des cases

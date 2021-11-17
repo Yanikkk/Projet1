@@ -25,8 +25,7 @@ public :
 		
 	
 private : 
-	double vitesse_;
-
+	double vitesse_;      ///< Vitesse de l'eau 
 }; 
 
 #endif // EAU_HPP

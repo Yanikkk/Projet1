@@ -3,6 +3,8 @@
 
 #pragma once
 
+class Env;
+
 /*!
  * @class Matiere
  * 
@@ -12,7 +14,7 @@
  * 
  * Super classe des différentes matières : eau, sol et air.
  */
-
+	
 class Matiere{
 public : 
 
@@ -23,6 +25,9 @@ public :
      */
 	Matiere();
 	
+	void setEnv2(Env* env);
+	
+	Env* getEnv2() const;
 	/*!
     * @brief permet de modifier la couleur d'une matière
     *
@@ -37,8 +42,9 @@ public :
     */	
 	//sf::color getCouleur() const;
 	
-private : 
-
+protected : 
+	
+	Env* env2;
 //sf::color couleur; // voir comment on peut faire la couleure, peut être qu'il faudra plûtot choisir en python quand on fait le graph -> sinon la sf je sais plus... il faut créer une classe couleur maybe (internet)
 
 }; 

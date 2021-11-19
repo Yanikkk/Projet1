@@ -4,6 +4,13 @@
 
 Matiere::Matiere() {}
 
+void Matiere::setEnv2(Env* env){
+	env2 = env;
+}
+
+Env* Matiere::getEnv2() const{
+	return env2;
+}
 
 /*void Matiere::setCouleur(const sf::color value) {
 	couleur = value;

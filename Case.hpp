@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Matiere.hpp"
+class Env;
 
 /*!
  * @class Case
@@ -30,6 +31,9 @@ private :
 	int y_;				///< coordonée y de la case
 	int z_;				///< coordonée z de la case
 	Matiere matiere_; 	///< type de matière dans la case 
-}; 
+	Env* env;
+
+friend class Env;
+};
 
 #endif // CASE_HPP

@@ -1,8 +1,7 @@
 #ifndef ENV_HPP
 #define ENV_HPP
 
-#pragma once
-
+#pragma once 
 #include "Case.hpp"
 #include <vector>
 #include <string>
@@ -77,7 +76,8 @@ private :
 	double pente_;		///< pente du fond de la rivière 
 	int debit_;			///< débit de la rivière
 	Case* tableau_;		///< tableau contenant des pointeurs sur des cases
-	
+
+
 }; 
 
 #endif // Env_HPP

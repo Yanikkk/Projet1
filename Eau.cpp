@@ -7,5 +7,6 @@ Eau::Eau()
 	:Matiere()/*, argument propre à eau */
 {
 	//formule de Manning Strickler voir drive
-	vitesse_ = 30 * pow((getH_eau()-getH_sol())/* j'ajouterais " *getLargeur() " *//(getLargeur() + 2 * (getH_eau()-getH_sol())),2/3) * pow(getPente(), 1/2);
+	vitesse_ = 30 * pow(((env2->getH_eau()-getEnv2()->getH_sol())*getEnv2()->getLargeur())/(getEnv2()->getLargeur() + 2 * (getEnv2()->getH_eau()-getEnv2()->getH_sol())),2/3) * pow(getEnv2()->getPente(), 1/2);
+	
 } 

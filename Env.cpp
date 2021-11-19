@@ -11,6 +11,10 @@ Env::Env(int largeur, int hauteur, int longueur)
 	h_sol = 0;
 	h_eau = 0;
 	tableau_ = new Case[hauteur*largeur*longueur];
+	for(int i = 0; i< hauteur * largeur * longueur; i++){
+		tableau_[i].env = this;
+		tableau_[i].matiere_.setEnv2(this);
+	}
 	
 	setPenteCsv("donnee-cours-deau.csv");
 
@@ -20,7 +24,7 @@ Env::Env(int largeur, int hauteur, int longueur)
 
 int Env::getLargeur() const{
 	return largeur_;
-	
+}
 int Env::getHauteur() const {
 	return hauteur_;
 }

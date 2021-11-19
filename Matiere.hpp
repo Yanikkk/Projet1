@@ -3,6 +3,9 @@
 
 #pragma once
 
+/*!
+ * @brief pré-déclaration de la Classe Env
+*/
 class Env;
 
 /*!
@@ -25,21 +28,32 @@ public :
      */
 	Matiere();
 	
+	/*!
+     * @brief Permet de modifier l'env
+     *
+     * @param env est la valeur passé à l'attribut env2 de cette classe.
+     */
 	void setEnv2(Env* env);
 	
-	Env* getEnv2() const;
 	/*!
-    * @brief permet de modifier la couleur d'une matière
-    *
-    * @param value nouvelle valeur que l'on souhaite associer à l'attribut couleur.
-    */
+     * @brief permet d'accéder à l'attribut env2
+     *
+     * constante car ne modifie pas d'attributs
+     */
+	Env* getEnv2() const;
+	
+	/*!
+     * @brief permet de modifier la couleur d'une matière
+     *
+     * @param value nouvelle valeur que l'on souhaite associer à l'attribut couleur.
+     */
     //void setCouleur(const sf::color value);	
 		
 	/*!
-    * @brief Permet d'accéder à a couleur qui est un attribut privé 
-    *
-    * @return la couleur de la matière.
-    */	
+     * @brief Permet d'accéder à a couleur qui est un attribut privé 
+     *
+     * @return la couleur de la matière.
+     */	
 	//sf::color getCouleur() const;
 	
 protected : 

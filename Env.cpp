@@ -1,9 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <new>
+
 #include "Env.hpp"
-
-
 
 Env::Env(int largeur, int hauteur, int longueur)
 	:largeur_(largeur), hauteur_(hauteur), longueur_(longueur)
@@ -129,8 +128,6 @@ void Env::initTableau(int largeur, int hauteur, int longueur) {
 	//int i = (z * (largeur) + y) + largeur * hauteur * x;
 
 	//double h_eau = hauteur_eau(pente, debit);
-
-	
 
 	for(int i = 0; i <= grandeur; i++){
 		tableau_[i] = Case(x,y,z);

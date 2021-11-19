@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "Case.hpp"
 #include "Env.hpp"
 #include "Sol.hpp"

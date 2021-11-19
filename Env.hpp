@@ -2,9 +2,12 @@
 #define ENV_HPP
 
 #pragma once 
-#include "Case.hpp"
+
 #include <vector>
 #include <string>
+
+#include "Case.hpp"
+
 using namespace std;
 
 /*!
@@ -59,7 +62,7 @@ public :
      * Elles sont définies const car elles ne modifient pas d'attributs.
      * 
      * @return Elles retournent les attributs privé de la classe
-    */
+     */
     int getLargeur() const;
 	int getHauteur() const;
 	int getH_eau() const;

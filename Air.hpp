@@ -12,7 +12,6 @@
  * 
  * Cette classe doit redéfinir les fonctions suivantes : ........ -> elles seront override (précise qu'elles sont redéfinies)
  */
-
 class Air : public Matiere {
 public : 
 

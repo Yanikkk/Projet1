@@ -5,8 +5,6 @@
 
 #include "Matiere.hpp"
 
-
-
 /*!
  * @class Sol
  * 
@@ -14,7 +12,6 @@
  * 
  * Cette classe doit redéfinir les fonctions suivantes : ........ -> elles seront override (précise qu'elles sont redéfinies)
  */
-
 class Sol : public Matiere {
 public : 
 

@@ -28,6 +28,10 @@ public :
 	void setX(int x);
 	void setY(int y);
 	void setZ(int z);
+	
+	int getX() const;
+	int getY() const;
+	int getZ() const;
 	/*!
      * @brief Permet de définir la matiere par rapport aux coordonées
      */

@@ -26,7 +26,7 @@ public :
      *
      * @param .........
      */
-	Matiere(Env* env_param = nullptr);
+	Matiere(Env* env_param = nullptr,std::string type = "vide", double vitesse = 0.0);
 	
 	/*!
      * @brief Permet de modifier l'env
@@ -41,6 +41,10 @@ public :
      * constante car ne modifie pas d'attributs
      */
 	Env* getEnv2() const;
+	
+	std::string getType() const;
+	
+	virtual double getVitesse() const;
 	
 	/*!
      * @brief permet de modifier la couleur d'une matière
@@ -59,6 +63,8 @@ public :
 protected : 
 	
 	Env* env2;
+	std::string type_;
+	double vitesse_;
 //sf::color couleur; // voir comment on peut faire la couleure, peut être qu'il faudra plûtot choisir en python quand on fait le graph -> sinon la sf je sais plus... il faut créer une classe couleur maybe (internet)
 
 }; 

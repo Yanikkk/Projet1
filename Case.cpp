@@ -19,20 +19,30 @@ void Case::setZ(int z){
 	z_ = z;
 }
 
+int Case::getX() const{
+	return x_;
+}
+
+int Case::getY() const{
+	return y_;
+}
+
+int Case::getZ() const{
+	return z_;
+}
+
 void Case::setMatiere() {
-	/*cout<< "h_sol_ dans setMetiere : " << env->getH_sol() << endl;
-	cout  << x_ << "," << z_ << "," << y_ << endl;
-	cout<< "h_eau_ dans setMetiere : " << env->getH_eau() << endl;*/
+
 	if(z_ <= env->getH_sol()) {
 		// il faut pas mettre dans le conctructeur de sol le fait qu'il prenne l'attribut env et se le donne?
-		matiere_ = Sol(matiere_.getEnv2());
+		matiere_ = Sol(matiere_.getEnv2(),"SOL");
 	
 	} else if( z_ <= env->getH_eau()) {
 		
-		matiere_ = Eau(matiere_.getEnv2());
+		matiere_ = Eau(matiere_.getEnv2(),"EAU");
 	
 	} else {
 		
-		matiere_ = Air(matiere_.getEnv2());
+		matiere_ = Air(matiere_.getEnv2(),"AIR");
 	}
 }

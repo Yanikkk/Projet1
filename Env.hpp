@@ -26,6 +26,9 @@ public :
      */
 	Env(int largeur, int hauteur, int longueur);
 	
+	
+	void writeCSV();
+	
 	/*!
      * @brief permet de modifier la pente de l'environnement
      *
@@ -44,6 +47,7 @@ public :
      * @param colonne; colonne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les colonnes)
      * @param ligne; ligne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les lignes)
      */	
+	
 	void readCsv(int x, int y, std::string filename, std::vector<double*>& data, int colonne = -1, int ligne = -1);
 	
 	

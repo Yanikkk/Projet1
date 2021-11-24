@@ -36,6 +36,27 @@ int Env::getPente() const{
 	return pente_;
 }
 
+void Env::writeCSV(){
+	std::ofstream myfile;
+	myfile.open("river_Data.csv");
+	myfile << "X,Y,Z,Vitesse,Matiere \n";
+	for(int i = 0; i< hauteur_ * largeur_ * longueur_; i++){
+	myfile << tableau_[i].getX() <<","<< tableau_[i].getY() << "," << tableau_[i].getZ();
+		if(tableau_[i].matiere_.getType() == "EAU"){
+			myfile <<","<< tableau_[i].matiere_.getVitesse();
+		}else{
+			myfile <<", -";
+		}
+		myfile <<","<< tableau_[i].matiere_.getType();
+		
+		myfile << "\n";
+	}
+	//mettre string en attribut matière de si "EAU" "SOL" ou "AIR" puis dans python lire ce string et en déduire une couleur
+	myfile.close();
+	
+}
+
+
 //mettre main sûrement?
 void Env::readCsv(int x, int y, string filename, vector<double*>& data, int colonne, int ligne) { // Mettre dans main ?
 

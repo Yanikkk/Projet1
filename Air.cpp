@@ -2,5 +2,5 @@
 #include "Air.hpp"
 
 
-Air::Air(Env* env_param)
-	:Matiere(env_param){} /*, argument propre à air*/
+Air::Air(Env* env_param, std::string type, double vitesse)
+	:Matiere(env_param, type, vitesse){} /*, argument propre à air*/

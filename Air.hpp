@@ -20,7 +20,7 @@ public :
      *
      * @param ..........
      */
-	Air(Env* env_param = nullptr);
+	Air(Env* env_param = nullptr, std::string type = "AIR", double vitesse = 0.0);
 			
 private : 
 

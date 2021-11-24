@@ -54,7 +54,7 @@ public :
      * @param hauteur; nombre de case dans le tableau représentant la hauteur de la rivière
      * @param longueur; nombre de case dans le tableau représentant la longueur de la rivière
      */
-	void initTableau(int largeur, int hauteur, int longueur);
+	void initTableau(int hsol = -1, int heau = -1, double pente = -1);
 	
 	/*!
      * @brief Les méthodes get permettent d'accéder aux attributs privés de cette classe en dehors de celle-ci.
@@ -74,8 +74,8 @@ private :
 	int largeur_; 		///< largeur de la rivière
 	int hauteur_;  	    ///< hauteur de la rivière 
 	int longueur_;      ///< lonugueur de la rivière
-	int h_sol;			///< hauteur du sol (en cases)
-	int h_eau;			///< hauteur de l'eau (en cases)
+	int h_sol_;			///< hauteur du sol (en cases)
+	int h_eau_;			///< hauteur de l'eau (en cases)
 	double pente_;		///< pente du fond de la rivière 
 	int debit_;			///< débit de la rivière
 	Case* tableau_;		///< tableau contenant des pointeurs sur des cases

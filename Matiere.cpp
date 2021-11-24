@@ -3,7 +3,10 @@
 #include "Matiere.hpp"
 
 
-Matiere::Matiere() {}
+Matiere::Matiere(Env* env_param)
+	{
+		env2 = env_param;
+	}
 
 void Matiere::setEnv2(Env* env){
 	env2 = env;

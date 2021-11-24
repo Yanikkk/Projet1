@@ -24,6 +24,10 @@ public :
      */
 	Case(int x = 0, int y = 0, int z = 0);
 	
+	
+	void setX(int x);
+	void setY(int y);
+	void setZ(int z);
 	/*!
      * @brief Permet de définir la matiere par rapport aux coordonées
      */

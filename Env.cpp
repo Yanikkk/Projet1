@@ -7,18 +7,14 @@
 Env::Env(int largeur, int hauteur, int longueur)
 	:largeur_(largeur), hauteur_(hauteur), longueur_(longueur)
 {
-	h_sol = 0;
-	h_eau = 0;
+	h_sol_ = 0;
+	h_eau_ = 0;
 	tableau_ = new Case[hauteur*largeur*longueur];
 	for(int i = 0; i< hauteur * largeur * longueur; i++){
 		tableau_[i].env = this;
 		tableau_[i].matiere_.setEnv2(this);
-	}
-	
-	setPenteCsv("donnee-cours-deau.csv");
-
-	// initie le tableau représentant la rivière
-	initTableau(largeur_, hauteur_, longueur_);
+	}	
+	pente_ = 0.0; 
 }
 
 int Env::getLargeur() const{
@@ -29,11 +25,11 @@ int Env::getHauteur() const {
 }
 
 int Env::getH_eau() const{
-	return h_eau;
+	return h_eau_;
 }
 
 int Env::getH_sol() const{
-	return h_sol;
+	return h_sol_;
 }
 
 int Env::getPente() const{
@@ -110,43 +106,40 @@ void Env::setPenteCsv(string filename) {
 	pente_ = somme / (y_size-1);
 }
 
-void Env::initTableau(int largeur, int hauteur, int longueur) {
-
-	//tableau de structure en 3D
-	int grandeur = hauteur * longueur * largeur;
-	
-	
-	int palier_pente = pente_/100.0 * longueur; // affiche l'arrondis de l'entier le plus bas
-
-	//h_sol = 0 initialement, une couche de terre au minimum
-	h_eau = hauteur/2;
+void Env::initTableau(int hsol, int heau, double pente) {
+	if(hsol < -1){
+		hsol = -1;
+	}
+	if(heau < 0){
+		heau = hauteur_/2 -1;
+	}
+	if(pente < 0){
+		setPenteCsv("donnee-cours-deau.csv");
+		pente = pente_;
+	}
+	int grandeur = hauteur_ *longueur_ * largeur_;
 	int x = 0;
 	int y = 0;
 	int z = 0;
+	int palier_pente = pente/100.0 * longueur_;
+	palier_pente = 2;
+
 	
-	// z vers le haut, y vers la largeur, x vers la longueur
-	//int i = (z * (largeur) + y) + largeur * hauteur * x;
-
-	//double h_eau = hauteur_eau(pente, debit);
-
-	for(int i = 0; i <= grandeur; i++){
-		tableau_[i] = Case(x,y,z);
-		y =+ 1;
-
-		if(i == (largeur-1) + z * largeur + x * largeur + hauteur){ // à chaque largeur finit, on monte dans le tableau
-			z =+1;
-			y = 0;
+	for(int i = 0; i < grandeur; i++){
+		y = i % (largeur_);
+		x = i / (largeur_*hauteur_);
+		z = (i - x * largeur_ * hauteur_) / largeur_;
+		tableau_[i].setX(x);
+		tableau_[i].setY(y);
+		tableau_[i].setZ(z);
+		//cout  << x << "," << z << "," << y << endl;
+		
+		if( ((x % palier_pente == 0) and y == 0) and z == 0){
+			hsol = hsol + 1;
+			h_sol_ = hsol;
+			heau = heau + 1;
+			h_eau_ = heau;
 		}
-
-		if(z == hauteur + 1){
-		//une fois le haut du tableau atteint
-			z = 0;
-			x =+ 1;
-			//modélisation pente
-			if( (x + 1) % palier_pente !=0){
-				h_sol =+ 1;
-				h_eau =+ 1;
-			}
-		}
+		tableau_[i].setMatiere();
 	}
 }

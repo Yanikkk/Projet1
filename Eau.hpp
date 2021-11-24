@@ -21,7 +21,7 @@ public :
      *
      * @param ........
      */
-	Eau();
+	Eau(Env* env_param = nullptr);
 	
     /*!
      * @brief utilise la formule de Manning Strickler pour déterminer la vitesse de l'eau

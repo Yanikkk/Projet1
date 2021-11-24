@@ -4,8 +4,10 @@
 
 int main() {
 	
-	Env riviere(40, 60, 200); 
+	Env riviere(4, 6, 20); 
 	// créer un objet Env avec les dimensions x, y, z passées en paramètres.
+	// 40,60,200
+	riviere.initTableau();	
 	
 	/*delete[] tableau_;*/ // pas oublier de supprimer le tableau -> ici ?
 	return 0;

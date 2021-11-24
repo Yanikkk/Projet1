@@ -26,7 +26,7 @@ public :
      *
      * @param .........
      */
-	Matiere();
+	Matiere(Env* env_param = nullptr);
 	
 	/*!
      * @brief Permet de modifier l'env

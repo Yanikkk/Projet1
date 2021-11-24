@@ -2,5 +2,5 @@
 #include "Sol.hpp"
 
 
-Sol::Sol()
-	:Matiere(){}/*, argument propre à sol*/
+Sol::Sol(Env * env_param)
+	:Matiere(env_param){}/*, argument propre à sol*/

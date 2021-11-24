@@ -20,7 +20,7 @@ public :
      *
      * @param .........
      */
-	Sol();
+	Sol(Env* env_param = nullptr);
 		
 	
 private : 

@@ -91,9 +91,9 @@ for row in csvReader:
 
 
 #remplacer les couleurs par cmap ou jsais pas quoi qu'on peut transferer dans le csv.
-ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', edgecolor = 'black', s = 100, alpha=0.4)
-ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', edgecolor = 'black', s = 100, alpha=0.2)
-ax.scatter(X_eau, Y_eau, Z_eau, c = 'blue', marker='s', edgecolor = 'black', s = 100, alpha=0.3)
+ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', s = 10, alpha=0.3)
+ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.1)
+ax.scatter(X_eau, Y_eau, Z_eau, c = 'blue', marker='s', s = 10, alpha=0.2)
     
 ax.set_title('Wouahouuu ! Belle rivière !')
 ax.set_xlabel('Longueur')

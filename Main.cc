@@ -4,7 +4,7 @@
 
 int main() {
 	
-	Env riviere(4, 6, 20); 
+	Env riviere(20, 30, 40); 
 	// créer un objet Env avec les dimensions x, y, z passées en paramètres.
 	// 40,60,200
 	riviere.initTableau();	

@@ -141,7 +141,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 	int y = 0;
 	int z = 0;
 	int palier_pente = pente/100.0 * longueur_;
-	palier_pente = 2;
+	//palier_pente = 2;
 
 	
 	for(int i = 0; i < grandeur; i++){

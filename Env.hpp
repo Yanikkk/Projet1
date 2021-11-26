@@ -81,9 +81,7 @@ private :
 	int h_sol_;			///< hauteur du sol (en cases)
 	int h_eau_;			///< hauteur de l'eau (en cases)
 	double pente_;		///< pente du fond de la rivière 
-	int debit_;			///< débit de la rivière
 	Case* tableau_;		///< tableau contenant des pointeurs sur des cases
-
 
 }; 
 

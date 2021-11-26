@@ -39,15 +39,15 @@ int Env::getPente() const{
 void Env::writeCSV(){
 	std::ofstream myfile;
 	myfile.open("river_Data.csv");
-	myfile << "X,Y,Z,Vitesse,Matiere \n";
+	myfile << "X,Y,Z,Vitesse,Matiere,Surface mouillee riviere\n";
 	for(int i = 0; i< hauteur_ * largeur_ * longueur_; i++){
 	myfile << tableau_[i].getX() <<","<< tableau_[i].getY() << "," << tableau_[i].getZ();
 		if(tableau_[i].matiere_.getType() == "EAU"){
 			myfile <<","<< tableau_[i].matiere_.getVitesse();
 		}else{
 			myfile <<", -";
-		}
-		myfile << "," << tableau_[i].matiere_.getType() << "\n";
+		}// chaque case 1mx1m => surface en [m^2]
+		myfile << "," << tableau_[i].matiere_.getType()<< "," << largeur_ * (h_eau_ - h_sol_)<< "\n";
 	}
 	//mettre string en attribut matière de si "EAU" "SOL" ou "AIR" puis dans python lire ce string et en déduire une couleur
 	myfile.close();

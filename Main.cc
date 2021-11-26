@@ -9,7 +9,6 @@ int main() {
 	// 40,60,200
 	riviere.initTableau();	
 	riviere.writeCSV();
-	
 	/*delete[] tableau_;*/ // pas oublier de supprimer le tableau -> ici ?
 	return 0;
 }

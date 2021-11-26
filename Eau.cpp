@@ -19,6 +19,8 @@ void Eau::setVitesse() {
 	double I = getEnv2()->getPente()/100.0; //tout en [m]
 	//formule de Manning Strickler 
 	vitesse_ = Ks * pow(R, 2.0/3.0) * pow(I, 1.0/2.0);
+	// on arrondi la vitesse à deux chiffres après la virgule
+	//vitesse_ =  faire une fonction arrondir?
 }
 
 double Eau::getVitesse() const{

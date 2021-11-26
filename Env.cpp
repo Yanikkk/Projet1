@@ -47,9 +47,7 @@ void Env::writeCSV(){
 		}else{
 			myfile <<", -";
 		}
-		myfile <<","<< tableau_[i].matiere_.getType();
-		
-		myfile << "\n";
+		myfile << "," << tableau_[i].matiere_.getType() << "\n";
 	}
 	//mettre string en attribut matière de si "EAU" "SOL" ou "AIR" puis dans python lire ce string et en déduire une couleur
 	myfile.close();

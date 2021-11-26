@@ -59,6 +59,9 @@ plt.show()
 
 from mpl_toolkits.mplot3d import Axes3D
 
+file = open('river_Data.csv', newline = '')
+csvReader = csv.reader(file, delimiter = ',')
+
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
@@ -86,10 +89,13 @@ for row in csvReader:
 		Y_eau.append(float(row[1]))
 		Z_eau.append(float(row[2]))
 
-ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', edgecolor = 'black',s = 500, alpha=0.4)
-ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', edgecolor = 'black',s = 500, alpha=0.1)
-ax.scatter(X_eau, Y_eau, Z_eau, c = 'blue', marker='s', edgecolor = 'black',s = 500, alpha=0.3)
+
+#remplacer les couleurs par cmap ou jsais pas quoi qu'on peut transferer dans le csv.
+ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', edgecolor = 'black', s = 100, alpha=0.4)
+ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', edgecolor = 'black', s = 100, alpha=0.2)
+ax.scatter(X_eau, Y_eau, Z_eau, c = 'blue', marker='s', edgecolor = 'black', s = 100, alpha=0.3)
     
+ax.set_title('Wouahouuu ! Belle rivière !')
 ax.set_xlabel('Longueur')
 ax.set_ylabel('Largeur')
 ax.set_zlabel('Hauteur')

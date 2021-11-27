@@ -92,13 +92,17 @@ for row in csvReader:
 
 #remplacer les couleurs par cmap ou jsais pas quoi qu'on peut transferer dans le csv.
 ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', s = 10, alpha=0.3)
-ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.1)
+ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.05)
 ax.scatter(X_eau, Y_eau, Z_eau, c = 'blue', marker='s', s = 10, alpha=0.2)
     
 ax.set_title('Wouahouuu ! Belle rivière !')
+
 ax.set_xlabel('Longueur')
+ax.set_xlim(0,40)
 ax.set_ylabel('Largeur')
+ax.set_ylim(-5,25)
 ax.set_zlabel('Hauteur')
+ax.set_zlim(0,40)
 
 plt.show()
 

@@ -1,14 +1,11 @@
 #! /usr/bin/python3
+
 import os
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
 #appelle le fichier "Main.exe" et l'exécuter (cree le fichier excel etc.)
-os.system("Main.exe")
-
-
-
-
+os.system("./Main.exe")
 
 
 file = open('river_Data.csv', newline = '')

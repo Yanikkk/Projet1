@@ -28,10 +28,6 @@ for row in csvReader:
 			axe_x.append(float(row[0]))
 			axe_debit.append(float(row[3])*float(row[5]))
 			x = row[0]
-			
-
-print(axe_x)
-print(axe_debit)
 
 #Schéma des graphes
 
@@ -71,6 +67,8 @@ Z_air = []
 X_eau = []
 Y_eau = []
 Z_eau = []
+couleur = []
+
 
 for row in csvReader:
 	if row[4] == 'SOL':
@@ -85,12 +83,13 @@ for row in csvReader:
 		X_eau.append(float(row[0]))
 		Y_eau.append(float(row[1]))
 		Z_eau.append(float(row[2]))
+		couleur.append(float(row[6]))
 
 
 #remplacer les couleurs par cmap ou jsais pas quoi qu'on peut transferer dans le csv.
 ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', s = 10, alpha=0.3)
-ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.05)
-ax.scatter(X_eau, Y_eau, Z_eau, c = 'blue', marker='s', s = 10, alpha=0.2)
+ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.01)
+ax.scatter(X_eau, Y_eau, Z_eau, c = couleur, cmap = "blues", marker='s', s = 10, alpha=0.2)
     
 ax.set_title('Wouahouuu ! Belle rivière !')
 

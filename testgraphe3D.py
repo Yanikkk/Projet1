@@ -72,5 +72,9 @@ ax.set_zlim(0,40)
 
 plt.show()
 
+<<<<<<< HEAD
 
 
+=======
+#test add
+>>>>>>> 6991c117cc32dadf405c6b905b6e197add4f8556

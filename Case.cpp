@@ -46,3 +46,7 @@ void Case::setMatiere() {
 		matiere_ = Air(matiere_.getEnv2(),"AIR");
 	}
 }
+
+Matiere Case::getMatiere() const{
+	return matiere_;
+}

@@ -24,7 +24,8 @@ void Eau::setVitesse() {
 	// on arrondi la vitesse à deux chiffres après la virgule
 	//vitesse_ =  faire une fonction arrondir?
 }
-
+/*
 double Eau::getVitesse() const{
 	return vitesse_;
 }
+*/

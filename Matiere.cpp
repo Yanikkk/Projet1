@@ -22,11 +22,4 @@ std::string Matiere::getType() const{
 double Matiere::getVitesse() const{
 	return vitesse_;
 }
-/*void Matiere::setCouleur(const sf::color value) {
-	couleur = value;
-}	
-	
-sf::color Matiere::getCouleur() const {
-	return couleur;
-}
-*/
+

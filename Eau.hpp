@@ -27,8 +27,8 @@ public :
      * @brief utilise la formule de Manning Strickler pour déterminer la vitesse de l'eau
      */	
 	void setVitesse();
-	double getVitesse() const override;
-	
+	/*double getVitesse() const override;
+	*/
 private : 
 }; 
 

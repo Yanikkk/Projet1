@@ -46,26 +46,11 @@ public :
 	
 	virtual double getVitesse() const;
 	
-	/*!
-     * @brief permet de modifier la couleur d'une matière
-     *
-     * @param value nouvelle valeur que l'on souhaite associer à l'attribut couleur.
-     */
-    //void setCouleur(const sf::color value);	
-		
-	/*!
-     * @brief Permet d'accéder à a couleur qui est un attribut privé 
-     *
-     * @return la couleur de la matière.
-     */	
-	//sf::color getCouleur() const;
-	
 protected : 
 	
 	Env* env2;
 	std::string type_;
 	double vitesse_;
-//sf::color couleur; // voir comment on peut faire la couleure, peut être qu'il faudra plûtot choisir en python quand on fait le graph -> sinon la sf je sais plus... il faut créer une classe couleur maybe (internet)
 
 }; 
 

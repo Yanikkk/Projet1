@@ -36,6 +36,9 @@ double Env::getPente() const{
 	return pente_;
 }
 
+Case* Env::getTableau() const{
+	return tableau_;
+}
 void Env::writeCSV(){
 	std::ofstream myfile;
 	myfile.open("river_Data.csv");
@@ -75,7 +78,7 @@ void Env::readCsv(int x, int y, string filename, vector<double*>& data, int colo
 		
 		
 
-		if (colonne == -1 and ligne == -1) {
+		if (colonne == -1 && ligne == -1) {
 			double* cell_d = new double (stod(cell));
 			data.push_back(cell_d);
 			
@@ -96,7 +99,7 @@ void Env::readCsv(int x, int y, string filename, vector<double*>& data, int colo
 
 		} else { // plus que l'option ou ligne et colonne != -1
 
-			if (i % x == colonne and i / x == ligne) { // corriger si on change les conditions précédentes
+			if (i % x == colonne && i / x == ligne) { // corriger si on change les conditions précédentes
 				
 				double* cell_d = new double (stod(cell));
 				data.push_back(cell_d);
@@ -153,7 +156,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		tableau_[i].setZ(z);
 		//cout  << x << "," << z << "," << y << endl;
 		
-		if( ((x % palier_pente == 0) and y == 0) and z == 0){
+		if( ((x % palier_pente == 0) && y == 0) && z == 0){
 			hsol = hsol + 1;
 			h_sol_ = hsol;
 			heau = heau + 1;

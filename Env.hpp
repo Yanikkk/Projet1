@@ -72,7 +72,7 @@ public :
 	int getH_eau() const;
 	int getH_sol() const;
 	double getPente() const;
-		
+	Case* getTableau() const;
 private : 
 
 	int largeur_; 		///< largeur de la rivière

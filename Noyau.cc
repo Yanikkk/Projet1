@@ -19,7 +19,7 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	riviere.initTableau();
 	//riviere.writeCSV();
 	//utiliser cette fonction pour écrire un csv à un moment t
-	
+
 //source utile
 //https://docs.python.org/3/c-api/list.html
 //http://web.mit.edu/people/amliu/vrut/python/ext/buildValue.html
@@ -33,18 +33,18 @@ static PyObject * ecoulement(PyObject * self, Pyobject * args{
 	double temps;
 	if (! PyArg_ParseTuple(args, "d", &temps)) return NULL;
 	//le nombre de seconde pour que une case d'eau avance de 1 case
-	
+
 	int z = 0;
 	int hs_dessous = 0;
 	int hs_devant = 0;
 	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
-			double seuil =  1/riviere.getTableau()[w].matiere_.getvitesse();
+			double seuil =  1/riviere.getTableau()[w].getMatiere().getvitesse();
 			if(temps >= seuil){ //soustraire le temps depuis la dernière fois
 				if(w/(largeur_*hauteur_)-1 < 0){ // si ce sont les cases au bords alors elles sortent et sont effacées
 					riviere.getTableau()[w].getMatiere() = "VIDE"; //normalement marche pas
 				}
-				
+
 				else{
 						//trouver si la hauteur de sol à la hauteur x et à la hauteur x -1 est la même ou non
 						while(riviere.getTableau()[w -z*riviere.getLargeur()].getMatiere().getType() != "SOL"){
@@ -67,16 +67,16 @@ static PyObject * ecoulement(PyObject * self, Pyobject * args{
 						if(hs_dessous != hs_devant && 1 = hs_dessous - hs_devant){
 							if(riviere.getTableau()[w - getLargeur - (getLargeur()*getHauteur())].getMatiere() == "VIDE"){
 								// il s'agit ici de la case devant(en x) et un cran en dessous(en z)
-								riviere.getTableau()[w - getLargeur - (getLargeur()*getHauteur())] = riviere.getTableau()[w]; 
+								riviere.getTableau()[w - getLargeur - (getLargeur()*getHauteur())] = riviere.getTableau()[w];
 								riviere.getTableau()[w].getMatiere() = "VIDE"; // la précédente se fait effacer
 							}
 						}
-						
+
 				}
 			}
 		}
 	}
-	
+
 	return Py_BuildValue("i",0);
 
 }
@@ -184,8 +184,8 @@ static struct PyModuleDef moduleDefinition = { //struct de config de module
     PyModuleDef_HEAD_INIT,
     "Noyau", //nom module
     "Simulation d une riviere.", //même que en haut
-    -1, //point tech. 
-    methods 
+    -1, //point tech.
+    methods
 	};
 PyMODINIT_FUNC
 PyInit_Noyau(void) { //main de mon module , accède avec le import

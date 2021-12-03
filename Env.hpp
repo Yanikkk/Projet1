@@ -71,7 +71,7 @@ public :
 	int getHauteur() const;
 	int getH_eau() const;
 	int getH_sol() const;
-	int getPente() const;
+	double getPente() const;
 		
 private : 
 

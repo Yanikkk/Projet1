@@ -32,7 +32,7 @@ int Env::getH_sol() const{
 	return h_sol_;
 }
 
-int Env::getPente() const{
+double Env::getPente() const{
 	return pente_;
 }
 

@@ -67,7 +67,7 @@ Z_air = []
 X_eau = []
 Y_eau = []
 Z_eau = []
-couleur = []
+#couleur = []
 
 
 for row in csvReader:
@@ -83,14 +83,14 @@ for row in csvReader:
 		X_eau.append(float(row[0]))
 		Y_eau.append(float(row[1]))
 		Z_eau.append(float(row[2]))
-		couleur.append(float(row[6]))
+#	couleur.append(float(row[6]))
 
 
 #remplacer les couleurs par cmap ou jsais pas quoi qu'on peut transferer dans le csv.
 ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', s = 10, alpha=0.3)
 ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.01)
-ax.scatter(X_eau, Y_eau, Z_eau, c = couleur, cmap = "blues", marker='s', s = 10, alpha=0.2)
-    
+ax.scatter(X_eau, Y_eau, Z_eau, c = "pink", marker='s', s = 10, alpha=0.2)
+    # cmap = "blues"
 ax.set_title('Wouahouuu ! Belle rivière !')
 
 ax.set_xlabel('Longueur')

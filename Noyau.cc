@@ -29,7 +29,8 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	return Py_BuildValue("i",0);
 }
 //fait avancer les cases d'eau
-static PyObject * ecoulement(PyObject * self, Pyobject * args{
+double seuil_cumule = 0.0;
+static PyObject * ecoulement(PyObject * self, Pyobject * args){
 	double temps;
 	if (! PyArg_ParseTuple(args, "d", &temps)) return NULL;
 	//le nombre de seconde pour que une case d'eau avance de 1 case
@@ -41,8 +42,10 @@ static PyObject * ecoulement(PyObject * self, Pyobject * args{
 		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
 			double seuil =  1/riviere.getTableau()[w].getMatiere().getvitesse();
 			if(temps >= seuil){ //soustraire le temps depuis la dernière fois
+				seuil_cumule = seuil_cumule + 1/riviere.getTableau()[w].getMatiere().getvitesse();
+				seuil = seuil_cumule;
 				if(w/(largeur_*hauteur_)-1 < 0){ // si ce sont les cases au bords alors elles sortent et sont effacées
-					riviere.getTableau()[w].getMatiere() = "VIDE"; //normalement marche pas
+					riviere.getTableau()[w].getMatiere() = "VIDE";
 				}
 
 				else{
@@ -60,8 +63,7 @@ static PyObject * ecoulement(PyObject * self, Pyobject * args{
 						// si la case devant elle est vide et que le sol est plat
 						if(riviere.getTableau()[w - (getLargeur()*getHauteur())].getMatiere() == "VIDE" && hs_dessous == hs_devant){
 								riviere.getTableau()[w - (getLargeur()*getHauteur())] = riviere.getTableau()[w]; // elle devient cette case
-								delete riviere.getTableau()[w]; // la précédente se fait effacer
-								riviere.getTableau()[w] = nullptr;
+								riviere.getTableau()[w].getMatiere() = "VIDE";
 						}
 						//pour l'instant la seul situation c'est que le sol devant est de une case plus bas alors j'écris ça comme ça
 						if(hs_dessous != hs_devant && 1 = hs_dessous - hs_devant){

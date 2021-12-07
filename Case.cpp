@@ -8,9 +8,13 @@
 
 Case::Case(int x, int y, int z)
 	: x_(x), y_(y), z_(z)// appel au constructeur de matiere 
-	{}
+	{
+		cout<< "ok"<< endl;
+		cout<<x << y << z << endl;
+		}
 void Case::setX(int x){
-	x_ = x;
+    x_ = x;
+	
 }
 void Case::setY(int y){
 	y_ = y;
@@ -32,7 +36,7 @@ int Case::getZ() const{
 }
 
 void Case::setMatiere() {
-
+	
 	if(z_ <= env->getH_sol()) {
 		// il faut pas mettre dans le conctructeur de sol le fait qu'il prenne l'attribut env et se le donne?
 		matiere_ = Sol(matiere_.getEnv2(),"SOL");

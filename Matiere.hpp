@@ -44,6 +44,8 @@ public :
 	
 	std::string getType() const;
 	
+	void setType(std::string);
+	
 	virtual double getVitesse() const;
 	
 protected : 

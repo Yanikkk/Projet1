@@ -16,7 +16,12 @@ Env* Matiere::getEnv2() const{
 }
 
 std::string Matiere::getType() const{
+	std::cout << "Matiere_a" << std::endl;
 	return type_;
+}
+
+void Matiere::setType(std::string nom){
+		type_ = nom;
 }
 
 double Matiere::getVitesse() const{

@@ -69,10 +69,13 @@ public :
      */
     int getLargeur() const;
 	int getHauteur() const;
+	int getLongueur() const;
 	int getH_eau() const;
 	int getH_sol() const;
 	double getPente() const;
 	Case* getTableau() const;
+	Case* creation(int, Case*);
+	
 private : 
 
 	int largeur_; 		///< largeur de la rivière

@@ -10,7 +10,7 @@ os.system("./Main.exe")
 
 file = open('river_Data.csv', newline = '')
 csvReader = csv.reader(file, delimiter = ',')
-	
+
 
 # test shema 3D
 
@@ -51,11 +51,11 @@ for row in csvReader:
 ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', s = 10, alpha=0.3)
 ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.05)
 ax.scatter(X_eau, Y_eau, Z_eau, c = 'blue', marker='s', s = 10, alpha=0.2)
-    
+
 ax.set_title('Rivière')
 
 
-limite = max(X_sol) 
+limite = max(X_sol)
 if limite < max(Y_sol):
 	limite = max(Y_sol)
 if limite <  max(Z_sol):
@@ -72,3 +72,9 @@ ax.set_zlim(0,40)
 
 plt.show()
 
+<<<<<<< HEAD
+
+
+=======
+#test add
+>>>>>>> 6991c117cc32dadf405c6b905b6e197add4f8556

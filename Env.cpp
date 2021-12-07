@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <new>
-
+#include <iterator>
 #include "Env.hpp"
 
 Env::Env(int largeur, int hauteur, int longueur)
@@ -10,7 +10,7 @@ Env::Env(int largeur, int hauteur, int longueur)
 	h_sol_ = 0;
 	h_eau_ = 0;
 	tableau_ = new Case[hauteur*largeur*longueur];
-	for(int i = 0; i< hauteur * largeur * longueur; i++){
+	for(int i = 0; i < hauteur * largeur * longueur; i++){
 		tableau_[i].env = this;
 		tableau_[i].matiere_.setEnv2(this);
 	}	
@@ -22,6 +22,10 @@ int Env::getLargeur() const{
 }
 int Env::getHauteur() const {
 	return hauteur_;
+}
+
+int Env::getLongueur() const{
+	return longueur_;
 }
 
 int Env::getH_eau() const{
@@ -39,6 +43,15 @@ double Env::getPente() const{
 Case* Env::getTableau() const{
 	return tableau_;
 }
+
+Case* Env::creation(int i, Case* tampon){
+		if(i/(hauteur_*largeur_)== longueur_){
+			tampon = new Case(this->tableau_[i].getX(),this->tableau_[i].getY() ,this->tableau_[i].getZ());
+			return tampon;
+		}
+		return 0; // arrête la simulation
+}
+
 void Env::writeCSV(){
 	std::ofstream myfile;
 	myfile.open("river_Data.csv");
@@ -129,6 +142,7 @@ void Env::setPenteCsv(string filename) {
 }
 
 void Env::initTableau(int hsol, int heau, double pente) {
+	std::cout << "Env1" << std::endl;
 	if(hsol < -1){
 		hsol = -1;
 	}
@@ -140,20 +154,29 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		pente = pente_;
 	}
 	int grandeur = hauteur_ *longueur_ * largeur_;
+	std::cout << grandeur << std::endl;
 	int x = 0;
 	int y = 0;
 	int z = 0;
 	int palier_pente = pente/100.0 * longueur_;
 	//palier_pente = 2;
-
+	std::cout << "Env2" << std::endl;
 	
 	for(int i = 0; i < grandeur; i++){
+		std::cout << "Env3" << std::endl;
 		y = i % (largeur_);
+		std::cout << "Env3.1" << std::endl;
 		x = i / (largeur_*hauteur_);
+		std::cout << "Env3.2" << std::endl;
 		z = (i - x * largeur_ * hauteur_) / largeur_;
+		std::cout << "Env3.3" << std::endl;
 		tableau_[i].setX(x);
+		std::cout << "Env3.4" << std::endl;
 		tableau_[i].setY(y);
+		std::cout << "Env3.5" << std::endl;
 		tableau_[i].setZ(z);
+		std::cout << "Env3.6" << std::endl;
+		
 		//cout  << x << "," << z << "," << y << endl;
 		
 		if( ((x % palier_pente == 0) && y == 0) && z == 0){
@@ -161,6 +184,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 			h_sol_ = hsol;
 			heau = heau + 1;
 			h_eau_ = heau;
+			
 		}
 		tableau_[i].setMatiere();
 	}

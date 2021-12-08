@@ -5,9 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-largeur = 4
-hauteur = 6
-longueur = 20
+largeur = 2
+hauteur = 3
+longueur = 4
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
 

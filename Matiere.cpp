@@ -6,7 +6,7 @@
 Matiere::Matiere(Env* env_param, std::string type, double vitesse)
 		:env2(env_param), type_(type), vitesse_(vitesse)
 	{
-		setCouleur();
+		//setCouleur();
 		//Comme le constructeur de matiere est appelé dans celui de chaque matière et que setCouleur est virtual, la couleur sera set avec la fonction setCouleur de la matière (si redéfinie).
 	}
 

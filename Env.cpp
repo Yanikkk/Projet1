@@ -180,12 +180,14 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		//cout  << x << "," << z << "," << y << endl;
 		
 		if( ((x % palier_pente == 0) && y == 0) && z == 0){
+			std::cout << "Env3.7" << std::endl;
 			hsol = hsol + 1;
 			h_sol_ = hsol;
 			heau = heau + 1;
 			h_eau_ = heau;
 			
 		}
+		std::cout << "Env3.8" << std::endl;
 		tableau_[i].setMatiere();
 	}
 }

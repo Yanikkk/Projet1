@@ -49,16 +49,16 @@ public :
 	virtual double getVitesse() const;
 	// enlever le virtual non ? on a changé
 	
-	int getCouleur() const; 
+	/*int getCouleur() const; 
 	
-	virtual void setCouleur();
+	virtual void setCouleur();*/
 	
 protected : 
 	
 	Env* env2;
 	std::string type_;
 	double vitesse_;
-	int couleur_; 
+	//int couleur_; 
 
 }; 
 

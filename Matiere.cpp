@@ -30,7 +30,7 @@ void Matiere::setType(std::string nom){
 double Matiere::getVitesse() const {
 	return vitesse_;
 }
-
+/*
 int Matiere::getCouleur() const {
 	return couleur_;
 }
@@ -41,4 +41,4 @@ void Matiere::setCouleur() {
 	//Mais ducoup faut associer une cmap à l'air sinon pas de sens.
 	// A voir comment on défini la couleur en général.
 }
-
+*/

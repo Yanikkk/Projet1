@@ -30,11 +30,11 @@ double Eau::getVitesse() const{
 	return vitesse_;
 }
 */
-
+/*
 // Pas le override en cpp ? 
 void Eau::setCouleur() {
 	int taille_eau = getEnv2()->getH_eau() - getEnv2()->getH_sol();
-	int hauteur_case = getEnv2()->getHauteur() - getEnv2()->getH_sol();
+	int hauteur_case = getEnt taille_eau = getEnv2()->getH_eau() - getEnv2()->getH_sonv2()->getHauteur() - getEnv2()->getH_sol();
 	// a la place de getEnv2()->getHauteur() c'est getZ non ? getHauteur c'est la hauteur de la simulation. comment chercher getZ ? this.getZ() ? 
 	
 	constexpr int MIN; 
@@ -68,7 +68,7 @@ void Eau::setCouleur() {
 }
 
 
-
+*/
 
 
 

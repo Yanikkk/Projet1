@@ -22,7 +22,7 @@ public :
      */
 	Sol(Env* env_param = nullptr, std::string type = "SOL", double vitesse = 0.0);
 	
-	void setCouleur() override;
+	/*void setCouleur() override;*/
 		
 private : 
 

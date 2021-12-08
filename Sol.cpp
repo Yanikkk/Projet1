@@ -7,7 +7,7 @@
 Sol::Sol(Env * env_param, std::string type, double vitesse)
 	:Matiere(env_param, type, vitesse){}/*, argument propre à sol*/
 
-void Sol::setCouleur() {
+/*void Sol::setCouleur() {
 	int taille_sol = getEnv2()->getH_sol();
 	int hauteur_case = getEnv2()->getHauteur();
 	// changer getEnv2()->getHauteur() comme pour l'eau
@@ -25,3 +25,4 @@ void Sol::setCouleur() {
 	} 
 }
 // Pas vraiment faites mais facil une fois que ça marchera pour l'eau casi pareil
+*/

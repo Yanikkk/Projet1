@@ -30,7 +30,7 @@ public :
 	/*double getVitesse() const override;
 	*/
 	
-	void setCouleur() override;
+/*	void setCouleur() override;*/
 private : 
 }; 
 

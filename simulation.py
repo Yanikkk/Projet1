@@ -44,7 +44,7 @@ def animation_frame(i):
 	X_sol = Noyau.coordX_eau()
 	Y_sol = Noyau.coordY_eau()
 	Z_sol = Noyau.coordZ_eau()
-	couleur_sol = Noyau.getCouleur_sol()
+	#couleur_sol = Noyau.getCouleur_sol()
 
 	X_air = Noyau.coordX_sol()
 	Y_air = Noyau.coordY_sol()
@@ -55,13 +55,15 @@ def animation_frame(i):
 	Y_eau = Noyau.coordY_air()
 	z_eau = Noyau.coordZ_air()
 	# Normal que le z pas en maj ici ??????????????????????????????????????????????????
-	couleur_eau = Noyau.getCouleur_eau()
+	#couleur_eau = Noyau.getCouleur_eau()
 	
 	
-	
-	ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3)
+	ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', s = 10, alpha=0.3)
 	ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.01) #voir comment on fait la couleur de l'air avec l'héritage
-	ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "blues", marker='s', s = 10, alpha=0.2)
+	ax.scatter(X_eau, Y_eau, Z_eau, c = 'pink', marker='s', s = 10, alpha=0.2)
+	#ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3)
+	#ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.01) #voir comment on fait la couleur de l'air avec l'héritage
+	#ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "blues", marker='s', s = 10, alpha=0.2)
 	# ou cmap = plt.cm.get_cmap("blues", 5) le 5 est la séparation de l'échelle des couleurs
 	# donc pour si on veut des séparation marquée ou tout continue et donc peut être moins flagrant l'avancée mais plus réelle l'avancée
   

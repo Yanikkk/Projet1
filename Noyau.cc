@@ -19,7 +19,7 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	Env tampon(largeur, hauteur, longueur);
 	riviere = tampon;
 	std::cout<<"Noyau_b"<<std::endl;
-	delete [] tampon.getTableau();
+	//delete [] tampon.getTableau();
 	riviere.initTableau();
 	/*//riviere.writeCSV();
 	//utiliser cette fonction pour écrire un csv à un moment t

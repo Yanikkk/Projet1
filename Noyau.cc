@@ -28,7 +28,7 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 //https://docs.python.org/3/c-api/list.html
 //http://web.mit.edu/people/amliu/vrut/python/ext/buildValue.html
 
-	/*
+	
 	riviere.getTableau()[i].matiere_.getvitesse()*/
 	cout << "Noyau_c" << endl;
 	return Py_BuildValue("i",0);
@@ -58,69 +58,72 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 				seuil_cumule = seuil_cumule + 1/riviere.getTableau()[w].getMatiere().getVitesse();
 				seuil = seuil_cumule;
 				cout << "Noyau_h" << endl;
+				
 				if(w/(riviere.getLargeur()*riviere.getHauteur())-1 < 0){ // si ce sont les cases au bords alors elles sortent et sont effacées
+					
 					if(riviere.getLongueur() == 1){
 						tampon = *riviere.creation(w, &riviere.getTableau()[w]);
 						statut = 1;
 						cout << "Noyau_i" << endl;
 					}
+					
 					riviere.getTableau()[w].getMatiere().setType("VIDE");
 					if(statut == 1){
 						riviere.getTableau()[w] = tampon;
 						statut = 0;
 					}
-				}
-
-				else{cout << "Noyau_j1" << endl;
-						//vérifie si il ne s'agit pas de la dernière case
-						if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()){
+					
+				} else {
+					
+					cout << "Noyau_j1" << endl;
+					//vérifie si il ne s'agit pas de la dernière case
+					if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()){
 						tampon = *riviere.creation(w, &riviere.getTableau()[w]);
 						statut = 1;
 						cout << "Noyau_j2" << endl;
-						}
-						//trouver si la hauteur de sol à la hauteur x et à la hauteur x -1 est la même ou non
-						while(riviere.getTableau()[w -z*riviere.getLargeur()].getMatiere().getType() != "SOL"){
-							z = z+1;
-						}
-						hs_dessous = z;
-						z = 0;
-						while(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- z*riviere.getLargeur()].getMatiere().getType() != "SOL"){
-							z = z+1;
-						}
-						hs_devant = z;
-						z = 0;
-						// si la case devant elle est vide et que le sol est plat
-						if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere().getType() == "VIDE" && hs_dessous == hs_devant){
-								
-								riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())] = riviere.getTableau()[w]; // elle devient cette case
-								riviere.getTableau()[w].getMatiere().getType() = "VIDE";
+					}
+					//trouver si la hauteur de sol à la hauteur x et à la hauteur x -1 est la même ou non
+					while(riviere.getTableau()[w -z*riviere.getLargeur()].getMatiere().getType() != "SOL"){
+						z = z+1;
+					}
+					hs_dessous = z;
+					z = 0;
+					while(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- z*riviere.getLargeur()].getMatiere().getType() != "SOL"){
+						z = z+1;
+					}
+					hs_devant = z;
+					z = 0;
+					// si la case devant elle est vide et que le sol est plat
+					if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere().getType() == "VIDE" && hs_dessous == hs_devant){	
+						riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())] = riviere.getTableau()[w]; // elle devient cette case
+						riviere.getTableau()[w].getMatiere().getType() = "VIDE";
+						
 						if(statut == 1){
-						riviere.getTableau()[w] = tampon;
-						statut = 0;
-						}
-						}
-						//pour l'instant la seul situation c'est que le sol devant est de une case plus bas alors j'écris ça comme ça
-						if(hs_dessous != hs_devant && 1 == hs_dessous - hs_devant){
-							if(riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].getMatiere().getType() == "VIDE"){
-								// il s'agit ici de la case devant(en x) et un cran en dessous(en z)
-								riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())] = riviere.getTableau()[w];
-								riviere.getTableau()[w].getMatiere().getType() = "VIDE"; // la précédente se fait effacer
-							}
-							if(statut == 1){
-								cout << "Noyau_k" << endl;
 							riviere.getTableau()[w] = tampon;
 							statut = 0;
-							}
 						}
-
+					}
+					//pour l'instant la seul situation c'est que le sol devant est de une case plus bas alors j'écris ça comme ça
+					if(hs_dessous != hs_devant && 1 == hs_dessous - hs_devant){
+						if(riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].getMatiere().getType() == "VIDE"){
+							// il s'agit ici de la case devant(en x) et un cran en dessous(en z)
+							riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())] = riviere.getTableau()[w];
+							riviere.getTableau()[w].getMatiere().getType() = "VIDE"; // la précédente se fait effacer
+						}
+						if(statut == 1){
+							cout << "Noyau_k" << endl;
+							riviere.getTableau()[w] = tampon;
+							statut = 0;
+						}
+					}
 				}
 			}
 		}
 	}
     cout << "Noyau_l" << endl;
 	return Py_BuildValue("i",0);
-
 }
+
 static PyObject * coord_Xeau(PyObject * self, PyObject * args){
 	cout << "Noyau_e" << endl;
 	PyObject * data_animation = PyList_New(0);

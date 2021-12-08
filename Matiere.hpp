@@ -47,12 +47,18 @@ public :
 	void setType(std::string);
 	
 	virtual double getVitesse() const;
+	// enlever le virtual non ? on a changé
+	
+	int getCouleur() const; 
+	
+	virtual void setCouleur();
 	
 protected : 
 	
 	Env* env2;
 	std::string type_;
 	double vitesse_;
+	int couleur_; 
 
 }; 
 

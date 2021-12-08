@@ -29,6 +29,8 @@ public :
 	void setVitesse();
 	/*double getVitesse() const override;
 	*/
+	
+	void setCouleur() override;
 private : 
 }; 
 

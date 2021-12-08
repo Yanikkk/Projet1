@@ -201,6 +201,33 @@ static PyObject * coord_Zair(PyObject * self, PyObject * args){
 	}
 	return data_animation;
 }
+static PyObject * getCouleur_sol(PyObject * self, PyObject * args){
+	PyObject * data_animation = PyList_New(0);
+	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+		if(riviere.getTableau()[w].getMatiere().getType() == "SOL"){
+			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getMatiere().getCouleur()));
+		}
+	}
+	return data_animation;
+}
+static PyObject * getCouleur_air(PyObject * self, PyObject * args){
+	PyObject * data_animation = PyList_New(0);
+	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+		if(riviere.getTableau()[w].getMatiere().getType() == "AIR"){
+			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getMatiere().getCouleur()));
+		}
+	}
+	return data_animation;
+}
+static PyObject * getCouleur_eau(PyObject * self, PyObject * args){
+	PyObject * data_animation = PyList_New(0);
+	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
+			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getMatiere().getCouleur()));
+		}
+	}
+	return data_animation;
+}
 //iii = int int intn
 //liste python marche mais gourmand
 //autre possibilité renvoyer un numpy

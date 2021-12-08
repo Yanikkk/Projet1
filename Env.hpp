@@ -75,6 +75,7 @@ public :
 	double getPente() const;
 	Case* getTableau() const;
 	Case* creation(int, Case*);
+	void copy(Env*);
 	
 private : 
 

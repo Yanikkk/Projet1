@@ -7,7 +7,7 @@
 Env::Env(int largeur, int hauteur, int longueur)
 	:largeur_(largeur), hauteur_(hauteur), longueur_(longueur)
 {
-	h_sol_ = 0;
+	h_sol_ = -1;
 	h_eau_ = 0;
 	tableau_ = new Case[hauteur*largeur*longueur];
 	for(int i = 0; i < hauteur * largeur * longueur; i++){
@@ -141,8 +141,22 @@ void Env::setPenteCsv(string filename) {
 	pente_ = somme / (y_size-1);
 }
 
+void Env::copy(Env* tampon){
+	longueur_ = tampon->getLongueur();
+	largeur_ = tampon->getLargeur();
+	hauteur_ = tampon->getHauteur();
+	h_sol_ = tampon->getH_sol();
+	h_eau_ =tampon->getH_eau();
+	pente_ = tampon->getPente();
+	for(int i = 0; i < hauteur_ * largeur_ * longueur_; i++){
+		tableau_[i].env = this;
+		tableau_[i].matiere_.setEnv2(this);
+	}
+	
+}
+
 void Env::initTableau(int hsol, int heau, double pente) {
-	std::cout << "Env1" << std::endl;
+	//std::cout << "Env1" << std::endl;
 	if(hsol < -1){
 		hsol = -1;
 	}
@@ -163,35 +177,40 @@ void Env::initTableau(int hsol, int heau, double pente) {
 	}	
 	int palier_pente = 1/(pente/100.0);
 	//palier_pente = 2;
-	std::cout << "Env2" << std::endl;
-	std::cout << palier_pente << std::endl;
+	//std::cout << "Env2" << std::endl;
+	//std::cout << palier_pente << std::endl;
 	for(int i = 0; i < grandeur; i++){
-		std::cout << "Env3" << std::endl;
+		//std::cout << "Env3" << std::endl;
 		y = i % (largeur_);
-		std::cout << "Env3.1" << std::endl;
+		//std::cout << "Env3.1" << std::endl;
 		x = i / (largeur_*hauteur_);
-		std::cout << "Env3.2" << std::endl;
+		//std::cout << "Env3.2" << std::endl;
 		z = (i - x * largeur_ * hauteur_) / largeur_;
-		std::cout << "Env3.3" << std::endl;
+		//std::cout << "Env3.3" << std::endl;
 		tableau_[i].setX(x);
-		std::cout << "Env3.4" << std::endl;
+		//std::cout << "Env3.4" << std::endl;
 		tableau_[i].setY(y);
-		std::cout << "Env3.5" << std::endl;
+		//std::cout << "Env3.5" << std::endl;
 		tableau_[i].setZ(z);
-		std::cout << "Env3.6" << std::endl;
+		//std::cout << "Env3.6" << std::endl;
 		
-		cout  << x << "," << z << "," << y << endl;
-		cout  << tableau_[i].getX() << "," << tableau_[i].getY() << "," << tableau_[i].getZ() << endl;
-		
+		//cout  << x << "," << z << "," << y << endl;
+	
+		//std::cout << palier_pente << std::endl;
 		if( ((x % palier_pente == 0) && y == 0) && z == 0){
-			std::cout << "Env3.7" << std::endl;
+			//std::cout << "Env3.7" << std::endl;
+			//std::cout << h_sol_ << std::endl;
+			//std::cout << h_eau_ << std::endl;
 			hsol = hsol + 1;
 			h_sol_ = hsol;
 			heau = heau + 1;
 			h_eau_ = heau;
+			//std::cout << h_sol_ << std::endl;
+			//std::cout << h_eau_ << std::endl;
 			
 		}
-		std::cout << "Env3.8" << std::endl;
+		
+		//std::cout << this << std::endl;
 		tableau_[i].setMatiere();
 	}
 }

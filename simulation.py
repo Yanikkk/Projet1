@@ -5,9 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-largeur = 10
-hauteur = 10
-longueur = 10
+largeur = 2
+hauteur = 3
+longueur = 4
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
 	#1,10,10 marche
@@ -42,40 +42,40 @@ def animation_frame(i):
 	Noyau.ecoulement(i)
 	
 	#retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
-	X_sol = Noyau.coordX_eau()
-	Y_sol = Noyau.coordY_eau()
-	Z_sol = Noyau.coordZ_eau()
+	X_eau = Noyau.coord_Xeau()
+	Y_eau = Noyau.coord_Yeau()
+	Z_eau = Noyau.coord_Zeau()
 	#couleur_sol = Noyau.getCouleur_sol()
 
-	X_air = Noyau.coordX_sol()
-	Y_air = Noyau.coordY_sol()
-	Z_air = Noyau.coordZ_sol()
+	X_sol = Noyau.coord_Xsol()
+	Y_sol = Noyau.coord_Ysol()
+	Z_sol = Noyau.coord_Zsol()
 	#couleur_air = Noyau.getCouleur_air() si on fait ?
 
-	X_eau = Noyau.coordX_air()
-	Y_eau = Noyau.coordY_air()
-	z_eau = Noyau.coordZ_air()
-	# Normal que le z pas en maj ici ??????????????????????????????????????????????????
+	X_air = Noyau.coord_Xair()
+	Y_air = Noyau.coord_Yair()
+	Z_air = Noyau.coord_Zair()
 	#couleur_eau = Noyau.getCouleur_eau()
 	
-	
+
 	ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', s = 10, alpha=0.3)
 	ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.01) #voir comment on fait la couleur de l'air avec l'héritage
-	ax.scatter(X_eau, Y_eau, Z_eau, c = 'pink', marker='s', s = 10, alpha=0.2)
+	ax.scatter(X_eau, Y_eau, Z_eau, c = 'blue', marker='s', s = 10, alpha=0.2)
+
 	#ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3)
 	#ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.01) #voir comment on fait la couleur de l'air avec l'héritage
 	#ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "blues", marker='s', s = 10, alpha=0.2)
 	# ou cmap = plt.cm.get_cmap("blues", 5) le 5 est la séparation de l'échelle des couleurs
 	# donc pour si on veut des séparation marquée ou tout continue et donc peut être moins flagrant l'avancée mais plus réelle l'avancée
   
-	print("sim_B")
-	return ax,
+#	print("sim_B")
+#	return ax,
 	
 animation = FuncAnimation(fig, func = animation_frame, frames = np.arange(0, 10, 0.01), interval = 10)
 print("sim_C")
 #remplacer les couleurs par cmap ou jsais pas quoi qu'on peut transferer dans le csv.
   # cmap = "blues"
-ax.set_title('Wouahouuu ! Belle rivière !')
+ax.set_title('Belle rivière !')
 
 ax.set_xlabel('Longueur')
 ax.set_xlim(0,40)

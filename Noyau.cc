@@ -18,6 +18,7 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	if (! PyArg_ParseTuple(args, "iii", &largeur, &hauteur, &longueur)) return NULL;
 	Env tampon(largeur, hauteur, longueur);
 	riviere = tampon;
+	riviere.copy(&tampon);
 	std::cout<<"Noyau_b"<<std::endl;
 	//delete [] tampon.getTableau();
 	riviere.initTableau();
@@ -51,6 +52,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	std::cout<<"taille avant:"<< taille <<std::endl;
 	for(int w = 0; w < taille; w++){
 		cout << "Noyau_g1" << endl;
+		cout << riviere.getTableau()[w].getMatiere().getType() << endl;
 		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
 			cout << "Noyau_g2" << endl;
 			double seuil =  1/riviere.getTableau()[w].getMatiere().getVitesse();
@@ -125,17 +127,22 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 }
 
 static PyObject * coord_Xeau(PyObject * self, PyObject * args){
+	riviere.writeCSV();
+	//	taille = riviere.getLargeur() * riviere.getLongueur() * riviere.getHauteur();
 	cout << "Noyau_e" << endl;
 	PyObject * data_animation = PyList_New(0);
 	//renvoie la position des cases d'eau en x
-	std::cout<<"taille après:"<< taille <<std::endl;
+	//std::cout<<"taille après:"<< taille <<std::endl;
 	for(int w = 0; w < taille; w++){
-		PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
+		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
+			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
+		}
 	}
 	return data_animation;
 }
 static PyObject * coord_Yeau(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
+	//cout <<"taille verification" << taille << endl;
 	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getY()));

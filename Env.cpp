@@ -158,10 +158,10 @@ void Env::initTableau(int hsol, int heau, double pente) {
 	int x = 0;
 	int y = 0;
 	int z = 0;
-	int palier_pente = pente/100.0 * longueur_;
+	int palier_pente = 1/(pente/100.0);
 	//palier_pente = 2;
 	std::cout << "Env2" << std::endl;
-	
+	std::cout << palier_pente << std::endl;
 	for(int i = 0; i < grandeur; i++){
 		std::cout << "Env3" << std::endl;
 		y = i % (largeur_);
@@ -177,7 +177,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		tableau_[i].setZ(z);
 		std::cout << "Env3.6" << std::endl;
 		
-		//cout  << x << "," << z << "," << y << endl;
+		cout  << x << "," << z << "," << y << endl;
 		
 		if( ((x % palier_pente == 0) && y == 0) && z == 0){
 			std::cout << "Env3.7" << std::endl;

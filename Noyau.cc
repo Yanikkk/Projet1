@@ -8,7 +8,7 @@ using namespace std;
 // avec ça normalement c'est toujours le même
 //sinon en faire un pointeur
 Env riviere(0,0,0);
-
+int taille = 0;
 
 static PyObject * initialisation(PyObject * self, PyObject * args){
 	std::cout<<"Noyau_a"<<std::endl;
@@ -27,7 +27,7 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 //source utile
 //https://docs.python.org/3/c-api/list.html
 //http://web.mit.edu/people/amliu/vrut/python/ext/buildValue.html
-/*
+
 	/*
 	riviere.getTableau()[i].matiere_.getvitesse()*/
 	cout << "Noyau_c" << endl;
@@ -47,7 +47,8 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	cout << "Noyau_e" << endl;
 	Case tampon;
 	cout << "Noyau_f" << endl;
-	int taille = riviere.getLargeur() * riviere.getLongueur() * riviere.getHauteur();
+	taille = riviere.getLargeur() * riviere.getLongueur() * riviere.getHauteur();
+	std::cout<<"taille avant:"<< taille <<std::endl;
 	for(int w = 0; w < taille; w++){
 		cout << "Noyau_g1" << endl;
 		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
@@ -64,7 +65,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 						cout << "Noyau_i" << endl;
 					}
 					riviere.getTableau()[w].getMatiere().setType("VIDE");
-					if(statut = 1){
+					if(statut == 1){
 						riviere.getTableau()[w] = tampon;
 						statut = 0;
 					}
@@ -93,7 +94,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 								
 								riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())] = riviere.getTableau()[w]; // elle devient cette case
 								riviere.getTableau()[w].getMatiere().getType() = "VIDE";
-						if(statut = 1){
+						if(statut == 1){
 						riviere.getTableau()[w] = tampon;
 						statut = 0;
 						}
@@ -103,9 +104,9 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 							if(riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].getMatiere().getType() == "VIDE"){
 								// il s'agit ici de la case devant(en x) et un cran en dessous(en z)
 								riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())] = riviere.getTableau()[w];
-								riviere.getTableau()[w].getMatiere().getType() == "VIDE"; // la précédente se fait effacer
+								riviere.getTableau()[w].getMatiere().getType() = "VIDE"; // la précédente se fait effacer
 							}
-							if(statut = 1){
+							if(statut == 1){
 								cout << "Noyau_k" << endl;
 							riviere.getTableau()[w] = tampon;
 							statut = 0;
@@ -124,14 +125,15 @@ static PyObject * coord_Xeau(PyObject * self, PyObject * args){
 	cout << "Noyau_e" << endl;
 	PyObject * data_animation = PyList_New(0);
 	//renvoie la position des cases d'eau en x
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	std::cout<<"taille après:"<< taille <<std::endl;
+	for(int w = 0; w < taille; w++){
 		PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
 	}
 	return data_animation;
 }
 static PyObject * coord_Yeau(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getY()));
 		}
@@ -140,7 +142,7 @@ static PyObject * coord_Yeau(PyObject * self, PyObject * args){
 }
 static PyObject * coord_Zeau(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getZ()));
 		}
@@ -149,7 +151,7 @@ static PyObject * coord_Zeau(PyObject * self, PyObject * args){
 }
 static PyObject * coord_Xsol(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "SOL"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
 		}
@@ -158,7 +160,7 @@ static PyObject * coord_Xsol(PyObject * self, PyObject * args){
 }
 static PyObject * coord_Ysol(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "SOL"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getY()));
 		}
@@ -167,7 +169,7 @@ static PyObject * coord_Ysol(PyObject * self, PyObject * args){
 }
 static PyObject * coord_Zsol(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "SOL"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getZ()));
 		}
@@ -176,7 +178,7 @@ static PyObject * coord_Zsol(PyObject * self, PyObject * args){
 }
 static PyObject * coord_Xair(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "AIR"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
 		}
@@ -185,7 +187,7 @@ static PyObject * coord_Xair(PyObject * self, PyObject * args){
 }
 static PyObject * coord_Yair(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille ; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "AIR"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getY()));
 		}
@@ -194,7 +196,7 @@ static PyObject * coord_Yair(PyObject * self, PyObject * args){
 }
 static PyObject * coord_Zair(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "AIR"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getZ()));
 		}

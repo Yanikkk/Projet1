@@ -158,6 +158,9 @@ void Env::initTableau(int hsol, int heau, double pente) {
 	int x = 0;
 	int y = 0;
 	int z = 0;
+	if(pente == 0){
+		cout << "Erreur de pente nulle" << endl;
+	}	
 	int palier_pente = 1/(pente/100.0);
 	//palier_pente = 2;
 	std::cout << "Env2" << std::endl;
@@ -178,6 +181,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		std::cout << "Env3.6" << std::endl;
 		
 		cout  << x << "," << z << "," << y << endl;
+		cout  << tableau_[i].getX() << "," << tableau_[i].getY() << "," << tableau_[i].getZ() << endl;
 		
 		if( ((x % palier_pente == 0) && y == 0) && z == 0){
 			std::cout << "Env3.7" << std::endl;

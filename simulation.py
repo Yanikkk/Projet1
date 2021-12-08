@@ -5,11 +5,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-largeur = 3
-hauteur = 5
+largeur = 10
+hauteur = 10
 longueur = 10
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
+	#1,10,10 marche
 
 #initialise le tableau/environnement
 

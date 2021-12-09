@@ -51,13 +51,15 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	taille = riviere.getLargeur() * riviere.getLongueur() * riviere.getHauteur();
 	//std::cout<<"taille avant:"<< taille <<std::endl;
 	for(int w = 0; w < taille; w++){
+		std::string type = riviere.getTableau()[w].getMatiere()->getType(); // voir si worse et si ailleur
+		double vitesse = riviere.getTableau()[w].getMatiere()->getVitesse()
 		//cout << "Noyau_g1" << endl;
 		//cout << riviere.getTableau()[w].getMatiere().getType() << endl;
-		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+		if(type == "EAU"){
 			//cout << "Noyau_g2" << endl;
-			double seuil =  1/riviere.getTableau()[w].getMatiere()->getVitesse();
+			double seuil =  1/vitesse;
 			if(temps >= seuil){ //soustraire le temps depuis la dernière fois
-				seuil_cumule = seuil_cumule + 1/riviere.getTableau()[w].getMatiere()->getVitesse();
+				seuil_cumule = seuil_cumule + 1/vitesse;
 				seuil = seuil_cumule;
 				//cout << "Noyau_h" << endl;
 				

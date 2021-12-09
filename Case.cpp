@@ -44,7 +44,8 @@ void Case::initMatiere() {
 	
 	
 	//cout<< "case: z : "<<  z_ << endl;
-	//cout<< "case: sol : "<<  env->getH_sol() << endl;
+	cout<< "case: sol : "<<  env << endl;
+	cout<< "case: sol : "<<  env->getH_sol() << endl;
 	if(z_ <= env->getH_sol()) {
 		//std::cout << "sol" << std::endl;
 		// il faut pas mettre dans le conctructeur de sol le fait qu'il prenne l'attribut env et se le donne?

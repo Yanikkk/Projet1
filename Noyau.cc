@@ -131,7 +131,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 }
 
 static PyObject * coord_Xeau(PyObject * self, PyObject * args){
-	riviere.writeCSV();
+	//riviere.writeCSV();
 	//	taille = riviere.getLargeur() * riviere.getLongueur() * riviere.getHauteur();
 	//cout << "Noyau_e" << endl;
 	PyObject * data_animation = PyList_New(0);

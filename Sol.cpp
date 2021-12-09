@@ -7,11 +7,13 @@
 Sol::Sol(Env * env_param, std::string type, int profondeur, double vitesse)
 	:Matiere(env_param, type, vitesse), profondeur_(profondeur) 
 {
+	
+	std::cout << env_param << std::endl;
 	setCouleur();
 }
 
 void Sol::setCouleur() {
-	/*int taille_sol = getEnv2()->getH_sol();
+	int taille_sol = getEnv2()->getH_sol();
 	
 	//remettre constexpr int si on trouve comment mettre c++11 ?
 	int MIN; 
@@ -39,7 +41,7 @@ void Sol::setCouleur() {
 		MAX = 80;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
-	} */
+	} 
 }
 // Pas vraiment faites mais facil une fois que ça marchera pour l'eau casi pareil
 

@@ -21,24 +21,24 @@ void Sol::setCouleur() {
 	std::random_device rd;
     std::default_random_engine eng(rd());
 
-	if (profondeur_ > 0.75*taille_sol) {
-		MIN = 25;
-		MAX = 45;
+	if (taille_sol - profondeur_ < 2) {
+		MIN = 15;
+		MAX = 35;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);	
-	} else if (profondeur_ > 0.5*taille_sol) {
-		MIN = 40;
+	} else if (taille_sol - profondeur_ < 3) {
+		MIN = 30;
+		MAX = 50;
+		std::uniform_int_distribution<int> distr(MIN, MAX);
+		couleur_ = distr(eng);
+	} else if (taille_sol - profondeur_ < 4) {
+		MIN = 45;
 		MAX = 60;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
-	} else if (profondeur_ > 0.25*taille_sol) {
+	} else {
 		MIN = 55;
 		MAX = 70;
-		std::uniform_int_distribution<int> distr(MIN, MAX);
-		couleur_ = distr(eng);
-	} else {
-		MIN = 65;
-		MAX = 80;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
 	} 

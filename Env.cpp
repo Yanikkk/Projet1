@@ -149,7 +149,6 @@ void Env::copy(Env* tampon){
 	pente_ = tampon->getPente();
 	for(int i = 0; i < hauteur_ * largeur_ * longueur_; i++){
 		tableau_[i].env = this;
-		tableau_[i].matiere_->setEnv2(this);
 	}
 	
 }
@@ -167,7 +166,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		pente = pente_;
 	}
 	int grandeur = hauteur_ *longueur_ * largeur_;
-	std::cout << grandeur << std::endl;
+	//std::cout << grandeur << std::endl;
 	int x = 0;
 	int y = 0;
 	int z = 0;
@@ -193,7 +192,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		tableau_[i].setZ(z);
 		//std::cout << "Env3.6" << std::endl;
 		
-		cout  << x << "," << z << "," << y << endl;
+		//cout  << x << "," << z << "," << y << endl;
 	
 		//std::cout << palier_pente << std::endl;
 		if( ((x % palier_pente == 0) && y == 0) && z == 0){

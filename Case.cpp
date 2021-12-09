@@ -40,23 +40,24 @@ void Case::setMatiere(Matiere* a){
 }
 
 void Case::initMatiere() {
-	matiere_->setEnv2(env);
+	std::cout <<  "a" << std::endl;
+	
 	
 	//cout<< "case: z : "<<  z_ << endl;
 	//cout<< "case: sol : "<<  env->getH_sol() << endl;
 	if(z_ <= env->getH_sol()) {
 		//std::cout << "sol" << std::endl;
 		// il faut pas mettre dans le conctructeur de sol le fait qu'il prenne l'attribut env et se le donne?
-		matiere_ = new Sol(matiere_->getEnv2(),"SOL",z_);
+		matiere_ = new Sol(env,"SOL",z_);
 	
 	} else if( z_ <= env->getH_eau()) {
 		//std::cout << "eau" << std::endl;
 		//std::cout << env << std::endl;
 		//std::cout << matiere_.getEnv2() << std::endl;
-		matiere_ = new Eau(matiere_->getEnv2(),"EAU", z_ - env->getH_sol());
+		matiere_ = new Eau(env,"EAU", z_ - env->getH_sol());
 	} else {
 		//std::cout << "air" << std::endl;
-		matiere_ = new Air(matiere_->getEnv2(),"AIR");
+		matiere_ = new Air(env,"AIR");
 	}
 }
 

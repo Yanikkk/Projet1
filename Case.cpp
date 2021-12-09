@@ -35,6 +35,9 @@ int Case::getY() const{
 int Case::getZ() const{
 	return z_;
 }
+void Case::setMatiere(Matiere* a){
+		matiere_ = a;
+}
 
 void Case::initMatiere() {
 	//cout<< "case: z : "<<  z_ << endl;
@@ -42,7 +45,7 @@ void Case::initMatiere() {
 	if(z_ <= env->getH_sol()) {
 		//std::cout << "sol" << std::endl;
 		// il faut pas mettre dans le conctructeur de sol le fait qu'il prenne l'attribut env et se le donne?
-		matiere_ = new Sol(matiere_->getEnv2(),"SOL");
+		matiere_ = new Sol(matiere_->getEnv2(),"SOL",z_);
 	
 	} else if( z_ <= env->getH_eau()) {
 		//std::cout << "eau" << std::endl;

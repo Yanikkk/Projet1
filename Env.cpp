@@ -194,7 +194,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		tableau_[i].setZ(z);
 		//std::cout << "Env3.6" << std::endl;
 		
-		//cout  << x << "," << z << "," << y << endl;
+		cout  << x << "," << z << "," << y << endl;
 	
 		//std::cout << palier_pente << std::endl;
 		if( ((x % palier_pente == 0) && y == 0) && z == 0){

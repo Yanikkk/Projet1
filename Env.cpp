@@ -12,7 +12,7 @@ Env::Env(int largeur, int hauteur, int longueur)
 	tableau_ = new Case[hauteur*largeur*longueur];
 	for(int i = 0; i < hauteur * largeur * longueur; i++){
 		tableau_[i].env = this;
-		tableau_[i].matiere_.setEnv2(this);
+		tableau_[i].matiere_->setEnv2(this);
 	}	
 	pente_ = 0.0; 
 }
@@ -44,9 +44,9 @@ Case* Env::getTableau() const{
 	return tableau_;
 }
 
-Case* Env::creation(int i, Case* tampon){
+Matiere* Env::creation(int i, Matiere* tampon){
 		if(i/(hauteur_*largeur_)== longueur_){
-			tampon = new Case(this->tableau_[i].getX(),this->tableau_[i].getY() ,this->tableau_[i].getZ());
+			tampon = tableau_[i].matiere_;
 			return tampon;
 		}
 		return 0; // arrête la simulation
@@ -58,12 +58,12 @@ void Env::writeCSV(){
 	myfile << "X,Y,Z,Vitesse,Matiere,Surface mouillee riviere\n";
 	for(int i = 0; i< hauteur_ * largeur_ * longueur_; i++){
 	myfile << tableau_[i].getX() <<","<< tableau_[i].getY() << "," << tableau_[i].getZ();
-		if(tableau_[i].matiere_.getType() == "EAU"){
-			myfile <<","<< tableau_[i].matiere_.getVitesse();
+		if(tableau_[i].matiere_->getType() == "EAU"){
+			myfile <<","<< tableau_[i].matiere_->getVitesse();
 		}else{
 			myfile <<", -";
 		}// chaque case 1mx1m => surface en [m^2]
-		myfile << "," << tableau_[i].matiere_.getType()<< "," << largeur_ * (h_eau_ - h_sol_)<< "\n";
+		myfile << "," << tableau_[i].matiere_->getType()<< "," << largeur_ * (h_eau_ - h_sol_)<< "\n";
 	}
 	//mettre string en attribut matière de si "EAU" "SOL" ou "AIR" puis dans python lire ce string et en déduire une couleur
 	myfile.close();
@@ -150,7 +150,7 @@ void Env::copy(Env* tampon){
 	pente_ = tampon->getPente();
 	for(int i = 0; i < hauteur_ * largeur_ * longueur_; i++){
 		tableau_[i].env = this;
-		tableau_[i].matiere_.setEnv2(this);
+		tableau_[i].matiere_->setEnv2(this);
 	}
 	
 }
@@ -211,6 +211,6 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		}
 		
 		//std::cout << this << std::endl;
-		tableau_[i].setMatiere();
+		tableau_[i].initMatiere();
 	}
 }

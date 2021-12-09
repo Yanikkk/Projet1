@@ -46,32 +46,34 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	int hs_dessous = 0;
 	int hs_devant = 0;
 	//cout << "Noyau_e" << endl;
-	Case tampon;
+	Matiere* tampon;
 	//cout << "Noyau_f" << endl;
 	taille = riviere.getLargeur() * riviere.getLongueur() * riviere.getHauteur();
 	//std::cout<<"taille avant:"<< taille <<std::endl;
 	for(int w = 0; w < taille; w++){
 		//cout << "Noyau_g1" << endl;
 		//cout << riviere.getTableau()[w].getMatiere().getType() << endl;
-		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
+		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 			//cout << "Noyau_g2" << endl;
-			double seuil =  1/riviere.getTableau()[w].getMatiere().getVitesse();
+			double seuil =  1/riviere.getTableau()[w].getMatiere()->getVitesse();
 			if(temps >= seuil){ //soustraire le temps depuis la dernière fois
-				seuil_cumule = seuil_cumule + 1/riviere.getTableau()[w].getMatiere().getVitesse();
+				seuil_cumule = seuil_cumule + 1/riviere.getTableau()[w].getMatiere()->getVitesse();
 				seuil = seuil_cumule;
 				//cout << "Noyau_h" << endl;
 				
 				if(w/(riviere.getLargeur()*riviere.getHauteur())-1 < 0){ // si ce sont les cases au bords alors elles sortent et sont effacées
 					
+					// si il ne fait que une case
 					if(riviere.getLongueur() == 1){
-						tampon = *riviere.creation(w, &riviere.getTableau()[w]);
+						tampon = riviere.creation(w, riviere.getTableau()[w].getMatiere());
 						statut = 1;
 						//cout << "Noyau_i" << endl;
 					}
 					
-					riviere.getTableau()[w].getMatiere().setType("VIDE");
-					if(statut == 1){
-						riviere.getTableau()[w] = tampon;
+					delete riviere.getTableau()[w].getMatiere();
+					riviere.getTableau()[w].getMatiere() = nullptr;
+					if(statut == 1){ // lui renvoit la même
+						riviere.getTableau()[w].getMatiere() = &tampon;
 						statut = 0;
 					}
 					
@@ -80,7 +82,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 					//cout << "Noyau_j1" << endl;
 					//vérifie si il ne s'agit pas de la dernière case
 					if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()){
-						tampon = *riviere.creation(w, &riviere.getTableau()[w]);
+						tampon = new *riviere.creation(w, &riviere.getTableau()[w]);
 						statut = 1;
 						//cout << "Noyau_j2" << endl;
 					}
@@ -96,25 +98,25 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 					hs_devant = z;
 					z = 0;
 					// si la case devant elle est vide et que le sol est plat
-					if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere().getType() == "VIDE" && hs_dessous == hs_devant){	
-						riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())] = riviere.getTableau()[w]; // elle devient cette case
-						riviere.getTableau()[w].getMatiere().getType() = "VIDE";
+					if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere() == nullptr && hs_dessous == hs_devant){	
+						riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere() =  &riviere.getTableau()[w].getMatiere(); // elle devient cette matière
+						riviere.getTableau()[w].getMatiere()= nullptr;
 						
 						if(statut == 1){
-							riviere.getTableau()[w] = tampon;
+							riviere.getTableau()[w].getMatiere = &tampon;
 							statut = 0;
 						}
 					}
 					//pour l'instant la seul situation c'est que le sol devant est de une case plus bas alors j'écris ça comme ça
 					if(hs_dessous != hs_devant && 1 == hs_dessous - hs_devant){
-						if(riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].getMatiere().getType() == "VIDE"){
+						if(riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].getMatiere() == nullptr){
 							// il s'agit ici de la case devant(en x) et un cran en dessous(en z)
-							riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())] = riviere.getTableau()[w];
-							riviere.getTableau()[w].getMatiere().getType() = "VIDE"; // la précédente se fait effacer
+							riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].getMatiere() =&riviere.getTableau()[w].getMatiere();
+							riviere.getTableau()[w].getMatiere()= nullptr; // la précédente se fait effacer
 						}
 						if(statut == 1){
 							//cout << "Noyau_k" << endl;
-							riviere.getTableau()[w] = tampon;
+							riviere.getTableau()[w].getMatiere() = &tampon;
 							statut = 0;
 						}
 					}

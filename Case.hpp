@@ -35,8 +35,8 @@ public :
 	/*!
      * @brief Permet de définir la matiere par rapport aux coordonées
      */
-	void setMatiere();
-	Matiere getMatiere() const;
+	void initMatiere();
+	Matiere* getMatiere() const;
 	
 	
 private :
@@ -44,7 +44,7 @@ private :
 	int x_;				///< coordonée x de la case
 	int y_;				///< coordonée y de la case
 	int z_;				///< coordonée z de la case
-	Matiere matiere_; 	///< type de matière dans la case 
+	Matiere* matiere_; 	///< type de matière dans la case 
 	Env* env;			///< l'env auquel appartient la case.
 
 friend class Env;		///< La classe case peut accéder aux attribut privé de Env.

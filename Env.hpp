@@ -74,7 +74,7 @@ public :
 	int getH_sol() const;
 	double getPente() const;
 	Case* getTableau() const;
-	Case* creation(int, Case*);
+	Matiere* creation(int, Matiere*);
 	void copy(Env*);
 	
 private : 

@@ -20,13 +20,13 @@ public :
      *
      * @param .........
      */
-	Sol(Env* env_param = nullptr, std::string type = "SOL", double vitesse = 0.0);
+	Sol(Env* env_param = nullptr, std::string type = "SOL", int profondeur = 0, double vitesse = 0.0);
 	
 	/*void setCouleur() override;*/
 		
 private : 
 
-
+int profondeur_
 }; 
 
 #endif // SOL_HPP

@@ -36,6 +36,7 @@ public :
      * @brief Permet de définir la matiere par rapport aux coordonées
      */
 	void initMatiere();
+	void setMatiere(Matiere*);
 	Matiere* getMatiere() const;
 	
 	

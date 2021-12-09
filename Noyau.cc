@@ -47,31 +47,31 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	int hs_devant = 0;
 	cout << "Noyau_e" << endl;
 	Matiere* tampon;
-	//cout << "Noyau_f" << endl;
+	cout << "Noyau_f" << endl;
 	taille = riviere.getLargeur() * riviere.getLongueur() * riviere.getHauteur();
 	//std::cout<<"taille avant:"<< taille <<std::endl;
 	for(int w = 0; w < taille; w++){
 		std::string type = riviere.getTableau()[w].getMatiere()->getType(); // voir si worse et si ailleur
 		double vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
-		//cout << "Noyau_g1" << endl;
+		cout << "Noyau_g1" << endl;
 		//cout << riviere.getTableau()[w].getMatiere().getType() << endl;
 		if(type == "EAU"){
-			//cout << "Noyau_g2" << endl;
+			cout << "Noyau_g2" << endl;
 			double seuil =  1/vitesse;
 			if(temps >= seuil){ //soustraire le temps depuis la dernière fois
 				seuil_cumule = seuil_cumule + 1/vitesse;
 				seuil = seuil_cumule;
-				//cout << "Noyau_h" << endl;
+				cout << "Noyau_h" << endl;
 				
 				if(w/(riviere.getLargeur()*riviere.getHauteur())-1 < 0){ // si ce sont les cases au bords alors elles sortent et sont effacées
-					
+					cout << "Noyau_i1" << endl;
 					// si il ne fait que une case
 					if(riviere.getLongueur() == 1){
 						tampon = riviere.creation(w, riviere.getTableau()[w].getMatiere());
 						statut = 1;
-						//cout << "Noyau_i" << endl;
+						cout << "Noyau_i2" << endl;
 					}
-					
+					cout << "case enlevée: "<< w << endl;
 					delete riviere.getTableau()[w].getMatiere();
 					riviere.getTableau()[w].setMatiere(nullptr);
 					if(statut == 1){ // lui renvoit la même
@@ -81,52 +81,63 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 					
 				} else {
 					
-					//cout << "Noyau_j1" << endl;
+						cout << "Noyau_j1" << endl;
 					//vérifie si il ne s'agit pas de la dernière case
 					if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()){
+						cout << "Noyau_j2" << endl;
 						tampon = new Matiere(*riviere.creation(w, riviere.getTableau()[w].getMatiere()));
 						statut = 1;
-						//cout << "Noyau_j2" << endl;
+						
 					}
+					cout << "Noyau_j3" << endl;
 					//trouver si la hauteur de sol à la hauteur x et à la hauteur x -1 est la même ou non
+					cout << "case avant while "<< w << endl;
+					cout << z*riviere.getLargeur() << endl;
 					while(riviere.getTableau()[w -z*riviere.getLargeur()].getMatiere()->getType() != "SOL"){
 						z = z+1;
 					}
 					hs_dessous = z;
 					z = 0;
-					while(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- z*riviere.getLargeur()].getMatiere()->getType() != "SOL"){
+					cout << "Noyau_k1" << endl;
+					while(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- z*riviere.getLargeur()].getMatiere() == nullptr){
 						z = z+1;
 					}
 					hs_devant = z;
 					z = 0;
+					cout << "Noyau_k2" << endl;
 					// si la case devant elle est vide et que le sol est plat
 					if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere() == nullptr && hs_dessous == hs_devant){	
 						riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].setMatiere(riviere.getTableau()[w].getMatiere()); // elle devient cette matière
 						riviere.getTableau()[w].setMatiere(nullptr);
-						
+						cout << "case enlevée: "<< w << endl;
 						if(statut == 1){
 							riviere.getTableau()[w].setMatiere(tampon);
 							statut = 0;
+							cout << "Noyau_k3" << endl;
 						}
 					}
 					//pour l'instant la seul situation c'est que le sol devant est de une case plus bas alors j'écris ça comme ça
 					if(hs_dessous != hs_devant && 1 == hs_dessous - hs_devant){
+						cout << "Noyau_L" << endl;
 						if(riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].getMatiere() == nullptr){
 							// il s'agit ici de la case devant(en x) et un cran en dessous(en z)
 							riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].setMatiere(riviere.getTableau()[w].getMatiere());
 							riviere.getTableau()[w].setMatiere(nullptr); // la précédente se fait effacer
+						cout << "Noyau_M" << endl;
 						}
 						if(statut == 1){
-							//cout << "Noyau_k" << endl;
+							
 							riviere.getTableau()[w].setMatiere(tampon);
 							statut = 0;
+							cout << "Noyau_N" << endl;
 						}
 					}
 				}
 			}
 		}
 	}
-    //cout << "Noyau_l" << endl;
+		cout << "Noyau_l" << endl;
+	tampon = nullptr;
 	return Py_BuildValue("i",0);
 }
 

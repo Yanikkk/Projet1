@@ -44,11 +44,9 @@ Case* Env::getTableau() const{
 }
 
 Matiere* Env::creation(int i, Matiere* tampon){
-		if(i/(hauteur_*largeur_)== longueur_){
-			tampon = tableau_[i].matiere_;
-			return tampon;
-		}
-		return 0; // arrête la simulation
+
+	tampon = tableau_[i].matiere_;
+	return tampon;
 }
 
 void Env::writeCSV(){

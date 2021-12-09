@@ -8,13 +8,13 @@ Sol::Sol(Env * env_param, std::string type, int profondeur, double vitesse)
 	:Matiere(env_param, type, vitesse), profondeur_(profondeur) 
 {
 	
-	std::cout << env_param << std::endl;
+	//std::cout << env_param << std::endl;
 	setCouleur();
 }
 
 void Sol::setCouleur() {
 	int taille_sol = getEnv2()->getH_sol();
-	
+	//std::cout << getEnv2()->getH_sol() << std::endl;
 	//remettre constexpr int si on trouve comment mettre c++11 ?
 	int MIN; 
 	int MAX; 

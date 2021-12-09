@@ -208,7 +208,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 			
 		}
 		
-		std::cout << this << std::endl;
+		//std::cout << this << std::endl;
 		
 		tableau_[i].initMatiere();
 	}

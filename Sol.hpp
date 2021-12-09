@@ -4,7 +4,7 @@
 #pragma once
 
 #include "Matiere.hpp"
-
+#include "Env.hpp"
 /*!
  * @class Sol
  * 

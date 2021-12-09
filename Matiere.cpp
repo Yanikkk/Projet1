@@ -12,6 +12,7 @@ Matiere::Matiere(Env* env_param, std::string type, double vitesse)
 	}
 
 void Matiere::setEnv2(Env* env){
+	std::cout << "A"<< std::endl;
 	env2 = env;
 }
 

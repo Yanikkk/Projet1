@@ -40,6 +40,8 @@ void Case::setMatiere(Matiere* a){
 }
 
 void Case::initMatiere() {
+	matiere_->setEnv2(env);
+	
 	//cout<< "case: z : "<<  z_ << endl;
 	//cout<< "case: sol : "<<  env->getH_sol() << endl;
 	if(z_ <= env->getH_sol()) {

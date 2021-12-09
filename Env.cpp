@@ -12,7 +12,6 @@ Env::Env(int largeur, int hauteur, int longueur)
 	tableau_ = new Case[hauteur*largeur*longueur];
 	for(int i = 0; i < hauteur * largeur * longueur; i++){
 		tableau_[i].env = this;
-		tableau_[i].matiere_->setEnv2(this);
 	}	
 	pente_ = 0.0; 
 }

@@ -52,6 +52,7 @@ public :
 	int getCouleur() const; 
 	
 	virtual void setCouleur();
+	virtual ~Matiere(){}
 	
 protected : 
 	

@@ -46,7 +46,7 @@ ax.set_zlim(0,40)
 
 def animation_frame(i):
 	#fait avancer les cases EAU
-	Noyau.ecoulement(i)
+
 	
 	#retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
 	X_eau = Noyau.coord_Xeau()
@@ -71,13 +71,15 @@ def animation_frame(i):
 	ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3, vmin = 0, vmax = 100)
 	ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.002) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
 	ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = 10, alpha=0.2, vmin = 0, vmax = 100)
+	Noyau.ecoulement(i)
+	return ax;
 	# ou cmap = plt.cm.get_cmap("blues", 5) le 5 est la séparation de l'échelle des couleurs
 	# donc pour si on veut des séparation marquée ou tout continue et donc peut être moins flagrant l'avancée mais plus réelle l'avancée
   
 #	print("sim_B")
 #	return ax,
 	
-animation = FuncAnimation(fig, func = animation_frame, frames = np.arange(0, 10, 0.01), interval = 1000, blit = True)
+animation = FuncAnimation(fig, func = animation_frame, frames = np.arange(0, 10, 0.01), interval = 1000)
 print("sim_C")
 #remplacer les couleurs par cmap ou jsais pas quoi qu'on peut transferer dans le csv.
   # cmap = "blues"

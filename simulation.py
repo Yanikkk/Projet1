@@ -35,7 +35,14 @@ Y_eau = []
 Z_eau = []
 #couleur = []
 
+ax.set_title('Belle rivière !')
 
+ax.set_xlabel('Longueur')
+ax.set_xlim(0,40)
+ax.set_ylabel('Largeur')
+ax.set_ylim(-5,25)
+ax.set_zlabel('Hauteur')
+ax.set_zlim(0,40)
 
 def animation_frame(i):
 	#fait avancer les cases EAU
@@ -45,18 +52,17 @@ def animation_frame(i):
 	X_eau = Noyau.coord_Xeau()
 	Y_eau = Noyau.coord_Yeau()
 	Z_eau = Noyau.coord_Zeau()
-	couleur_sol = Noyau.getCouleur_sol()
+	couleur_eau = Noyau.getCouleur_eau()
 
 	X_sol = Noyau.coord_Xsol()
 	Y_sol = Noyau.coord_Ysol()
 	Z_sol = Noyau.coord_Zsol()
-	#couleur_air = Noyau.getCouleur_air() si on fait ?
+	couleur_sol = Noyau.getCouleur_sol()
 
 	X_air = Noyau.coord_Xair()
 	Y_air = Noyau.coord_Yair()
 	Z_air = Noyau.coord_Zair()
-	couleur_eau = Noyau.getCouleur_eau()
-	#print(couleur_eau)
+	#couleur_air = Noyau.getCouleur_air() si on fait ?
 
 	#ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', s = 10, alpha=0.3)
 	#ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.01) #voir comment on fait la couleur de l'air avec l'héritage
@@ -71,17 +77,10 @@ def animation_frame(i):
 #	print("sim_B")
 #	return ax,
 	
-animation = FuncAnimation(fig, func = animation_frame, frames = np.arange(0, 10, 0.01), interval = 1000)
+animation = FuncAnimation(fig, func = animation_frame, frames = np.arange(0, 10, 0.01), interval = 1000, blit = True)
 print("sim_C")
 #remplacer les couleurs par cmap ou jsais pas quoi qu'on peut transferer dans le csv.
   # cmap = "blues"
-ax.set_title('Belle rivière !')
 
-ax.set_xlabel('Longueur')
-ax.set_xlim(0,40)
-ax.set_ylabel('Largeur')
-ax.set_ylim(-5,25)
-ax.set_zlabel('Hauteur')
-ax.set_zlim(0,40)
 
 plt.show()

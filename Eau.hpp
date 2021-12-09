@@ -21,7 +21,7 @@ public :
      *
      * @param ........
      */
-	Eau(Env* env_param = nullptr, std::string type = "EAU", double vitesse = 0.0);
+	Eau(Env* env_param = nullptr, std::string type = "EAU", int profondeur = 0, double vitesse = 0.0);
 	
     /*!
      * @brief utilise la formule de Manning Strickler pour déterminer la vitesse de l'eau
@@ -30,8 +30,10 @@ public :
 	/*double getVitesse() const override;
 	*/
 	
-/*	void setCouleur() override;*/
+	void setCouleur() override;
 private : 
+
+int profondeur_;
 }; 
 
 #endif // EAU_HPP

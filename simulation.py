@@ -5,9 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-largeur = 2
-hauteur = 3
-longueur = 4
+largeur = 20
+hauteur = 30
+longueur = 40
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
 	#1,10,10 marche
@@ -55,16 +55,16 @@ def animation_frame(i):
 	X_air = Noyau.coord_Xair()
 	Y_air = Noyau.coord_Yair()
 	Z_air = Noyau.coord_Zair()
-	#couleur_eau = Noyau.getCouleur_eau()
-	
+	couleur_eau = Noyau.getCouleur_eau()
+	#print(couleur_eau)
 
 	ax.scatter(X_sol, Y_sol, Z_sol, c = 'brown', marker='s', s = 10, alpha=0.3)
-	ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.01) #voir comment on fait la couleur de l'air avec l'héritage
-	ax.scatter(X_eau, Y_eau, Z_eau, c = 'blue', marker='s', s = 10, alpha=0.2)
+	#ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.01) #voir comment on fait la couleur de l'air avec l'héritage
+	#ax.scatter(X_eau, Y_eau, Z_eau, c = 'blue', marker='s', s = 10, alpha=0.2)
 
 	#ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3)
-	#ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.01) #voir comment on fait la couleur de l'air avec l'héritage
-	#ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "blues", marker='s', s = 10, alpha=0.2)
+	ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.002) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
+	ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = 10, alpha=0.2, vmin = 0, vmax = 100)
 	# ou cmap = plt.cm.get_cmap("blues", 5) le 5 est la séparation de l'échelle des couleurs
 	# donc pour si on veut des séparation marquée ou tout continue et donc peut être moins flagrant l'avancée mais plus réelle l'avancée
   

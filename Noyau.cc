@@ -11,7 +11,7 @@ Env riviere(0,0,0);
 int taille = 0;
 
 static PyObject * initialisation(PyObject * self, PyObject * args){
-	std::cout<<"Noyau_a"<<std::endl;
+	//std::cout<<"Noyau_a"<<std::endl;
 	int largeur;
 	int hauteur;
 	int longueur;
@@ -19,7 +19,7 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	Env tampon(largeur, hauteur, longueur);
 	riviere = tampon;
 	riviere.copy(&tampon);
-	std::cout<<"Noyau_b"<<std::endl;
+	//std::cout<<"Noyau_b"<<std::endl;
 	//delete [] tampon.getTableau();
 	riviere.initTableau();
 	/*//riviere.writeCSV();
@@ -31,42 +31,42 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 
 	
 	riviere.getTableau()[i].matiere_.getvitesse()*/
-	cout << "Noyau_c" << endl;
+	//cout << "Noyau_c" << endl;
 	return Py_BuildValue("i",0);
 }
 //fait avancer les cases d'eau
 double seuil_cumule = 0.0;
 static PyObject * ecoulement(PyObject * self, PyObject * args){
 	double temps;
-	cout << "Noyau_d" << endl;
+	//cout << "Noyau_d" << endl;
 	if (! PyArg_ParseTuple(args, "d", &temps)) return NULL;
 	//le nombre de seconde pour que une case d'eau avance de 1 case
 	int statut = 0;
 	int z = 0;
 	int hs_dessous = 0;
 	int hs_devant = 0;
-	cout << "Noyau_e" << endl;
+	//cout << "Noyau_e" << endl;
 	Case tampon;
-	cout << "Noyau_f" << endl;
+	//cout << "Noyau_f" << endl;
 	taille = riviere.getLargeur() * riviere.getLongueur() * riviere.getHauteur();
-	std::cout<<"taille avant:"<< taille <<std::endl;
+	//std::cout<<"taille avant:"<< taille <<std::endl;
 	for(int w = 0; w < taille; w++){
-		cout << "Noyau_g1" << endl;
-		cout << riviere.getTableau()[w].getMatiere().getType() << endl;
+		//cout << "Noyau_g1" << endl;
+		//cout << riviere.getTableau()[w].getMatiere().getType() << endl;
 		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
-			cout << "Noyau_g2" << endl;
+			//cout << "Noyau_g2" << endl;
 			double seuil =  1/riviere.getTableau()[w].getMatiere().getVitesse();
 			if(temps >= seuil){ //soustraire le temps depuis la dernière fois
 				seuil_cumule = seuil_cumule + 1/riviere.getTableau()[w].getMatiere().getVitesse();
 				seuil = seuil_cumule;
-				cout << "Noyau_h" << endl;
+				//cout << "Noyau_h" << endl;
 				
 				if(w/(riviere.getLargeur()*riviere.getHauteur())-1 < 0){ // si ce sont les cases au bords alors elles sortent et sont effacées
 					
 					if(riviere.getLongueur() == 1){
 						tampon = *riviere.creation(w, &riviere.getTableau()[w]);
 						statut = 1;
-						cout << "Noyau_i" << endl;
+						//cout << "Noyau_i" << endl;
 					}
 					
 					riviere.getTableau()[w].getMatiere().setType("VIDE");
@@ -77,12 +77,12 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 					
 				} else {
 					
-					cout << "Noyau_j1" << endl;
+					//cout << "Noyau_j1" << endl;
 					//vérifie si il ne s'agit pas de la dernière case
 					if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()){
 						tampon = *riviere.creation(w, &riviere.getTableau()[w]);
 						statut = 1;
-						cout << "Noyau_j2" << endl;
+						//cout << "Noyau_j2" << endl;
 					}
 					//trouver si la hauteur de sol à la hauteur x et à la hauteur x -1 est la même ou non
 					while(riviere.getTableau()[w -z*riviere.getLargeur()].getMatiere().getType() != "SOL"){
@@ -113,7 +113,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 							riviere.getTableau()[w].getMatiere().getType() = "VIDE"; // la précédente se fait effacer
 						}
 						if(statut == 1){
-							cout << "Noyau_k" << endl;
+							//cout << "Noyau_k" << endl;
 							riviere.getTableau()[w] = tampon;
 							statut = 0;
 						}
@@ -122,14 +122,14 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 			}
 		}
 	}
-    cout << "Noyau_l" << endl;
+    //cout << "Noyau_l" << endl;
 	return Py_BuildValue("i",0);
 }
 
 static PyObject * coord_Xeau(PyObject * self, PyObject * args){
 	riviere.writeCSV();
 	//	taille = riviere.getLargeur() * riviere.getLongueur() * riviere.getHauteur();
-	cout << "Noyau_e" << endl;
+	//cout << "Noyau_e" << endl;
 	PyObject * data_animation = PyList_New(0);
 	//renvoie la position des cases d'eau en x
 	//std::cout<<"taille après:"<< taille <<std::endl;
@@ -213,9 +213,9 @@ static PyObject * coord_Zair(PyObject * self, PyObject * args){
 	}
 	return data_animation;
 }
-/*static PyObject * getCouleur_sol(PyObject * self, PyObject * args){
+static PyObject * getCouleur_sol(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "SOL"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getMatiere().getCouleur()));
 		}
@@ -224,7 +224,7 @@ static PyObject * coord_Zair(PyObject * self, PyObject * args){
 }
 static PyObject * getCouleur_air(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "AIR"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getMatiere().getCouleur()));
 		}
@@ -233,13 +233,13 @@ static PyObject * getCouleur_air(PyObject * self, PyObject * args){
 }
 static PyObject * getCouleur_eau(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < sizeof(riviere.getTableau()); w++){
+	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere().getType() == "EAU"){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getMatiere().getCouleur()));
 		}
 	}
 	return data_animation;
-}*/
+}
 //iii = int int intn
 //liste python marche mais gourmand
 //autre possibilité renvoyer un numpy
@@ -256,9 +256,9 @@ static PyMethodDef methods[] = {
 	{"coord_Xair", coord_Xair, METH_VARARGS, "Les coordonnee x des cases contenant de l air"},
 	{"coord_Yair", coord_Yair, METH_VARARGS, "Les coordonnee y des cases contenant de l air"},
 	{"coord_Zair", coord_Zair, METH_VARARGS, "Les coordonnee z des cases contenant de l air"},
-	//{"getCouleur_sol", getCouleur_sol, METH_VARARGS, "Les couleurs des cases de sol"},
-	//{"getCouleur_air", getCouleur_air, METH_VARARGS, "Les couleurs des cases d'air"},
-	//{"getCouleur_eau", getCouleur_eau, METH_VARARGS, "Les couleurs des cases d'eau"},
+	{"getCouleur_sol", getCouleur_sol, METH_VARARGS, "Les couleurs des cases de sol"},
+	{"getCouleur_air", getCouleur_air, METH_VARARGS, "Les couleurs des cases d'air"},
+	{"getCouleur_eau", getCouleur_eau, METH_VARARGS, "Les couleurs des cases d'eau"},
 	//nom en python, nom en C, comment gérer les arguments(voir internet), description de la fonction(no interest
 	{NULL, NULL, 0, NULL}
 	};

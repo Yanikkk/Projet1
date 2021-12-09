@@ -38,6 +38,7 @@ public :
 	void setMatiere();
 	Matiere getMatiere() const;
 	
+	
 private :
 	
 	int x_;				///< coordonée x de la case

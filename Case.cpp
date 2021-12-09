@@ -46,8 +46,7 @@ void Case::setMatiere() {
 		//std::cout << "eau" << std::endl;
 		//std::cout << env << std::endl;
 		//std::cout << matiere_.getEnv2() << std::endl;
-		matiere_ = Eau(matiere_.getEnv2(),"EAU");
-	
+		matiere_ = Eau(matiere_.getEnv2(),"EAU", z_ - env->getH_sol());
 	} else {
 		//std::cout << "air" << std::endl;
 		matiere_ = Air(matiere_.getEnv2(),"AIR");
@@ -57,3 +56,5 @@ void Case::setMatiere() {
 Matiere Case::getMatiere() const{
 	return matiere_;
 }
+
+

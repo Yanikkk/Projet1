@@ -5,9 +5,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-largeur = 20
-hauteur = 30
-longueur = 40
+largeur = 2
+hauteur = 5
+longueur = 1
+0
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
 	
@@ -145,12 +146,10 @@ def setup_plot():
 	print(X_eau)
 	return scatters
 '''
-'''
+
 def animation_frame(i):
 	#fait avancer les cases EAU
 	
-	
-	print("ok?")
 	Noyau.ecoulement(i)
 	
 	X_eau = Noyau.coord_Xeau()
@@ -173,7 +172,7 @@ def animation_frame(i):
 	scatter_eau._offsets3d = (X_eau, Y_eau, Z_eau)
 	scatter_sol._offsets3d = (X_sol, Y_sol, Z_sol)
 	scatter_air._offsets3d = (X_air, Y_air, Z_air)
-	#scatter_eau.set_facecolor(couleur_eau)
+	scatter_eau.set_array(couleur_eau)
 	scatter_eau.stale = True
 	scatter_sol.stale = True
 	scatter_air.stale = True
@@ -185,10 +184,12 @@ animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.0
 
 
 plt.show()
-'''
 
+'''
 
 for i in range (0, 1000, 1):
 	j= i/100
 	print("ok?")
 	Noyau.ecoulement(j)
+
+'''

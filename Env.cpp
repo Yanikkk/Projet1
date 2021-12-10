@@ -172,7 +172,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		cout << "Erreur de pente nulle" << endl;
 	}	
 	int palier_pente = 1/(pente/100.0);
-	//palier_pente = 2;
+	palier_pente = 2;
 	//std::cout << "Env2" << std::endl;
 	//std::cout << palier_pente << std::endl;
 	for(int i = 0; i < grandeur; i++){
@@ -202,7 +202,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 			heau = heau + 1;
 			h_eau_ = heau;
 			//std::cout << h_sol_ << std::endl;
-			//std::cout << h_eau_ << std::endl;
+			std::cout << "H_eau_:" << h_eau_ << std::endl;
 			
 		}
 		

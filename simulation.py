@@ -5,9 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-largeur = 2
-hauteur = 5
-longueur = 5
+largeur = 20
+hauteur = 30
+longueur = 40
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
 	
@@ -120,7 +120,7 @@ Z_air = Noyau.coord_Zair()
 scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3, vmin = 0, vmax = 100)
 scatter_air = ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.002) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
 scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = 10, alpha=0.2, vmin = 0, vmax = 100)
-
+'''
 def setup_plot():
 	X_eau = Noyau.coord_Xeau()
 	Y_eau = Noyau.coord_Yeau()
@@ -142,11 +142,15 @@ def setup_plot():
 	scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = 10, alpha=0.2, vmin = 0, vmax = 100)
 	
 	scatters = [scatter_sol, scatter_eau, scatter_air]
+	print(X_eau)
 	return scatters
-
+'''
+'''
 def animation_frame(i):
 	#fait avancer les cases EAU
 	
+	
+	print("ok?")
 	Noyau.ecoulement(i)
 	
 	X_eau = Noyau.coord_Xeau()
@@ -154,7 +158,7 @@ def animation_frame(i):
 	Z_eau = Noyau.coord_Zeau()
 	couleur_eau = Noyau.getCouleur_eau()
 	#pas besoin je pense de couleur
-
+	#print(couleur_eau)
 	X_sol = Noyau.coord_Xsol()
 	Y_sol = Noyau.coord_Ysol()
 	Z_sol = Noyau.coord_Zsol()
@@ -169,10 +173,22 @@ def animation_frame(i):
 	scatter_eau._offsets3d = (X_eau, Y_eau, Z_eau)
 	scatter_sol._offsets3d = (X_sol, Y_sol, Z_sol)
 	scatter_air._offsets3d = (X_air, Y_air, Z_air)
+	#scatter_eau.set_facecolor(couleur_eau)
+	scatter_eau.stale = True
+	scatter_sol.stale = True
+	scatter_air.stale = True
 	
 	scatters = [scatter_sol, scatter_eau, scatter_air]
 	return scatters
 
-animation = FuncAnimation(fig, func=animation_frame, init_func=setup_plot, frames=np.arange(0, 10, 0.01), interval=10, blit=True)
-plt.show()
+animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=10, blit=False)
 
+
+plt.show()
+'''
+
+
+for i in range (0, 1000, 1):
+	j= i/100
+	print("ok?")
+	Noyau.ecoulement(j)

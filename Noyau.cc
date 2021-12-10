@@ -86,7 +86,11 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 					
 						cout << "Noyau_j1" << endl;
 					//vérifie si il ne s'agit pas de la dernière case
-					if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()){
+						cout << w << endl;
+						cout << w/(riviere.getLargeur()*riviere.getHauteur() )<<endl;
+						cout << riviere.getLongueur() << endl;
+						
+					if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()-1){
 						cout << "Noyau_j2" << endl;
 						tampon = new Matiere(*riviere.creation(w, riviere.getTableau()[w].getMatiere()));
 						statut = 1;

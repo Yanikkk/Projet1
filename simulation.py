@@ -173,6 +173,6 @@ def animation_frame(i):
 	scatters = [scatter_sol, scatter_eau, scatter_air]
 	return scatters
 
-animation = FuncAnimation(fig, func=animation_frame, init_func=setup_plot, frames=np.arange(0, 10, 0.01), interval=1000, blit=True)
+animation = FuncAnimation(fig, func=animation_frame, init_func=setup_plot, frames=np.arange(0, 10, 0.01), interval=10, blit=True)
 plt.show()
 

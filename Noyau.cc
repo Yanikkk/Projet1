@@ -42,7 +42,10 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	if (! PyArg_ParseTuple(args, "d", &temps)) return NULL;
 	//le nombre de seconde pour que une case d'eau avance de 1 case
 	int statut = 0;
-	int z = 0;
+	int zb = 0;
+	int zd = 0;
+	int state_denivele_b = 0;
+	int state_denivele_d = 0;
 	int hs_dessous = 0;
 	int hs_devant = 0;
 	cout << "Noyau_e" << endl;
@@ -50,18 +53,17 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	cout << "Noyau_f" << endl;
 	taille = riviere.getLargeur() * riviere.getLongueur() * riviere.getHauteur();
 	//std::cout<<"taille avant:"<< taille <<std::endl;
+	cout << "Noyau_h" << endl;
 	for(int w = 0; w < taille; w++){
 		std::string type = riviere.getTableau()[w].getMatiere()->getType(); // voir si worse et si ailleur
 		double vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
 		cout << "Noyau_g1" << endl;
-		//cout << riviere.getTableau()[w].getMatiere().getType() << endl;
 		if(type == "EAU"){
 			cout << "Noyau_g2" << endl;
 			double seuil =  1/vitesse;
 			if(temps >= seuil){ //soustraire le temps depuis la dernière fois
-				seuil_cumule = seuil_cumule + 1/vitesse;
-				seuil = seuil_cumule;
-				cout << "Noyau_h" << endl;
+			seuil_cumule = seuil_cumule + 1/vitesse;
+			seuil = seuil_cumule;
 				
 				if(w/(riviere.getLargeur()*riviere.getHauteur())-1 < 0){ // si ce sont les cases au bords alors elles sortent et sont effacées
 					cout << "Noyau_i1" << endl;
@@ -71,7 +73,8 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 						statut = 1;
 						cout << "Noyau_i2" << endl;
 					}
-					cout << "case enlevée: "<< w << endl;
+					cout << "case enlevée première ligne: "<< w << endl;
+					cout << "type de la case enlevée:" << riviere.getTableau()[w].getMatiere()->getType() << endl;
 					delete riviere.getTableau()[w].getMatiere();
 					riviere.getTableau()[w].setMatiere(nullptr);
 					if(statut == 1){ // lui renvoit la même
@@ -91,25 +94,59 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 					}
 					cout << "Noyau_j3" << endl;
 					//trouver si la hauteur de sol à la hauteur x et à la hauteur x -1 est la même ou non
-					cout << "case avant while "<< w << endl;
-					cout << z*riviere.getLargeur() << endl;
-					while(riviere.getTableau()[w -z*riviere.getLargeur()].getMatiere()->getType() != "SOL"){
-						z = z+1;
+					for(int q = 0; q < riviere.getLargeur()*riviere.getHauteur(); q++){
+						if(state_denivele_b == 0){
+							cout << "Noyau_j4" << endl;
+							if(riviere.getTableau()[w -zb*riviere.getLargeur()].getMatiere() == nullptr){
+								zb = zb+1;
+								cout << "Noyau_j5" << endl;
+								continue;
+							}else if(riviere.getTableau()[w -zb*riviere.getLargeur()].getMatiere()->getType() != "SOL"){
+								zb = zb+1;
+								cout << "Noyau_j6" << endl;
+								continue;
+							}else if(riviere.getTableau()[w -zb*riviere.getLargeur()].getMatiere()->getType() == "SOL"){
+								state_denivele_b = 1;
+								cout << "Noyau_j7" << endl;
+								continue;
+							}
+						}
+						if(state_denivele_d == 0){
+							 cout << "Noyau_jj" << endl;
+							if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- zd*riviere.getLargeur()].getMatiere() == nullptr){
+								zd = zd+1;
+								cout << "Noyau_j8" << endl;
+								continue;
+							}else if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- zd*riviere.getLargeur()].getMatiere()->getType() != "SOL"){
+								zd = zd+1;
+								cout << "Noyau_j9" << endl;
+								continue;
+							}else if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- zd*riviere.getLargeur()].getMatiere()->getType() == "SOL"){
+								state_denivele_d = 1;
+								cout << "Noyau_j10" << endl;
+								continue;
+							}
+							
+						}
+						if(state_denivele_b == 1 && state_denivele_d == 1){
+							cout << "Noyau_j11" << endl;
+							break;
+						}
 					}
-					hs_dessous = z;
-					z = 0;
-					cout << "Noyau_k1" << endl;
-					while(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- z*riviere.getLargeur()].getMatiere() == nullptr){
-						z = z+1;
-					}
-					hs_devant = z;
-					z = 0;
+					state_denivele_b = 0;
+					state_denivele_d = 0;
+					hs_dessous = zb;
+					hs_devant = zd;
+					zb = 0;
+					zd = 0;
 					cout << "Noyau_k2" << endl;
 					// si la case devant elle est vide et que le sol est plat
 					if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere() == nullptr && hs_dessous == hs_devant){	
 						riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].setMatiere(riviere.getTableau()[w].getMatiere()); // elle devient cette matière
-						riviere.getTableau()[w].setMatiere(nullptr);
 						cout << "case enlevée: "<< w << endl;
+						cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+						riviere.getTableau()[w].setMatiere(nullptr);
+						cout << "case remise : " << w - (riviere.getLargeur()*riviere.getHauteur())<< endl;
 						if(statut == 1){
 							riviere.getTableau()[w].setMatiere(tampon);
 							statut = 0;
@@ -122,11 +159,13 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 						if(riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].getMatiere() == nullptr){
 							// il s'agit ici de la case devant(en x) et un cran en dessous(en z)
 							riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].setMatiere(riviere.getTableau()[w].getMatiere());
+							cout << "case enlevée: "<< w << endl;
+							cout << "case remise : " << w - (riviere.getLargeur()*riviere.getHauteur())<< endl;
 							riviere.getTableau()[w].setMatiere(nullptr); // la précédente se fait effacer
 						cout << "Noyau_M" << endl;
 						}
 						if(statut == 1){
-							
+							cout << "case crée à la fin: " << w <<endl;
 							riviere.getTableau()[w].setMatiere(tampon);
 							statut = 0;
 							cout << "Noyau_N" << endl;

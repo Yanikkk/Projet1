@@ -2,3 +2,6 @@ Main
 Main.exe
 debitGraph.png
 river_Data.csv
+*.o
+*.obj
+*.so

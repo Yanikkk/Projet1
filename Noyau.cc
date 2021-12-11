@@ -150,14 +150,16 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 					//		state_depacement = 1
 					cout << "taille:" << taille << endl;
 					cout << w + crossSection  * riviere.getPalier()<< endl;
-					
-					cout << "q: " << q << endl;
+					cout << q << endl;
+					cout << riviere.getTableau()[q].getMatiere()->getType() << endl;
 					double vitesse = riviere.getTableau()[q].getMatiere()->getVitesse();
 					if(riviere.getTableau()[q].getMatiere()->getType() == "EAU"){
 						seuil =  1/vitesse;
 						cout << "b" << endl;
 						cout << seuil << endl;
 						cout << temps<< endl;
+						cout << vitesse << endl;
+						
 							if(temps >= seuil){ //soustraire le temps depuis la dernière fois
 								cout << "c" << endl;
 								seuil_cumule = seuil_cumule + 1/vitesse;
@@ -239,12 +241,10 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 							}
 							
 						}
-				
+					}
 				}
-			}
-		}	
-	}
-	
+			}	
+		}
 }
 
 
@@ -435,7 +435,6 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 
 static PyObject * coord_Xeau(PyObject * self, PyObject * args){
 	//riviere.writeCSV();
-	//cout << "Noyau_e" << endl;
 	PyObject * data_animation = PyList_New(0);
 	//renvoie la position des cases d'eau en x
 	//std::cout<<"taille après:"<< taille <<std::endl;

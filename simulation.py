@@ -5,9 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-largeur = 20
-hauteur = 30
-longueur = 40
+largeur = 2
+hauteur = 5
+longueur = 12
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -103,19 +103,20 @@ Z_eau = []
 #besoin de tout ça ? 
 
 #retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
-X_eau = Noyau.coord_Xeau()
-Y_eau = Noyau.coord_Yeau()
-Z_eau = Noyau.coord_Zeau()
-couleur_eau = Noyau.getCouleur_eau()
+#mettre en np
+X_eau = np.array(Noyau.coord_Xeau())
+Y_eau = np.array(Noyau.coord_Yeau())
+Z_eau = np.array(Noyau.coord_Zeau())
+couleur_eau = np.array(Noyau.getCouleur_eau())
 
-X_sol = Noyau.coord_Xsol()
-Y_sol = Noyau.coord_Ysol()
-Z_sol = Noyau.coord_Zsol()
-couleur_sol = Noyau.getCouleur_sol()
+X_sol = np.array(Noyau.coord_Xsol())
+Y_sol = np.array(Noyau.coord_Ysol())
+Z_sol = np.array(Noyau.coord_Zsol())
+couleur_sol = np.array(Noyau.getCouleur_sol())
 
-X_air = Noyau.coord_Xair()
-Y_air = Noyau.coord_Yair()
-Z_air = Noyau.coord_Zair()
+X_air = np.array(Noyau.coord_Xair())
+Y_air = np.array(Noyau.coord_Yair())
+Z_air = np.array(Noyau.coord_Zair())
 #couleur_air = Noyau.getCouleur_air() si on fait ?
 
 scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3, vmin = 0, vmax = 100)
@@ -159,6 +160,7 @@ def animation_frame(i):
 	couleur_eau = np.array(Noyau.getCouleur_eau())
 	#pas besoin je pense de couleur
 	#print(couleur_eau)
+	
 	X_sol = np.array(Noyau.coord_Xsol())
 	Y_sol = np.array(Noyau.coord_Ysol())
 	Z_sol = np.array(Noyau.coord_Zsol())

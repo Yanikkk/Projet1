@@ -31,6 +31,9 @@ public :
 	*/
 	
 	void setCouleur() override;
+	
+	void setProfondeur(int);
+	
 private : 
 
 int profondeur_;

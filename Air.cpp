@@ -5,9 +5,9 @@
 Air::Air(Env* env_param, std::string type, double vitesse)
 	:Matiere(env_param, type, vitesse)
 {
-	setMeteo();
+	//setMeteo();
 }
-
+/*
 
 void Air::setMeteo() {
 		
@@ -26,3 +26,4 @@ void Air::setMeteo() {
 	}
 	// peut-être pas besoin les == 1
 }
+*/

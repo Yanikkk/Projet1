@@ -36,6 +36,195 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	//cout << "Noyau_c" << endl;
 	return Py_BuildValue("i",0);
 }
+
+void cleanFirstline(int w){
+	cout << "case enlevée: "<< w << endl;
+	cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+	cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+				
+	delete riviere.getTableau()[w].getMatiere();
+	riviere.getTableau()[w].setMatiere(nullptr);
+}
+int calculeProfondeur(int w){
+	int zb = 0;
+	for(int q = 0; q < riviere.getLargeur()*riviere.getHauteur(); q++){
+		
+		if(riviere.getTableau()[w -zb*riviere.getLargeur()].getMatiere() == nullptr){
+			zb = zb+1;
+		}else if(riviere.getTableau()[w -zb*riviere.getLargeur()].getMatiere()->getType() != "SOL"){
+			zb = zb+1;
+		}else if(riviere.getTableau()[w -zb*riviere.getLargeur()].getMatiere()->getType() == "SOL"){
+			break;
+		}
+	}
+	return zb;
+}
+void ecoulementPlat(int w){
+	int crossSection = riviere.getLargeur()*riviere.getHauteur();
+		//si ce sont les premières cases tout devant en x = 0
+		if(w/(crossSection)-1 < 0){
+			cleanFirstline(w);
+		}else{
+			//si les cases devant sont nullptr
+			//alors les matières avancent
+			int prof;
+			if(riviere.getTableau()[w - crossSection].getMatiere() == nullptr){	
+				prof = calculeProfondeur(w - crossSection);
+				riviere.getTableau()[w - crossSection].setMatiere(riviere.getTableau()[w].getMatiere());
+				riviere.getTableau()[w - crossSection].getMatiere()->setProfondeur(prof);
+				cout << "case enlevée: "<< w << endl;
+				cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+				cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+				riviere.getTableau()[w].setMatiere(nullptr);
+				cout << "case remise : " << w - (riviere.getLargeur()*riviere.getHauteur())<< endl;
+				cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;						
+		//vérifie si il ne s'agit pas des dernières cases
+			if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()-1){
+				if(riviere.getTableau()[w].getMatiere() == nullptr){
+					prof = calculeProfondeur(w - crossSection);
+					riviere.getTableau()[w].setMatiere(riviere.creation(w,prof));
+					riviere.getTableau()[w].setMatiere(nullptr);
+					cout << "case remise : " << w << endl;
+					cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
+					cout << " profondeur "<< prof << endl;
+				}
+			}
+			
+			}
+		}
+}
+
+/*
+
+double seuil_cumule = 0.0;
+static PyObject * ecoulement(PyObject * self, PyObject * args){
+	double temps;
+	double seuil;
+	//cout << "Noyau_d" << endl;
+	if (! PyArg_ParseTuple(args, "d", &temps)) return NULL;
+	//le nombre de seconde pour que une case d'eau avance de 1 case
+	int crossSection = riviere.getLargeur() * riviere.getHauteur();	
+	//cas si la rivière est plus petite que un palier
+	//(donc si elle est plate)
+	if(riviere.getPalier() >= taille/crossSection){
+		for(int w = 0; w < taille; w++){
+			int vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				seuil =  1/vitesse;
+				if(temps >= seuil){ //soustraire le temps depuis la dernière fois
+					seuil_cumule = seuil_cumule + 1/vitesse;
+					seuil = seuil_cumule;
+					ecoulementPlat(w);
+				}
+			}
+		}
+	}else{ 
+		//si la rivière à une pente
+		
+		//état de l'attribution au mouvement des cases
+		//état 0 => on traite les cases en première ligne
+		//état 1 => on traite les cases en non situation de débordement
+		//état 2 => se met en place quand il y a un état de dépacement
+	
+		//l'état de dépacement est caractériser par une hauteur de l'eau réel qui sortirai de notre tableau
+		//de simulation
+		//Cela entraîne la nécessité de faire directement "nâitre" certaine cases d'eau sur le dessus de notre simulation.
+		int state = 0;
+		int prof = 0;
+		int state_depacement = 0;
+		int lastcrossSection = 0;
+		int profond_actuelle = 0;
+		int profond_apres = 0;
+		int h_chgmnt_palier = 0;
+		int position = 0;
+		int xprof = 0;
+		int zmax = 0;
+		//faire si le palier ne sépare pas en partie 
+		//finit avec de l'eau 
+		//ou finit avec du sol
+		
+		//si le palier sépare la rivière en partie égale
+		if(taille % riviere.getPalier() == 0){
+			for(int w = 0; w <= taille - crossSection * riviere.getPalier(); w += crossSection * riviere.getPalier()){
+				for(int q = w; q < w+crossSection * riviere.getPalier(); q++){
+		//vérifier état débordement			if(
+			//		state_depacement = 1
+					
+					
+					//pas en état de débordement
+					if(state_depacement == 0){
+						//état 0
+						if((q/(crossSection))-1 < 0 && state == 0){
+							cleanFirstline(w);
+						}
+						if((q/(crossSection))-1 >=0 && state == 0){
+							state = 1;
+						}
+						
+						
+						//état 1
+						//pour toutes les cases du palier sauf la dernière crossSection
+						lastcrossSection = w+crossSection * riviere.getPalier();
+						lastcrossSection = lastcrossSection / crossSection;
+						if(q/(crossSection) < lastcrossSection  && state == 1){
+							ecoulementPlat(q);
+						}
+						//si on est sur la dernière crossSection du palier
+						if(q/(crossSection) == lastcrossSection && state == 1){
+							// les cases de la dernière crossSection qu'il faut encore
+							//transférer à l'avant dernière crossSection sont transféré
+							if(riviere.getTableau()[q].getMatiere() !=nullptr){
+								riviere.getTableau()[q- (crossSection)].setMatiere(riviere.getTableau()[w].getMatiere());
+								prof = calculeProfondeur(q-(crossSection));
+								riviere.getTableau()[q - (crossSection)].getMatiere()->setProfondeur(prof);
+								riviere.getTableau()[q].setMatiere(nullptr);
+							}
+								// si la case sur la dernière crossSection est vide 
+								//(donc on l'a déjà été transféré)
+								if(riviere.getTableau()[q].getMatiere() == nullptr){
+									
+									//si on a atteint la dernière case de la dernière
+									//cross Section du tableau
+									if(q/crossSection == riviere.getLongueur() -1){
+											ecoulementPlat(q);
+									}else{//il reste encore des paliers derrière
+									//on prend la première ligne du prochain palier et on la transmet
+									// à la dernière ligne du palier actuelle
+									//position de la case à transmettre
+							
+									//on calcule la hauteur du changemnent de palier
+									
+									//on a les coord. x de la crossSection en cours
+									//et on a le z max du tableau
+									xprof = q/crossSection;
+									zmax= riviere.getHauteur()-1;
+									// on calcule la distance du sol par rapport à tout en haut
+									profond_actuelle = calculeProfondeur(xprof*crossSection+ zmax*riviere.getLargeur());
+									profond_apres = calculeProfondeur((xprof+1)*crossSection + zmax*riviere.getLargeur());
+									h_chgmnt_palier = profond_apres - profond_actuelle;
+									position = q + h_chgmnt_palier *riviere.getLargeur() + (crossSection);
+									//on transfère cette matière
+									riviere.getTableau()[q].setMatiere(riviere.getTableau()[position].getMatiere());
+									prof = calculeProfondeur(q);
+									riviere.getTableau()[q].getMatiere()->setProfondeur(prof);
+								// et cette matière devient nulle
+									riviere.getTableau()[position].setMatiere(nullptr);
+									}
+								
+						
+								}
+						}
+					}
+					
+				}
+			}
+		}
+
+	}
+}
+
+
+*/
 //fait avancer les cases d'eau
 double seuil_cumule = 0.0;
 static PyObject * ecoulement(PyObject * self, PyObject * args){

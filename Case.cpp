@@ -39,6 +39,11 @@ void Case::setMatiere(Matiere* a){
 		matiere_ = a;
 }
 
+Matiere* Case::creation(int w, int profondeur){	
+	
+	return new Eau(env,"EAU", profondeur);
+}
+
 void Case::initMatiere() {
 	//std::cout <<  "a" << std::endl;
 	

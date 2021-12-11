@@ -71,6 +71,10 @@ void Eau::setCouleur() {
 	} 
 }
 
+void Eau::setProfondeur(int actuelle){
+	profondeur_ =	actuelle;
+}
+
 
 
 

@@ -7,8 +7,8 @@ from matplotlib.animation import FuncAnimation
 
 largeur = 2
 hauteur = 5
-longueur = 1
-0
+longueur = 12
+
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
 	
@@ -180,7 +180,7 @@ def animation_frame(i):
 	scatters = [scatter_sol, scatter_eau, scatter_air]
 	return scatters
 
-animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=10, blit=False)
+animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=100, blit=False)
 
 
 plt.show()

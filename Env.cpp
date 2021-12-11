@@ -6,7 +6,8 @@
 
 Env::Env(int largeur, int hauteur, int longueur)
 	:largeur_(largeur), hauteur_(hauteur), longueur_(longueur)
-{
+{	
+	palier_ = 1;
 	h_sol_ = -1;
 	h_eau_ = 0;
 	tableau_ = new Case[hauteur*largeur*longueur];
@@ -39,14 +40,16 @@ double Env::getPente() const{
 	return pente_;
 }
 
+int Env::getPalier() const{
+	return palier_;
+}
 Case* Env::getTableau() const{
 	return tableau_;
 }
 
-Matiere* Env::creation(int i, Matiere* tampon){
-
-	tampon = tableau_[i].matiere_;
-	return tampon;
+Matiere* Env::creation(int w, int profondeur){
+	
+	return tableau_[w].creation(w,profondeur);
 }
 
 void Env::writeCSV(){
@@ -69,11 +72,11 @@ void Env::writeCSV(){
 
 
 //mettre main sûrement?
-void Env::readCsv(int x, int y, string filename, vector<double*>& data, int colonne, int ligne) { // Mettre dans main ?
+void Env::readCsv(int x, int y, std::string filename, vector<double*>& data, int colonne, int ligne) { // Mettre dans main ?
 
-	ifstream myFile;
+	std::ifstream myFile;
 	myFile.open(filename); // mettre que si pas ouvert erreur
-	string cell;
+	std::string cell;
 	
 	
 	for(int i = 0; i < x * y; i++) {
@@ -119,7 +122,7 @@ void Env::readCsv(int x, int y, string filename, vector<double*>& data, int colo
 	}
 }
 
-void Env::setPenteCsv(string filename) {
+void Env::setPenteCsv(std::string filename) {
 	int x_size = 36;
 	int y_size = 23;
 	vector<double*> data_pente; ///< données csv
@@ -171,8 +174,8 @@ void Env::initTableau(int hsol, int heau, double pente) {
 	if(pente == 0){
 		cout << "Erreur de pente nulle" << endl;
 	}	
-	int palier_pente = 1/(pente/100.0);
-	palier_pente = 2;
+	palier_ = 1/(pente/100.0);
+	palier_ = 400;
 	//std::cout << "Env2" << std::endl;
 	//std::cout << palier_pente << std::endl;
 	for(int i = 0; i < grandeur; i++){
@@ -192,11 +195,11 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		
 		//cout  << x << "," << z << "," << y << endl;
 	
-		//std::cout << palier_pente << std::endl;
-		if( ((x % palier_pente == 0) && y == 0) && z == 0){
-			//std::cout << "Env3.7" << std::endl;
-			//std::cout << h_sol_ << std::endl;
-			//std::cout << h_eau_ << std::endl;
+		//on sait qu'il change de valeurs, mais il garde leur écart relatif
+		// donc on les garde quand même comme attribut
+		//si il ne gardait pas leur écart relatif(pente plus irrégulière), cela n'aurait plus
+		// de sens de les garder en attribut
+		if( ((x % palier_ == 0) && y == 0) && z == 0){
 			hsol = hsol + 1;
 			h_sol_ = hsol;
 			heau = heau + 1;

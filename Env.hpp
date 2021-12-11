@@ -10,10 +10,6 @@
 
 using namespace std;
 
-/*!
- * @class Env
- */
-
 class Env {
 public : 
 
@@ -73,8 +69,9 @@ public :
 	int getH_eau() const;
 	int getH_sol() const;
 	double getPente() const;
+	int getPalier() const;
 	Case* getTableau() const;
-	Matiere* creation(int, Matiere*);
+	Matiere* creation(int, int);
 	void copy(Env*);
 	
 private : 
@@ -85,8 +82,9 @@ private :
 	int h_sol_;			///< hauteur du sol (en cases)
 	int h_eau_;			///< hauteur de l'eau (en cases)
 	double pente_;		///< pente du fond de la rivière 
+	int palier_;
 	Case* tableau_;		///< tableau contenant des pointeurs sur des cases
-
+	
 }; 
 
 #endif // Env_HPP

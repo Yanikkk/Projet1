@@ -37,6 +37,7 @@ public :
      */
 	void initMatiere();
 	void setMatiere(Matiere*);
+	Matiere* creation(int, int);
 	Matiere* getMatiere() const;
 	
 	

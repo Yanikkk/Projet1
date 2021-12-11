@@ -48,6 +48,7 @@ public :
 	
 	virtual double getVitesse() const;
 	// enlever le virtual non ? on a changé
+	virtual void setProfondeur(int);
 	
 	int getCouleur() const; 
 	

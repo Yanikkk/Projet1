@@ -205,7 +205,6 @@ void Env::initTableau(int hsol, int heau, double pente) {
 			heau = heau + 1;
 			h_eau_ = heau;
 			//std::cout << h_sol_ << std::endl;
-			std::cout << "H_eau_:" << h_eau_ << std::endl;
 			
 		}
 		

@@ -5,9 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-largeur = 2
-hauteur = 5
-longueur = 12
+largeur = 20
+hauteur = 30
+longueur = 40
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -151,22 +151,22 @@ def animation_frame(i):
 	#fait avancer les cases EAU
 	
 	Noyau.ecoulement(i)
-	
-	X_eau = Noyau.coord_Xeau()
-	Y_eau = Noyau.coord_Yeau()
-	Z_eau = Noyau.coord_Zeau()
-	couleur_eau = Noyau.getCouleur_eau()
+	np.array
+	X_eau = np.array(Noyau.coord_Xeau())
+	Y_eau = np.array(Noyau.coord_Yeau())
+	Z_eau = np.array(Noyau.coord_Zeau())
+	couleur_eau = np.array(Noyau.getCouleur_eau())
 	#pas besoin je pense de couleur
 	#print(couleur_eau)
-	X_sol = Noyau.coord_Xsol()
-	Y_sol = Noyau.coord_Ysol()
-	Z_sol = Noyau.coord_Zsol()
-	couleur_sol = Noyau.getCouleur_sol()
+	X_sol = np.array(Noyau.coord_Xsol())
+	Y_sol = np.array(Noyau.coord_Ysol())
+	Z_sol = np.array(Noyau.coord_Zsol())
+	couleur_sol = np.array(Noyau.getCouleur_sol())
 	#pas besoin je pense de couleur 
 
-	X_air = Noyau.coord_Xair()
-	Y_air = Noyau.coord_Yair()
-	Z_air = Noyau.coord_Zair()
+	X_air = np.array(Noyau.coord_Xair())
+	Y_air = np.array(Noyau.coord_Yair())
+	Z_air = np.array(Noyau.coord_Zair())
 	#couleur_air = Noyau.getCouleur_air() si on fait ?
 	
 	scatter_eau._offsets3d = (X_eau, Y_eau, Z_eau)
@@ -180,7 +180,7 @@ def animation_frame(i):
 	scatters = [scatter_sol, scatter_eau, scatter_air]
 	return scatters
 
-animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=100, blit=False)
+animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=10, blit=False)
 
 
 plt.show()

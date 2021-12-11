@@ -38,9 +38,9 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 }
 
 void cleanFirstline(int w){
-	cout << "case enlevée: "<< w << endl;
-	cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-	cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+	//cout << "case enlevée: "<< w << endl;
+	//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+	//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 				
 	delete riviere.getTableau()[w].getMatiere();
 	riviere.getTableau()[w].setMatiere(nullptr);
@@ -72,21 +72,21 @@ void ecoulementPlat(int w){
 				prof = calculeProfondeur(w - crossSection);
 				riviere.getTableau()[w - crossSection].setMatiere(riviere.getTableau()[w].getMatiere());
 				riviere.getTableau()[w - crossSection].getMatiere()->setProfondeur(prof);
-				cout << "case enlevée: "<< w << endl;
-				cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-				cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+				//cout << "case enlevée: "<< w << endl;
+				//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+				//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 				riviere.getTableau()[w].setMatiere(nullptr);
-				cout << "case remise : " << w - crossSection<< endl;
-				cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;						
+				//cout << "case remise : " << w - crossSection<< endl;
+				//cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;						
 		//vérifie si il ne s'agit pas des dernières cases
 			if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()-1){
 				if(riviere.getTableau()[w].getMatiere() == nullptr){
 					prof = calculeProfondeur(w - crossSection);
 					riviere.getTableau()[w].setMatiere(riviere.creation(w,prof));
 					//riviere.getTableau()[w].setMatiere(nullptr);
-					cout << "case remise : " << w << endl;
-					cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
-					cout << " profondeur "<< prof << endl;
+					//cout << "case remise : " << w << endl;
+					//cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
+					//cout << " profondeur "<< prof << endl;
 				}
 			}
 			
@@ -108,7 +108,6 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	//(donc si elle est plate)
 	if(riviere.getPalier() >= taille/crossSection){
 		for(int w = 0; w < taille; w++){
-			cout << "pb : "<< w << endl;
 			int vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
 			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 				seuil =  1/vitesse;

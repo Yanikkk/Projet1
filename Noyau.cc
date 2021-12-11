@@ -24,7 +24,9 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	//std::cout<<"Noyau_b"<<std::endl;
 	//delete [] tampon.getTableau();
 	riviere.initTableau();
-	/*//riviere.writeCSV();
+	//riviere.writeCSV();
+	
+	/*
 	//utiliser cette fonction pour écrire un csv à un moment t
 
 //source utile
@@ -33,7 +35,6 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 
 	
 	riviere.getTableau()[i].matiere_.getvitesse()*/
-	//cout << "Noyau_c" << endl;
 	return Py_BuildValue("i",0);
 }
 
@@ -117,7 +118,6 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 			}
 		}
 	}else{ 
-		cout << "a" << endl;
 		//si la rivière à une pente
 		
 		//état de l'attribution au mouvement des cases
@@ -148,20 +148,14 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 				for(int q = w; q < w+crossSection * riviere.getPalier(); q++){
 				//vérifier état débordement			if(
 					//		state_depacement = 1
-					cout << "taille:" << taille << endl;
-					cout << w + crossSection  * riviere.getPalier()<< endl;
-					cout << q << endl;
-					cout << riviere.getTableau()[q].getMatiere()->getType() << endl;
 					double vitesse = riviere.getTableau()[q].getMatiere()->getVitesse();
 					if(riviere.getTableau()[q].getMatiere()->getType() == "EAU"){
 						seuil =  1/vitesse;
-						cout << "b" << endl;
-						cout << seuil << endl;
-						cout << temps<< endl;
-						cout << vitesse << endl;
-						
+						//cout << "b" << endl;
+						//cout << seuil << endl;
+						//cout << temps<< endl;
+						//cout << vitesse << endl;
 							if(temps >= seuil){ //soustraire le temps depuis la dernière fois
-								cout << "c" << endl;
 								seuil_cumule = seuil_cumule + 1/vitesse;
 								seuil = seuil_cumule;
 								
@@ -171,13 +165,11 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 						//état 0	
 									if((q/(crossSection))-1 < 0 && state == 0){
 										cleanFirstline(q);
-										cout << "d" << endl;
 									}
 									if((q/(crossSection))-1 >=0 && state == 0){
 										state = 1;
 									}
-						
-									cout << "e" << endl;
+
 						//état 1
 						//pour toutes les cases du palier sauf la dernière crossSection
 									lastcrossSection = w+crossSection * riviere.getPalier();
@@ -221,16 +213,16 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 												h_chgmnt_palier = profond_apres - profond_actuelle;
 												position = q + h_chgmnt_palier *riviere.getLargeur() + (crossSection);
 									//on transfère cette matière
-												cout << "PALIER" << endl;
-												cout << "case ajoutée : " << q << endl;
-												cout << "couleur de la case ajoutée: "<<riviere.getTableau()[q].getMatiere()->getCouleur()<< endl;	
+												//cout << "PALIER" << endl;
+												//cout << "case ajoutée : " << q << endl;
+												//cout << "couleur de la case ajoutée: "<<riviere.getTableau()[q].getMatiere()->getCouleur()<< endl;	
 												
 												riviere.getTableau()[q].setMatiere(riviere.getTableau()[position].getMatiere());
 												prof = calculeProfondeur(q);
 												riviere.getTableau()[q].getMatiere()->setProfondeur(prof);
 								// et cette matière devient nulle
-												cout << "case enlevée : " << position << endl;
-												cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
+												//cout << "case enlevée : " << position << endl;
+												//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
 												
 												riviere.getTableau()[position].setMatiere(nullptr);
 												}				
@@ -446,6 +438,7 @@ static PyObject * coord_Xeau(PyObject * self, PyObject * args){
 	return data_animation;
 }
 static PyObject * coord_Yeau(PyObject * self, PyObject * args){
+	//riviere.writeCSV();
 	PyObject * data_animation = PyList_New(0);
 	//cout <<"taille verification" << taille << endl;
 	for(int w = 0; w < taille; w++){

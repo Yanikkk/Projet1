@@ -32,7 +32,6 @@ double Matiere::getVitesse() const {
 	return vitesse_;
 }
 void Matiere::setProfondeur(int actuelle){
-	//juste?
 }
 
 int Matiere::getCouleur() const {

@@ -104,6 +104,21 @@ Z_eau = []
 
 #retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
 #mettre en np
+X_eau = Noyau.coord_Xeau()
+Y_eau = Noyau.coord_Yeau()
+Z_eau = Noyau.coord_Zeau()
+couleur_eau = np.array(Noyau.getCouleur_eau())
+
+X_sol = Noyau.coord_Xsol()
+Y_sol = Noyau.coord_Ysol()
+Z_sol = Noyau.coord_Zsol()
+couleur_sol = np.array(Noyau.getCouleur_sol())
+
+X_air = Noyau.coord_Xair()
+Y_air = Noyau.coord_Yair()
+Z_air = Noyau.coord_Zair()
+
+'''
 X_eau = np.array(Noyau.coord_Xeau())
 Y_eau = np.array(Noyau.coord_Yeau())
 Z_eau = np.array(Noyau.coord_Zeau())
@@ -117,6 +132,7 @@ couleur_sol = np.array(Noyau.getCouleur_sol())
 X_air = np.array(Noyau.coord_Xair())
 Y_air = np.array(Noyau.coord_Yair())
 Z_air = np.array(Noyau.coord_Zair())
+'''
 #couleur_air = Noyau.getCouleur_air() si on fait ?
 
 scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3, vmin = 0, vmax = 100)
@@ -188,11 +204,12 @@ animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.0
 
 plt.show()
 
-'''
 
+'''
 for i in range (0, 1000, 1):
 	j= i/100
-	print("ok?")
+	print(j)
 	Noyau.ecoulement(j)
+
 
 '''

@@ -83,7 +83,7 @@ void ecoulementPlat(int w){
 				if(riviere.getTableau()[w].getMatiere() == nullptr){
 					prof = calculeProfondeur(w - crossSection);
 					riviere.getTableau()[w].setMatiere(riviere.creation(w,prof));
-					riviere.getTableau()[w].setMatiere(nullptr);
+					//riviere.getTableau()[w].setMatiere(nullptr);
 					cout << "case remise : " << w << endl;
 					cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
 					cout << " profondeur "<< prof << endl;
@@ -94,7 +94,7 @@ void ecoulementPlat(int w){
 		}
 }
 
-/*
+
 
 double seuil_cumule = 0.0;
 static PyObject * ecoulement(PyObject * self, PyObject * args){
@@ -224,7 +224,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 }
 
 
-*/
+/*
 //fait avancer les cases d'eau
 double seuil_cumule = 0.0;
 static PyObject * ecoulement(PyObject * self, PyObject * args){
@@ -407,6 +407,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	tampon = nullptr;
 	return Py_BuildValue("i",0);
 }
+*/
 
 static PyObject * coord_Xeau(PyObject * self, PyObject * args){
 	//riviere.writeCSV();

@@ -76,7 +76,7 @@ void ecoulementPlat(int w){
 				cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
 				cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 				riviere.getTableau()[w].setMatiere(nullptr);
-				cout << "case remise : " << w - (riviere.getLargeur()*riviere.getHauteur())<< endl;
+				cout << "case remise : " << w - crossSection<< endl;
 				cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;						
 		//vérifie si il ne s'agit pas des dernières cases
 			if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()-1){
@@ -108,6 +108,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	//(donc si elle est plate)
 	if(riviere.getPalier() >= taille/crossSection){
 		for(int w = 0; w < taille; w++){
+			cout << "pb : "<< w << endl;
 			int vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
 			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 				seuil =  1/vitesse;

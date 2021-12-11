@@ -147,11 +147,12 @@ def setup_plot():
 	return scatters
 '''
 
+
+
 def animation_frame(i):
 	#fait avancer les cases EAU
 	
 	Noyau.ecoulement(i)
-	np.array
 	X_eau = np.array(Noyau.coord_Xeau())
 	Y_eau = np.array(Noyau.coord_Yeau())
 	Z_eau = np.array(Noyau.coord_Zeau())
@@ -180,7 +181,7 @@ def animation_frame(i):
 	scatters = [scatter_sol, scatter_eau, scatter_air]
 	return scatters
 
-animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=10, blit=False)
+animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=100, blit=False)
 
 
 plt.show()

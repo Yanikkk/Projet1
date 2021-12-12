@@ -35,7 +35,6 @@ void Matiere::setProfondeur(int actuelle){
 }
 
 int Matiere::getProfondeur() const{
-	std::cout << "lui"<< std::endl;
 	return 0;
 }
 

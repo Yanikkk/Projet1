@@ -175,7 +175,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		cout << "Erreur de pente nulle" << endl;
 	}	
 	palier_ = 1/(pente/100.0);
-	palier_ = 4000;
+	palier_ = 11111;
 	//std::cout << "Env2" << std::endl;
 	//std::cout << palier_pente << std::endl;
 	for(int i = 0; i < grandeur; i++){

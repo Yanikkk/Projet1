@@ -39,9 +39,9 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 }
 
 void cleanFirstline(int w){
-	cout << "case enlevée: "<< w << endl;
-	cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-	cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+	//cout << "case enlevée: "<< w << endl;
+	//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+	//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 				
 	delete riviere.getTableau()[w].getMatiere();
 	riviere.getTableau()[w].setMatiere(nullptr);
@@ -265,7 +265,6 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 												h_chgmnt_palier = profond_actuelle - profond_apres;
 												position = q + h_chgmnt_palier *riviere.getLargeur() + (crossSection);
 									//on transfère cette matière
-												cout << position << endl;
 												//cout << "case ajoutée : " << q << endl;
 												//cout << "couleur de la case ajoutée: "<<riviere.getTableau()[position].getMatiere()->getCouleur()<< endl;	
 												riviere.getTableau()[q].setMatiere(riviere.getTableau()[position].getMatiere());

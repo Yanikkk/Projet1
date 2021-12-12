@@ -172,10 +172,10 @@ void Env::initTableau(int hsol, int heau, double pente) {
 	int y = 0;
 	int z = 0;
 	if(pente == 0){
-		cout << "Erreur de pente nulle" << endl;
+		cout << "Erreur de pente nulle, division infinie" << endl;
 	}	
 	palier_ = 1/(pente/100.0);
-	palier_ = 5;
+	palier_ = 2;
 	//std::cout << "Env2" << std::endl;
 	//std::cout << palier_pente << std::endl;
 	for(int i = 0; i < grandeur; i++){

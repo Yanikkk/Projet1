@@ -20,7 +20,6 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	riviere.copy(&tampon);
 	
 	riviere.initTableau();
-	
 	return Py_BuildValue("i",0);
 }
 
@@ -51,11 +50,11 @@ void ecoulementPlat(int w){
 		if(w/(crossSection)-1 < 0){
 			cleanFirstline(w);
 		}else{
-			int prof;
+			int profondeur;
 			if(riviere.getTableau()[w - crossSection].getMatiere() == nullptr){	
-				prof = calculeProfondeur(w - crossSection);
+				profondeur = calculeProfondeur(w - crossSection);
 				riviere.getTableau()[w - crossSection].setMatiere(riviere.getTableau()[w].getMatiere());
-				riviere.getTableau()[w - crossSection].getMatiere()->setProfondeur(prof);
+				riviere.getTableau()[w - crossSection].getMatiere()->setProfondeur(profondeur);
 				//cout << "case enlevée: "<< w << endl;
 				//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
 				//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
@@ -66,8 +65,8 @@ void ecoulementPlat(int w){
 				//cout << " profondeur transmise "<< riviere.getTableau()[w-crossSection].getMatiere()->getProfondeur() << endl;					
 			if(w/(crossSection) == riviere.getLongueur()-1){
 				if(riviere.getTableau()[w].getMatiere() == nullptr){
-					prof = calculeProfondeur(w);
-					riviere.getTableau()[w].setMatiere(riviere.creation(w,prof));
+					profondeur = calculeProfondeur(w);
+					riviere.getTableau()[w].setMatiere(riviere.creation(w,profondeur));
 					//cout << "case remiseeeee : " << w << endl;
 					//cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
 					//cout << " profondeur "<< prof << endl;
@@ -188,16 +187,25 @@ void parPalier(int q, int w, double temps, double seuil_cumule, int crossSection
 }
 void simulation_non_conforme(int w, int crossSection){
 	int x = w/crossSection;
-	int z = (w -x) / riviere.getLargeur();
+	int z = (w -x * riviere.getLargeur() * riviere.getHauteur()) / riviere.getLargeur();
 	int hauteur_eau = riviere.getH_eau()-riviere.getH_sol();
-	if(z + hauteur_eau > riviere.getHauteur()){
-		cout << "\n\nErreur due a une taille non conforme de la simulation" << endl;
+	if(z - riviere.getTableau()[w].getMatiere()->getProfondeur() + hauteur_eau > riviere.getHauteur()){
+		cout << "\n" << endl;
+		cout << "--------------------------------------------------------------"<< endl;
+		cout << "Erreur due a une taille non-conforme de la simulation" << endl;
 		cout << "Veuillez tenir compte du fait que l'eau ne doit pas deborder" << endl;
-		cout << "Pour rappel voici: \n" << endl;
+		cout << "Pour rappel voici les valeurs actuelles: \n" << endl;
 		cout << "Le palier :" << riviere.getPalier() << endl;
 		cout << "La largeur :" << riviere.getLargeur() << endl;
-		cout << "La longueur :" << riviere.getLongueur() << endl;
 		cout << "La hauteur :" << riviere.getHauteur() << endl;
+		cout << "La longueur :" << riviere.getLongueur() << endl;
+		cout << "\nLa simulation est non conforme car en (x,z) = (" << x << "," << z << "), " << endl;
+		cout << "on a une hauteur d'eau de :" << z - riviere.getTableau()[w].getMatiere()->getProfondeur() + hauteur_eau  << endl;
+		cout << "pour une hauteur totale de tableau de : " << riviere.getHauteur() << endl;
+		
+		cout << "\n\nVeuillez reessayer avec des valeurs conformes" << endl;
+		cout <<"(Ps: par exemple : larg = 20, haut = 30, long = 40)" << endl;
+		cout << "--------------------------------------------------------------"<< endl;
 		exit(0);
 	}
 }
@@ -206,11 +214,12 @@ double seuil_cumule = 0.0;
 static PyObject * ecoulement(PyObject * self, PyObject * args){
 	int crossSection = riviere.getLargeur() * riviere.getHauteur();	
 	for(int w = 0; w < taille; w++){
-	//simulation_non_conforme(w, crossSection);
+		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+			simulation_non_conforme(w, crossSection);
+		}
 	}
 	
 	double temps;
-	double seuil;
 	double vitesse = 0;
 	if (! PyArg_ParseTuple(args, "d", &temps)) return NULL;
 	//le nombre de seconde pour que une case d'eau avance de 1 case
@@ -254,7 +263,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 			if(temps >= seuil_cumule){
 			seuil_cumule = seuil_cumule + 1/vitesse;
 			}	
-	}else{
+	}else{ 
 			/*!
 			* @biref
 			* si la rivière à une pente et si le palier ne sépare pas la rivière en partie égale
@@ -274,9 +283,6 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 				for(int w = taille - caseRestante + crossSection; w < taille; w++){
 					if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 						vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
-						if(seuil_cumule == 0.0){
-							seuil_cumule = seuil_cumule + 1/vitesse;
-						}
 						if(temps >= seuil_cumule){
 							ecoulementPlat(w);
 						}
@@ -286,11 +292,10 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 					for(int w = taille- crossSection; w < taille; w++){
 						if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 							vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
-							if(seuil_cumule == 0.0){
-								seuil_cumule = seuil_cumule + 1/vitesse;
-							}
 							if(temps >= seuil_cumule){
-								ecoulementPlat(w);
+								if(riviere.getTableau()[w].getMatiere() == nullptr){
+										riviere.getTableau()[w].setMatiere(riviere.creation(w, calculeProfondeur(w)));
+								}
 							}
 						}
 					}
@@ -298,7 +303,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 					
 				}
 				if(temps >= seuil_cumule){
-					seuil_cumule = seuil_cumule + 1/vitesse;
+					seuil_cumule = seuil_cumule + 1/vitesse;			
 				}
 			
 		}

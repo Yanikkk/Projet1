@@ -152,7 +152,7 @@ void Env::copy(Env* tampon){
 		tableau_[i].env = this;
 	}
 	
-}
+} 
 
 void Env::initTableau(int hsol, int heau, double pente) {
 	//std::cout << "Env1" << std::endl;
@@ -175,7 +175,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		cout << "Erreur de pente nulle" << endl;
 	}	
 	palier_ = 1/(pente/100.0);
-	palier_ = 11111;
+	palier_ = 5;
 	//std::cout << "Env2" << std::endl;
 	//std::cout << palier_pente << std::endl;
 	for(int i = 0; i < grandeur; i++){

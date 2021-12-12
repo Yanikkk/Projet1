@@ -83,11 +83,11 @@ void ecoulementPalier(int w){
 		if(w/(crossSection)-1 < 0){
 			cleanFirstline(w);
 		}
-			int prof;
+			int profondeur;
 			if(riviere.getTableau()[w - crossSection].getMatiere() == nullptr){	
-				prof = calculeProfondeur(w - crossSection);
+				profondeur = calculeProfondeur(w - crossSection);
 				riviere.getTableau()[w - crossSection].setMatiere(riviere.getTableau()[w].getMatiere());
-				riviere.getTableau()[w - crossSection].getMatiere()->setProfondeur(prof);
+				riviere.getTableau()[w - crossSection].getMatiere()->setProfondeur(profondeur);
 				//cout << "case enlevée: "<< w << endl;
 				//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
 				//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
@@ -100,11 +100,11 @@ void ecoulementPalier(int w){
 			if(w/(crossSection) == riviere.getLongueur()-1){
 
 				if(riviere.getTableau()[w].getMatiere() == nullptr){
-					prof = calculeProfondeur(w);
-					riviere.getTableau()[w].setMatiere(riviere.creation(w,prof));
+					profondeur = calculeProfondeur(w);
+					riviere.getTableau()[w].setMatiere(riviere.creation(w,profondeur));
 					//cout << "case remiseeeee : " << w << endl;
 					//cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
-					//cout << " profondeur "<< prof << endl;
+					//cout << " profondeur "<< profondeur << endl;
 				}
 			}
 			
@@ -121,7 +121,6 @@ void parPalier(int q, int w, double temps, double seuil_cumule, int crossSection
 		int position = 0;
 		int xprof = 0;
 		int zmax = 0;
-					
 					if(riviere.getTableau()[q].getMatiere()->getType() == "EAU"){
 							if(temps >= seuil_cumule){
 						/*!
@@ -145,13 +144,16 @@ void parPalier(int q, int w, double temps, double seuil_cumule, int crossSection
 									if(q/(crossSection) < lastcrossSection  && state == 1){
 										ecoulementPalier(q);
 									}
+									/*!
+									 * concerne la dernière crossSection
+									 * */
 									if(q/(crossSection) == lastcrossSection && state == 1){
 										if(riviere.getTableau()[q].getMatiere() !=nullptr){
 											riviere.getTableau()[q- (crossSection)].setMatiere(riviere.getTableau()[q].getMatiere());
 											profondeur = calculeProfondeur(q-(crossSection));
 											//cout << "case remise : " << q-crossSection << endl;
 											//cout << "couleur de la case remise: "<<riviere.getTableau()[q-crossSection].getMatiere()->getCouleur()<< endl;	
-											//cout << " profondeur calculée "<< prof << endl;
+											//cout << " profondeur calculée "<< profondeur << endl;
 											//cout << " profondeur transmise "<< riviere.getTableau()[q-crossSection].getMatiere()->getProfondeur() << endl;
 											riviere.getTableau()[q - (crossSection)].getMatiere()->setProfondeur(profondeur);
 											//cout << "case enlevée: "<< q << endl;
@@ -177,7 +179,6 @@ void parPalier(int q, int w, double temps, double seuil_cumule, int crossSection
 												riviere.getTableau()[q].getMatiere()->setProfondeur(profondeur);
 												//cout << "case enlevée : " << position << endl;
 												//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
-												//cout << "fincase enlevée : " << position << endl;
 												riviere.getTableau()[position].setMatiere(nullptr);
 												}											
 											}
@@ -258,7 +259,8 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 			* @biref
 			* si la rivière à une pente et si le palier ne sépare pas la rivière en partie égale
 			* */
-			for(int w = 0; w <= taille; w += crossSection * riviere.getPalier()){
+			int caseRestante = taille %(crossSection * (riviere.getPalier()));
+			for(int w = 0; w <= taille - crossSection * riviere.getPalier(); w += crossSection * riviere.getPalier()){
 				for(int q = w; q < w+crossSection * riviere.getPalier(); q++){
 						if(riviere.getTableau()[q].getMatiere() != nullptr && riviere.getTableau()[q].getMatiere()->getType() == "EAU"){
 						vitesse = riviere.getTableau()[q].getMatiere()->getVitesse();
@@ -267,12 +269,9 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 									}
 						}else{ continue;}
 						parPalier(q,w, temps, seuil_cumule, crossSection, vitesse);
-					}
-				
 				}
-			if(1==1){
-				int caseRestante = taille %(crossSection * riviere.getPalier());
-				for(int w = taille - caseRestante; w < taille; w++){
+			}
+				for(int w = taille - caseRestante + crossSection; w < taille; w++){
 					if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 						vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
 						if(seuil_cumule == 0.0){
@@ -283,10 +282,25 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 						}
 					}
 				}
+				if(caseRestante = crossSection){
+					for(int w = taille- crossSection; w < taille; w++){
+						if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+							vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
+							if(seuil_cumule == 0.0){
+								seuil_cumule = seuil_cumule + 1/vitesse;
+							}
+							if(temps >= seuil_cumule){
+								ecoulementPlat(w);
+							}
+						}
+					}
+				
+					
+				}
 				if(temps >= seuil_cumule){
 					seuil_cumule = seuil_cumule + 1/vitesse;
 				}
-			}
+			
 		}
 	return Py_BuildValue("i",0);
 }

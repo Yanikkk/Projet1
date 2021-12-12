@@ -7,7 +7,6 @@
  * @brief pré-déclaration de la Classe Env
 */
 class Env;
-
 /*!
  * @class Matiere
  * 
@@ -48,11 +47,12 @@ public :
 	
 	virtual double getVitesse() const;
 	// enlever le virtual non ? on a changé
-	virtual void setProfondeur(int);
 	
 	int getCouleur() const; 
 	
+	virtual void setProfondeur(int);
 	virtual void setCouleur();
+	virtual int getProfondeur() const;
 	virtual ~Matiere(){}
 	
 protected : 

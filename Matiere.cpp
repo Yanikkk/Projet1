@@ -34,6 +34,11 @@ double Matiere::getVitesse() const {
 void Matiere::setProfondeur(int actuelle){
 }
 
+int Matiere::getProfondeur() const{
+	std::cout << "lui"<< std::endl;
+	return 0;
+}
+
 int Matiere::getCouleur() const {
 	return couleur_;
 }

@@ -39,9 +39,9 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 }
 
 void cleanFirstline(int w){
-	//cout << "case enlevée: "<< w << endl;
-	//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-	//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+	cout << "case enlevée: "<< w << endl;
+	cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+	cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 				
 	delete riviere.getTableau()[w].getMatiere();
 	riviere.getTableau()[w].setMatiere(nullptr);
@@ -76,23 +76,63 @@ void ecoulementPlat(int w){
 				//cout << "case enlevée: "<< w << endl;
 				//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
 				//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+				//cout << " profondeur transmise "<< riviere.getTableau()[w].getMatiere()->getProfondeur() << endl;
 				riviere.getTableau()[w].setMatiere(nullptr);
 				//cout << "case remise : " << w - crossSection<< endl;
-				//cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;						
+				//cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;	
+				//cout << " profondeur transmise "<< riviere.getTableau()[w-crossSection].getMatiere()->getProfondeur() << endl;					
 		//vérifie si il ne s'agit pas des dernières cases
-			if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()-1){
+			if(w/(crossSection) == riviere.getLongueur()-1){
 				if(riviere.getTableau()[w].getMatiere() == nullptr){
-					prof = calculeProfondeur(w - crossSection);
+					prof = calculeProfondeur(w);
 					riviere.getTableau()[w].setMatiere(riviere.creation(w,prof));
-					//cout << "case remise : " << w << endl;
+					//cout << "case remiseeeee : " << w << endl;
+					//cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
+					//cout << " profondeur "<< prof << endl;
+				}
+			}
+		}
+	}
+}
+
+
+void ecoulementPlatPalier(int w){
+	int crossSection = riviere.getLargeur()*riviere.getHauteur();
+		//si ce sont les premières cases tout devant en x = 0
+		if(w/(crossSection)-1 < 0){
+			cleanFirstline(w);
+		}
+			//si les cases devant sont nullptr
+			//alors les matières avancent
+			int prof;
+			if(riviere.getTableau()[w - crossSection].getMatiere() == nullptr){	
+				prof = calculeProfondeur(w - crossSection);
+				riviere.getTableau()[w - crossSection].setMatiere(riviere.getTableau()[w].getMatiere());
+				riviere.getTableau()[w - crossSection].getMatiere()->setProfondeur(prof);
+				//cout << "case enlevée: "<< w << endl;
+				//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+				//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+				//cout << " profondeur transmise "<< riviere.getTableau()[w].getMatiere()->getProfondeur() << endl;
+				riviere.getTableau()[w].setMatiere(nullptr);
+				//cout << "case remise : " << w - crossSection<< endl;
+				//cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;	
+				//cout << " profondeur transmise "<< riviere.getTableau()[w-crossSection].getMatiere()->getProfondeur() << endl;					
+		//vérifie si il ne s'agit pas des dernières cases
+			}
+			if(w/(crossSection) == riviere.getLongueur()-1){
+
+				if(riviere.getTableau()[w].getMatiere() == nullptr){
+					prof = calculeProfondeur(w);
+					riviere.getTableau()[w].setMatiere(riviere.creation(w,prof));
+					//cout << "case remiseeeee : " << w << endl;
 					//cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
 					//cout << " profondeur "<< prof << endl;
 				}
 			}
 			
-			}
-		}
+			
 }
+
 
 
 
@@ -148,18 +188,17 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 				for(int q = w; q < w+crossSection * riviere.getPalier(); q++){
 				//vérifier état débordement			if(
 					//		state_depacement = 1
-					double vitesse = riviere.getTableau()[q].getMatiere()->getVitesse();
+					double vitesse = 0;
+					if(riviere.getTableau()[q].getMatiere() != nullptr){
+						vitesse = riviere.getTableau()[q].getMatiere()->getVitesse();
+					}else{ continue;}
+					
 					if(riviere.getTableau()[q].getMatiere()->getType() == "EAU"){
 						seuil =  1/vitesse;
-						//cout << "b" << endl;
-						//cout << seuil << endl;
-						//cout << temps<< endl;
-						//cout << vitesse << endl;
 							if(temps >= seuil){ //soustraire le temps depuis la dernière fois
 								seuil_cumule = seuil_cumule + 1/vitesse;
 								seuil = seuil_cumule;
 								
-					
 					//pas en état de dépacement
 								if(state_depacement == 0){
 						//état 0	
@@ -171,32 +210,39 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 									}
 
 						//état 1
-						//pour toutes les cases du palier sauf la dernière crossSection
+						//concerne toutes les cases du palier sauf la dernière crossSection
 									lastcrossSection = w+crossSection * riviere.getPalier();
-									lastcrossSection = lastcrossSection / crossSection;
+									lastcrossSection = lastcrossSection / crossSection -1;
 									if(q/(crossSection) < lastcrossSection  && state == 1){
-										ecoulementPlat(q);
+										ecoulementPlatPalier(q);
 									}
 						//si on est sur la dernière crossSection du palier
 								if(q/(crossSection) == lastcrossSection && state == 1){
 							// les cases de la dernière crossSection qu'il faut encore
 							//transférer à l'avant dernière crossSection sont transféré
 										if(riviere.getTableau()[q].getMatiere() !=nullptr){
-											riviere.getTableau()[q- (crossSection)].setMatiere(riviere.getTableau()[w].getMatiere());
+											riviere.getTableau()[q- (crossSection)].setMatiere(riviere.getTableau()[q].getMatiere());
 											prof = calculeProfondeur(q-(crossSection));
+											//cout << "case remise : " << q-crossSection << endl;
+											//cout << "couleur de la case remise: "<<riviere.getTableau()[q-crossSection].getMatiere()->getCouleur()<< endl;	
+											//cout << " profondeur calculée "<< prof << endl;
+											//cout << " profondeur transmise "<< riviere.getTableau()[q-crossSection].getMatiere()->getProfondeur() << endl;
 											riviere.getTableau()[q - (crossSection)].getMatiere()->setProfondeur(prof);
+											//cout << "case enlevée: "<< q << endl;
+											//cout << "couleur de la case enlevée: "<<riviere.getTableau()[q].getMatiere()->getCouleur()<< endl;
+											//cout <<"type de la case enelvée: " << riviere.getTableau()[q].getMatiere()->getType() << endl;
+				
 											riviere.getTableau()[q].setMatiere(nullptr);
 										}
 								// si la case sur la dernière crossSection est vide 
-								//(donc on l'a déjà été transféré)
-											cout << "envoit" << endl;
+								//(donc a déjà été transféré)
 											if(riviere.getTableau()[q].getMatiere() == nullptr){
-											cout << "rep" << endl;
 									//si on a atteint la dernière case de la dernière
 									//cross Section du tableau
 												if(q/crossSection == riviere.getLongueur() -1){
-														ecoulementPlat(q);
-												}else{//il reste encore des paliers derrière
+														ecoulementPlatPalier(q);
+												}
+												if(q/crossSection != riviere.getLongueur() -1){//il reste encore des paliers derrière
 									//on prend la première ligne du prochain palier et on la transmet
 									// à la dernière ligne du palier actuelle
 									//position de la case à transmettre
@@ -206,26 +252,34 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 									//on a les coord. x de la crossSection en cours
 									//et on a le z max du tableau
 												xprof = q/crossSection;
-												zmax= riviere.getHauteur()-1;
+												zmax= riviere.getHauteur();
+												//cout << "xprof : " << xprof  << endl;
+												//cout << "zmax " << 	zmax << endl;
 									// on calcule la distance du sol par rapport à tout en haut
-												profond_actuelle = calculeProfondeur(xprof*crossSection+ zmax*riviere.getLargeur());
-												profond_apres = calculeProfondeur((xprof+1)*crossSection + zmax*riviere.getLargeur());
-												h_chgmnt_palier = profond_apres - profond_actuelle;
+												//cout << xprof*crossSection+ zmax*riviere.getLargeur() -1 << endl;
+												//cout << (xprof+1)*crossSection + zmax*riviere.getLargeur()-1 << endl;
+												profond_actuelle = calculeProfondeur(xprof*crossSection+ zmax*riviere.getLargeur()-1);
+												profond_apres = calculeProfondeur((xprof+1)*crossSection + zmax*riviere.getLargeur()-1);
+												//cout << "profondeur actuelle: " << profond_actuelle << endl;
+												//cout << "pprofond_apres " << profond_apres << endl;
+												h_chgmnt_palier = profond_actuelle - profond_apres;
 												position = q + h_chgmnt_palier *riviere.getLargeur() + (crossSection);
 									//on transfère cette matière
-												//cout << "PALIER" << endl;
+												cout << position << endl;
 												//cout << "case ajoutée : " << q << endl;
-												//cout << "couleur de la case ajoutée: "<<riviere.getTableau()[q].getMatiere()->getCouleur()<< endl;	
-												
+												//cout << "couleur de la case ajoutée: "<<riviere.getTableau()[position].getMatiere()->getCouleur()<< endl;	
 												riviere.getTableau()[q].setMatiere(riviere.getTableau()[position].getMatiere());
 												prof = calculeProfondeur(q);
 												riviere.getTableau()[q].getMatiere()->setProfondeur(prof);
 								// et cette matière devient nulle
 												//cout << "case enlevée : " << position << endl;
 												//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
-												
+												//cout << "fincase enlevée : " << position << endl;
 												riviere.getTableau()[position].setMatiere(nullptr);
-												}				
+												//si on a atteint la dernière case de la dernière
+									//cross Section du tableau
+				
+												}											
 											}
 									}
 								}
@@ -237,193 +291,8 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 				}
 			}	
 		}
-}
-
-
-/*
-//fait avancer les cases d'eau
-double seuil_cumule = 0.0;
-static PyObject * ecoulement(PyObject * self, PyObject * args){
-	double temps;
-	//cout << "Noyau_d" << endl;
-	if (! PyArg_ParseTuple(args, "d", &temps)) return NULL;
-	//le nombre de seconde pour que une case d'eau avance de 1 case
-	int statut_debordement = 0;
-	int statut = 0;
-	int zb = 0;
-	int zd = 0;
-	int state_denivele_b = 0;
-	int state_denivele_d = 0;
-	int hs_dessous = 0;
-	int hs_devant = 0;
-	//cout << "Noyau_e" << endl;
-	Matiere* tampon;
-	//cout << "Noyau_f" << endl;
-	//cout << "Noyau_h" << endl;
-	for(int w = 0; w < taille; w++){
-		std::string type = riviere.getTableau()[w].getMatiere()->getType(); // voir si worse et si ailleur
-		double vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
-		cout << "Noyau_g1" << endl;
-		if(type == "EAU"){
-			cout << "Noyau_g2" << endl;
-			double seuil =  1/vitesse;
-			if(temps >= seuil){ //soustraire le temps depuis la dernière fois
-			seuil_cumule = seuil_cumule + 1/vitesse;
-			seuil = seuil_cumule;
-				
-				if(w/(riviere.getLargeur()*riviere.getHauteur())-1 < 0){ // si ce sont les cases au bords alors elles sortent et sont effacées
-					cout << "Noyau_i1" << endl;
-					// si il ne fait que une case
-					if(riviere.getLongueur() == 1){
-						tampon = riviere.creation(w, riviere.getTableau()[w].getMatiere());
-						statut = 1;
-						//cout << "Noyau_i2" << endl;
-					}
-					
-					cout << "case enlevée première ligne: "<< w << endl;
-					cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-					cout << "type de la case enlevée:" << riviere.getTableau()[w].getMatiere()->getType() << endl;
-					delete riviere.getTableau()[w].getMatiere();
-					riviere.getTableau()[w].setMatiere(nullptr);
-					if(statut == 1){ // lui renvoit la même
-						riviere.getTableau()[w].setMatiere(tampon);
-						statut = 0;
-					}
-					
-				} else { // si c'est pas des caes qui sont toutes devant tu rentres la dedans
-					
-						cout << "Noyau_j1" << endl;
-					//vérifie si il ne s'agit pas de la dernière case
-					if(w/(riviere.getLargeur()*riviere.getHauteur()) == riviere.getLongueur()-1){
-						cout << "Noyau_j2" << endl;
-						tampon = new Eau(riviere.getTableau()[w].getMatiere()->getEnv2(),"EAU", riviere.getTableau()[w].getZ() - riviere.getH_sol());
-						statut = 1;
-					}
-					//si il reste une case d'eau en haut mais pas au bord du tableau	
-					cout << "Noyau_j3" << endl;
-					//trouver si la hauteur de sol à la hauteur x et à la hauteur x -1 est la même ou non
-					for(int q = 0; q < riviere.getLargeur()*riviere.getHauteur(); q++){
-						if(state_denivele_b == 0){
-							//cout << "Noyau_j4" << endl;
-							if(riviere.getTableau()[w -zb*riviere.getLargeur()].getMatiere() == nullptr){
-								zb = zb+1;
-								cout << "Noyau_j5" << endl;
-								continue;
-							}else if(riviere.getTableau()[w -zb*riviere.getLargeur()].getMatiere()->getType() != "SOL"){
-								zb = zb+1;
-								cout << "Noyau_j6" << endl;
-								continue;
-							}else if(riviere.getTableau()[w -zb*riviere.getLargeur()].getMatiere()->getType() == "SOL"){
-								state_denivele_b = 1;
-								//cout << "Noyau_j7" << endl;
-								continue;
-							}
-						}
-						if(state_denivele_d == 0){
-							 //cout << "Noyau_jj" << endl;
-							if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- zd*riviere.getLargeur()].getMatiere() == nullptr){
-								zd = zd+1;
-								//cout << "Noyau_j8" << endl;
-								continue;
-							}else if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- zd*riviere.getLargeur()].getMatiere()->getType() != "SOL"){
-								zd = zd+1;
-								//cout << "Noyau_j9" << endl;
-								continue;
-							}else if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())- zd*riviere.getLargeur()].getMatiere()->getType() == "SOL"){
-								state_denivele_d = 1;
-								//cout << "Noyau_j10" << endl;
-								continue;
-							}
-							
-						}
-						if(state_denivele_b == 1 && state_denivele_d == 1){
-							//cout << "Noyau_j11" << endl;
-							break;
-						}
-					}
-					state_denivele_b = 0;
-					state_denivele_d = 0;
-					cout << "case 24:" << w << endl;
-					cout << hs_dessous << endl;
-					cout << hs_devant << endl;
-					hs_dessous = zb;
-					hs_devant = zd;
-					zb = 0;
-					zd = 0;
-					cout << "Noyau_k2" << endl;
-					cout << w << endl;
-					cout << (w - (w/(riviere.getLargeur() *riviere.getHauteur()))*riviere.getLargeur() * riviere.getHauteur())/riviere.getLargeur() << endl;
-					int zbis = (w - (w/(riviere.getLargeur() *riviere.getHauteur()))*riviere.getLargeur() * riviere.getHauteur())/riviere.getLargeur();
-					cout << riviere.getHauteur() << endl;
-					cout << hs_dessous << endl;
-					//vérifie que la case est tout en haut et que elle est de profondeur 1
-					if((zbis == (riviere.getHauteur() -1)) && (hs_dessous == 1)){
-						//vérifie qu'elle pas tout au bord au fond, sinon déjà tampon créer
-						if(w/(riviere.getLargeur()*riviere.getHauteur()) != riviere.getLongueur()-1){
-							//vérifie que derrière il y a bien du sol et que du coup elle doit nâitre
-							if(riviere.getTableau()[w+riviere.getHauteur()*riviere.getLargeur()].getMatiere()->getType() == "SOL"){
-								
-								cout << "a"<< endl;
-								tampon = new Eau(riviere.getTableau()[w].getMatiere()->getEnv2(),"EAU", riviere.getTableau()[w].getZ() - riviere.getH_sol());
-								statut = 1;
-							}	
-						}
-					}
-					//si il s'agit de la dernière case d'eau au bord du haut (idée fonction vérifie haut)
-					//if((zbis == (riviere.getHauteur() -1) && (
-					// si la case devant elle est vide et que le sol est plat
-					if(riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere() == nullptr && hs_dessous == hs_devant){	
-						riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].setMatiere(riviere.getTableau()[w].getMatiere()); // elle devient cette matière
-						cout << "case enlevée: "<< w << endl;
-						cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-						cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
-						riviere.getTableau()[w].setMatiere(nullptr);
-						cout << "case remise : " << w - (riviere.getLargeur()*riviere.getHauteur())<< endl;
-						cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;
-						if(statut == 1){
-							if(riviere.getTableau()[w].getMatiere() !=nullptr){
-							cout <<"Erreur de ecoulement" << endl;
-							}
-							cout << "case crée à la fin: " << w <<endl;
-							riviere.getTableau()[w].setMatiere(tampon);
-							statut = 0;
-							cout << "Noyau_k3" << endl;
-						}
-						//if(statut_debordement ==1)
-					}
-					//pour l'instant la seul situation c'est que le sol devant est de une case plus bas alors j'écris ça comme ça
-					if(hs_dessous != hs_devant && 1 == hs_devant -hs_dessous){
-						cout << "Noyau_L" << endl;
-						if(riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].getMatiere() == nullptr){
-							// il s'agit ici de la case devant(en x) et un cran en dessous(en z)
-							riviere.getTableau()[w - riviere.getLargeur() - (riviere.getLargeur()*riviere.getHauteur())].setMatiere(riviere.getTableau()[w].getMatiere());
-							cout << "case enlevée: "<< w << endl;
-							cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur() << endl;
-							cout << "case remise : " << w - riviere.getLargeur()-(riviere.getLargeur()*riviere.getHauteur())<< endl;
-							cout << "couleur de la case remise: "<<riviere.getTableau()[w -riviere.getLargeur()- (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;
-							riviere.getTableau()[w].setMatiere(nullptr); // la précédente se fait effacer
-						cout << "Noyau_M" << endl;
-						}
-						if(statut == 1){
-							if(riviere.getTableau()[w].getMatiere() !=nullptr){
-							cout <<"Erreur de ecoulement" << endl;
-							}
-							cout << "case crée à la fin: " << w <<endl;
-							riviere.getTableau()[w].setMatiere(tampon);
-							statut = 0;
-							cout << "Noyau_N" << endl;
-						}
-						//if(statut_debordenement ==1)
-					}
-				}
-			}
-		}
-	}
-		//cout << "Noyau_l" << endl;
-	tampon = nullptr;
 	return Py_BuildValue("i",0);
 }
-*/
 
 static PyObject * coord_Xeau(PyObject * self, PyObject * args){
 	//riviere.writeCSV();

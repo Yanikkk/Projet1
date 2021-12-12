@@ -7,7 +7,7 @@ Matiere::Matiere(Env* env_param, std::string type, double vitesse)
 		:env2(env_param), type_(type), vitesse_(vitesse)
 	{
 		
-		//setCouleur(); // voir pour qu'il appelle setCouleur de la bonne sous-classe...
+		setCouleur(); // voir pour qu'il appelle setCouleur de la bonne sous-classe...
 		//Comme le constructeur de matiere est appelé dans celui de chaque matière et que setCouleur est virtual, la couleur sera set avec la fonction setCouleur de la matière (si redéfinie).
 	}
 
@@ -44,7 +44,7 @@ int Matiere::getCouleur() const {
 
 void Matiere::setCouleur() {
 	//std::cout << "setCouleur de matiere" << std::endl;
-	couleur_ = 0;
+	couleur_ = 35;
 	// voir ce qu'on met par défaut -> dans notre cas c'est l'air qui va utiliser celle la.
 	//Mais ducoup faut associer une cmap à l'air sinon pas de sens.
 	// A voir comment on défini la couleur en général.

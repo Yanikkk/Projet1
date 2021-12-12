@@ -30,9 +30,9 @@ public :
 	/*double getVitesse() const override;
 	*/
 	
-	virtual void setCouleur() override;
-	virtual int getProfondeur() const override;
-	virtual void setProfondeur(int)override;
+	void setCouleur() override;
+	int getProfondeur() const override;
+	void setProfondeur(int)override;
 	
 private : 
 

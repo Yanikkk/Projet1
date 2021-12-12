@@ -5,24 +5,22 @@
 Air::Air(Env* env_param, std::string type, double vitesse)
 	:Matiere(env_param, type, vitesse)
 {
-	//setMeteo();
+	//setCouleur();
 }
+
 /*
+void Air::setCouleur() {
 
-void Air::setMeteo() {
-		
-	meteo_ = "sky";
-
-	if ((GetKeyState(112) & 0x8000) == 1) { // p
-		meteo_ = "pluie";	
-	} else if ((GetKeyState(98) & 0x8000) == 1) { // b 
-		meteo = "brouillard";
-	} else if ((GetKeyState(110) & 0x8000) == 1) { // n
-		meteo = "nuit";
-	} else if ((GetKeyState(114) & 0x8000) == 1) { // r
-		meteo = "sunrise";
-	} else if ((GetKeyState(115) & 0x8000) == 1) { // s
-		meteo = "sunset";
+	if ((GetKeyState(112) & 0x8000) == 1) { // p luie
+		couleur_ = 15;	
+	} else if ((GetKeyState(98) & 0x8000) == 1) { // b rouillard
+		couleur_ = 100;
+	} else if ((GetKeyState(110) & 0x8000) == 1) { // n uit
+		couleur_ = 0;
+	} else if ((GetKeyState(114) & 0x8000) == 1) { // sun r ise
+		couleur_ = 90;
+	} else if ((GetKeyState(115) & 0x8000) == 1) { // sun s et
+		couleur_ = 75;
 	}
 	// peut-être pas besoin les == 1
 }

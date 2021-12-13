@@ -107,7 +107,8 @@ def change_meteo():
 def animation_frame(i):
 	#fait avancer les cases EAU
 	
-	#Noyau.ecoulement(i, pollution_state)
+	#Noyau.pollution(pollution_state)
+	
 	Noyau.ecoulement(i)
 	change_meteo()
 	X_eau = np.array(Noyau.coord_X("EAU"))

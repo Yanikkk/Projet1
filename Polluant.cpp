@@ -42,8 +42,8 @@ double Polluant::getDilution() const {
 	return etat_dilution_;
 } 
 
-double Polluant::getFacteurDilution() const {
-	return facteur_dilution_;
+double Polluant::getCoeffDispersion() const {
+	return coeff_dispersion_;
 } 
 
 std::string Polluant::getNom() const {

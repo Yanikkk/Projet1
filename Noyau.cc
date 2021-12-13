@@ -45,6 +45,7 @@ int calculeProfondeur(int w){
 	}
 	return zb;
 }
+
 void ecoulementPlat(int w){
 	int crossSection = riviere.getLargeur()*riviere.getHauteur();
 		if(w/(crossSection)-1 < 0){
@@ -388,6 +389,31 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 		}
 	return Py_BuildValue("i",0);
 }
+
+static PyObject * pollution(PyObject * self, PyObject * args){
+	int pollution_state;
+	if (! PyArg_ParseTuple(args, "i", &pollution_state)) return NULL;
+	
+	int z_maxEau = 0;
+	int xmax = riviere.getLongueur()-1;
+	//cas du Fer par exemple
+	if(pollution_state == 1){
+		for(int w = taille -1; w >= taille - (riviere.getLargeur*getLongueur()) taille; w--){
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				z_maxEau = (w -xmax*riviere.getLargeur() * riviere.getHauteur())/riviere.getLargeur();
+				break;
+			}
+		}
+		//génère un nombre sur la dernière ligne d'eau de la dernière crossSection de la simulation
+		w = rand() % (get.Largeur()-1) + taille - (getHauteur()-1- zmax) * getLargeur(); 
+		//riviere.getTableau()[w].getMatiere()->setPolluant("fer",)
+	}
+	
+	
+	
+return Py_BuildValue("i",0);
+}
+
 
 static PyObject * coord_X(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);

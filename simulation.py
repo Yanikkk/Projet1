@@ -31,6 +31,10 @@ ax.set_ylim(-5,25)
 ax.set_zlabel('Hauteur')
 ax.set_zlim(0,40)
 
+textstr = ' Arrêt/Marche : Espace\n\n up : augmente la taille\n des cases\n down : diminue la taille\n des cases\n\n changer la météo : \n\n j = jour (par défaut)\n n = nuit\n b = brouillard\n p = pluie\n r = sunrise\n s = sunset\n w = rainbow\n'
+plt.figtext(0, 0, textstr, fontsize = 8)
+#plt.grid(True)
+
 #retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
 X_eau = np.array(Noyau.coord_X("EAU"))
 Y_eau = np.array(Noyau.coord_Y("EAU"))
@@ -47,9 +51,28 @@ Y_air = np.array(Noyau.coord_Y("AIR"))
 Z_air = np.array(Noyau.coord_Z("AIR"))
 couleur_air = np.array(Noyau.getCouleur_air())
 
-scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3, vmin = 0, vmax = 100)
-scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", marker='s', s = 10, alpha=0.005, vmin = 0, vmax = 100) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
-scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = 10, alpha=0.2, vmin = 0, vmax = 100)
+size_case = 30
+s_sol = []
+for i in range(len(X_sol)) : 
+	s_sol.append(size_case)
+S_sol = np.array(s_sol)
+s_sol.clear()
+
+s_eau = []
+for i in range(len(X_eau)) : 
+	s_eau.append(size_case)
+S_eau = np.array(s_eau)
+s_eau.clear()
+
+s_air = []
+for i in range(len(X_air)) : 
+	s_air.append(size_case)
+S_air = np.array(s_air)
+s_air.clear()
+
+scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = S_sol, alpha=0.3, vmin = 0, vmax = 100)
+scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", marker='s', s = S_air, alpha=0.005, vmin = 0, vmax = 100) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
+scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = S_eau, alpha=0.2, vmin = 0, vmax = 100)
 '''
 def setup_plot():
 	X_eau = Noyau.coord_Xeau()
@@ -77,6 +100,9 @@ def setup_plot():
 '''
 
 def change_meteo():
+	if keyboard.is_pressed('j'): #jour (de base)
+		for i in range(len(couleur_air)): 
+			couleur_air[i] = 35 
 	if keyboard.is_pressed('p'): #pluie
 		for i in range(len(couleur_air)): 
 			couleur_air[i] = 15
@@ -103,18 +129,39 @@ def change_meteo():
 			compteur += 1
 			couleur_air[i] = j
 #pollution_state = 0	
-
+'''
+def change_taille():
+	global size_case
+	if keyboard.is_pressed('up') : 
+		size_case += 10
+		for i in range(len(S_sol)) : 
+			S_sol[i] = size_case 
+		for i in range(len(S_eau)) : 
+			S_eau[i] = size_case 
+		for i in range(len(S_air)) : 
+			S_air[i] = size_case 
+	if keyboard.is_pressed('down') and size_case >= 10 : 
+		size_case -= 10
+		for i in range(len(S_sol)) : 
+			S_sol[i] = size_case
+		for i in range(len(S_eau)) : 
+			S_eau[i] = size_case
+		for i in range(len(S_air)) : 
+			S_air[i] = size_case
+'''
 def animation_frame(i):
 	#fait avancer les cases EAU
 	
 	#tester si ça arrête et redémarre quand on appuie sur space
+	'''
 	if keyboard.is_pressed('space'):
 		keyboard.wait('space')
-	
+	'''
 	#Noyau.pollution(pollution_state)
 	
 	Noyau.ecoulement(i)
 	change_meteo()
+	#change_taille()
 	X_eau = np.array(Noyau.coord_X("EAU"))
 	Y_eau = np.array(Noyau.coord_Y("EAU"))
 	Z_eau = np.array(Noyau.coord_Z("EAU"))
@@ -135,6 +182,12 @@ def animation_frame(i):
 	scatter_air._offsets3d = (X_air, Y_air, Z_air)
 	scatter_eau.set_array(couleur_eau)
 	scatter_air.set_array(couleur_air)
+	'''
+	scatter_eau.set_array(S_eau)
+	scatter_air.set_array(S_air)
+	scatter_sol.set_array(S_sol)
+	'''
+
 	'''
 	scatter_eau.stale = True
 	scatter_sol.stale = True

@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 
 #include "Polluant.hpp"
 
@@ -53,3 +53,4 @@ std::string Polluant::getNom() const {
 std::string Polluant::getNomCmap() const {
 	return nom_cmap_;
 } 
+*/

@@ -34,11 +34,11 @@ public :
 	int getProfondeur() const override;
 	void setProfondeur(int)override;
 	
-	Polluant* getPolluant() const;
+	//Polluant* getPolluant() const;
 	
 private : 
 
-Polluant* polluant_;
+//Polluant* polluant_;
 int profondeur_;
 }; 
 

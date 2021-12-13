@@ -1,6 +1,6 @@
 from distutils.core import setup, Extension
 
-projetModule = Extension('Noyau', sources = ['Noyau.cc','Env.cpp','Matiere.cpp','Case.cpp','Air.cpp','Eau.cpp','Sol.cpp'], libraries = [])
+projetModule = Extension('Noyau', sources = ['Noyau.cc','Env.cpp','Matiere.cpp','Case.cpp','Air.cpp','Eau.cpp','Sol.cpp', 'Polluant.cpp'], libraries = [])
 
 setup(name = 'Simulation d une riviere',
       version = '1.0',

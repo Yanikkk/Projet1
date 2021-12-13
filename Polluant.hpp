@@ -1,14 +1,14 @@
-#ifndef POLLUANT_HPP
+/*#ifndef POLLUANT_HPP
 #define POLLUANT_HPP
 
 #pragma once
 
-#include "Eau.hpp"
+/*
 
 /*!
  * @class Polluant
- */
-class Polluant : {
+ *//*
+class Polluant{
 public : 
 
     /*!
@@ -16,7 +16,7 @@ public :
      *
      * @param .........
      */
-	Polluant(std::string nom, int etat_dilution_);
+	/*Polluant(std::string nom, int etat_dilution_);
 	
 	void setPolluant(std::string nom);  
 	
@@ -39,6 +39,7 @@ Dispersion.
 // U = vitesse moyen du courant (m/s)
 //S = pente (m/m)
 //
+/*
 double coeff_dispersion_;
 //sa concentration en % 1 = 100%
 int etat_dilution_;			///< augmenter l'etat de dilution quand il se propage
@@ -48,3 +49,4 @@ std::string nom_cmap_;
 
 #endif // POLLUANT_HPP
 
+*/

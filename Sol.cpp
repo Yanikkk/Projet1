@@ -40,9 +40,9 @@ void Sol::setCouleur() {
 		couleur_ = distr(eng);
 	} 
 }
-
+/*
 Polluant* getPolluant() const{
 	return polluant_;
-}
+}*/
 // Pas vraiment faites mais facil une fois que ça marchera pour l'eau casi pareil
 

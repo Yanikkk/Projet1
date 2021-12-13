@@ -389,7 +389,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 		}
 	return Py_BuildValue("i",0);
 }
-
+/*
 static PyObject * pollution(PyObject * self, PyObject * args){
 	int pollution_state;
 	if (! PyArg_ParseTuple(args, "i", &pollution_state)) return NULL;
@@ -398,7 +398,7 @@ static PyObject * pollution(PyObject * self, PyObject * args){
 	int xmax = riviere.getLongueur()-1;
 	//cas du Fer par exemple
 	if(pollution_state == 1){
-		for(int w = taille -1; w >= taille - (riviere.getLargeur*getLongueur()) taille; w--){
+		for(int w = taille -1; w >= taille - (riviere.getLargeur*getLongueur()); w--){
 			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 				z_maxEau = (w -xmax*riviere.getLargeur() * riviere.getHauteur())/riviere.getLargeur();
 				break;
@@ -412,7 +412,7 @@ static PyObject * pollution(PyObject * self, PyObject * args){
 	
 	
 return Py_BuildValue("i",0);
-}
+}*/
 
 
 static PyObject * coord_X(PyObject * self, PyObject * args){

@@ -24,11 +24,11 @@ public :
 	
 	void setCouleur() override;
 	
-	Polluant* getPolluant() const;
+	//Polluant* getPolluant() const;
 		
 private : 
 
-Polluant* polluant_;
+//Polluant* polluant_;
 int profondeur_;
 }; 
 

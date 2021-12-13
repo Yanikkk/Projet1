@@ -310,82 +310,34 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	return Py_BuildValue("i",0);
 }
 
-static PyObject * coord_Xeau(PyObject * self, PyObject * args){
+static PyObject * coord_X(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
+	char* matiere;
+	if (! PyArg_ParseTuple(args, "s", &matiere)) return NULL;
 	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+		if(riviere.getTableau()[w].getMatiere()->getType() == matiere){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
 		}
 	}
 	return data_animation;
 }
-static PyObject * coord_Yeau(PyObject * self, PyObject * args){
+static PyObject * coord_Y(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
+	char* matiere;
+	if (! PyArg_ParseTuple(args, "s", &matiere)) return NULL;
 	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+		if(riviere.getTableau()[w].getMatiere()->getType() == matiere){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getY()));
 		}
 	}
 	return data_animation;
 }
-static PyObject * coord_Zeau(PyObject * self, PyObject * args){
+static PyObject * coord_Z(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
+	char* matiere;
+	if (! PyArg_ParseTuple(args, "s", &matiere)) return NULL;
 	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getZ()));
-		}
-	}
-	return data_animation;
-}
-static PyObject * coord_Xsol(PyObject * self, PyObject * args){
-	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "SOL"){
-			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
-		}
-	}
-	return data_animation;
-}
-static PyObject * coord_Ysol(PyObject * self, PyObject * args){
-	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "SOL"){
-			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getY()));
-		}
-	}
-	return data_animation;
-}
-static PyObject * coord_Zsol(PyObject * self, PyObject * args){
-	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "SOL"){
-			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getZ()));
-		}
-	}
-	return data_animation;
-}
-static PyObject * coord_Xair(PyObject * self, PyObject * args){
-	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "AIR"){
-			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
-		}
-	}
-	return data_animation;
-}
-static PyObject * coord_Yair(PyObject * self, PyObject * args){
-	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < taille ; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "AIR"){
-			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getY()));
-		}
-	}
-	return data_animation;
-}
-static PyObject * coord_Zair(PyObject * self, PyObject * args){
-	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "AIR"){
+		if(riviere.getTableau()[w].getMatiere()->getType() == matiere){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getZ()));
 		}
 	}
@@ -425,15 +377,9 @@ static PyObject * getCouleur_eau(PyObject * self, PyObject * args){
 static PyMethodDef methods[] = {
 	{"initialisation", initialisation, METH_VARARGS, "Initialisation de environnement riviere."},
 	{"ecoulement", ecoulement, METH_VARARGS, "Fait avancer les cases EAU"},
-	{"coord_Xeau", coord_Xeau, METH_VARARGS, "Les coordonnee x des cases contenant de l eau"},
-	{"coord_Yeau", coord_Yeau, METH_VARARGS, "Les coordonnee y des cases contenant de l eau"},
-	{"coord_Zeau", coord_Zeau, METH_VARARGS, "Les coordonnee z des cases contenant de l eau"},
-	{"coord_Xsol", coord_Xsol, METH_VARARGS, "Les coordonnee x des cases contenant de l sol"},
-	{"coord_Ysol", coord_Ysol, METH_VARARGS, "Les coordonnee y des cases contenant de l sol"},
-	{"coord_Zsol", coord_Zsol, METH_VARARGS, "Les coordonnee z des cases contenant de l sol"},
-	{"coord_Xair", coord_Xair, METH_VARARGS, "Les coordonnee x des cases contenant de l air"},
-	{"coord_Yair", coord_Yair, METH_VARARGS, "Les coordonnee y des cases contenant de l air"},
-	{"coord_Zair", coord_Zair, METH_VARARGS, "Les coordonnee z des cases contenant de l air"},
+	{"coord_X", coord_X, METH_VARARGS, "Les coordonnee x de matieres"},
+	{"coord_Y", coord_Y, METH_VARARGS, "Les coordonnee y de matieres"},
+	{"coord_Z", coord_Z, METH_VARARGS, "Les coordonnee z de matieres"},
 	{"getCouleur_sol", getCouleur_sol, METH_VARARGS, "Les couleurs des cases de sol"},
 	{"getCouleur_air", getCouleur_air, METH_VARARGS, "Les couleurs des cases d'air"},
 	{"getCouleur_eau", getCouleur_eau, METH_VARARGS, "Les couleurs des cases d'eau"},

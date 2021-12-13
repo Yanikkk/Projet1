@@ -32,19 +32,19 @@ ax.set_zlabel('Hauteur')
 ax.set_zlim(0,40)
 
 #retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
-X_eau = np.array(Noyau.coord_Xeau())
-Y_eau = np.array(Noyau.coord_Yeau())
-Z_eau = np.array(Noyau.coord_Zeau())
+X_eau = np.array(Noyau.coord_X("EAU"))
+Y_eau = np.array(Noyau.coord_Y("EAU"))
+Z_eau = np.array(Noyau.coord_Z("EAU"))
 couleur_eau = np.array(Noyau.getCouleur_eau())
 
-X_sol = np.array(Noyau.coord_Xsol())
-Y_sol = np.array(Noyau.coord_Ysol())
-Z_sol = np.array(Noyau.coord_Zsol())
+X_sol = np.array(Noyau.coord_X("SOL"))
+Y_sol = np.array(Noyau.coord_Y("SOL"))
+Z_sol = np.array(Noyau.coord_Z("SOL"))
 couleur_sol = np.array(Noyau.getCouleur_sol())
 
-X_air = np.array(Noyau.coord_Xair())
-Y_air = np.array(Noyau.coord_Yair())
-Z_air = np.array(Noyau.coord_Zair())
+X_air = np.array(Noyau.coord_X("AIR"))
+Y_air = np.array(Noyau.coord_Y("AIR"))
+Z_air = np.array(Noyau.coord_Z("AIR"))
 couleur_air = np.array(Noyau.getCouleur_air())
 
 scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3, vmin = 0, vmax = 100)
@@ -109,20 +109,19 @@ def animation_frame(i):
 	
 	Noyau.ecoulement(i)
 	change_meteo()
-	
-	X_eau = np.array(Noyau.coord_Xeau())
-	Y_eau = np.array(Noyau.coord_Yeau())
-	Z_eau = np.array(Noyau.coord_Zeau())
+	X_eau = np.array(Noyau.coord_X("EAU"))
+	Y_eau = np.array(Noyau.coord_Y("EAU"))
+	Z_eau = np.array(Noyau.coord_Z("EAU"))
 	couleur_eau = np.array(Noyau.getCouleur_eau())
 	
-	X_sol = np.array(Noyau.coord_Xsol())
-	Y_sol = np.array(Noyau.coord_Ysol())
-	Z_sol = np.array(Noyau.coord_Zsol())
+	X_sol = np.array(Noyau.coord_X("SOL"))
+	Y_sol = np.array(Noyau.coord_Y("SOL"))
+	Z_sol = np.array(Noyau.coord_Z("SOL"))
 	couleur_sol = np.array(Noyau.getCouleur_sol())
 
-	X_air = np.array(Noyau.coord_Xair())
-	Y_air = np.array(Noyau.coord_Yair())
-	Z_air = np.array(Noyau.coord_Zair())
+	X_air = np.array(Noyau.coord_X("AIR"))
+	Y_air = np.array(Noyau.coord_Y("AIR"))
+	Z_air = np.array(Noyau.coord_Z("AIR"))
 	#couleur_air = Noyau.getCouleur_air() 
 	
 	scatter_eau._offsets3d = (X_eau, Y_eau, Z_eau)
@@ -130,12 +129,14 @@ def animation_frame(i):
 	scatter_air._offsets3d = (X_air, Y_air, Z_air)
 	scatter_eau.set_array(couleur_eau)
 	scatter_air.set_array(couleur_air)
+	'''
 	scatter_eau.stale = True
 	scatter_sol.stale = True
 	scatter_air.stale = True
+	'''
 	
 	scatters = [scatter_sol, scatter_eau, scatter_air]
 	return scatters
 
-animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.2), interval=100, blit=False)
+animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=10, blit=False)
 plt.show()

@@ -32,7 +32,7 @@ void Polluant::setPolluant(std::string nom) {
 			facteur_dilution_ = 1.0;
 					
 			break; 
-		default : 
+		default :  //polluant inconnue facteur de dilution aux hasards
 			nom_cmap_ = "binary"	
 			facteur_dilution_ = 1.0;
 	}

@@ -369,7 +369,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 						}
 					}
 				}
-				if(caseRestante = crossSection){
+				if(caseRestante == crossSection){
 					for(int w = taille- crossSection; w < taille; w++){
 						if(riviere.getTableau()[w].getMatiere() == nullptr){
 							if(temps >= seuil_cumule){

@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import keyboard
 
-largeur = 2
-hauteur = 5
-longueur = 12
+largeur = 20
+hauteur = 30
+longueur = 40
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -106,6 +106,10 @@ def change_meteo():
 
 def animation_frame(i):
 	#fait avancer les cases EAU
+	
+	#tester si ça arrête et redémarre quand on appuie sur space
+	if keyboard.is_pressed('space'):
+		keyboard.wait('space')
 	
 	#Noyau.pollution(pollution_state)
 	

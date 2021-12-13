@@ -2,7 +2,7 @@
 #define EAU_HPP
 
 #pragma once
-
+#include "Polluant.hpp"
 #include "Matiere.hpp"
 #include "Env.hpp"
 
@@ -34,8 +34,11 @@ public :
 	int getProfondeur() const override;
 	void setProfondeur(int)override;
 	
+	Polluant* getPolluant() const;
+	
 private : 
 
+Polluant* polluant_;
 int profondeur_;
 }; 
 

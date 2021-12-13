@@ -102,11 +102,12 @@ def change_meteo():
 				j += 1
 			compteur += 1
 			couleur_air[i] = j
-			
+#pollution_state = 0	
 
 def animation_frame(i):
 	#fait avancer les cases EAU
 	
+	#Noyau.ecoulement(i, pollution_state)
 	Noyau.ecoulement(i)
 	change_meteo()
 	X_eau = np.array(Noyau.coord_X("EAU"))

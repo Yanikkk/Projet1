@@ -2,7 +2,7 @@
 #define SOL_HPP
 
 #pragma once
-
+#include "Polluant.hpp"
 #include "Matiere.hpp"
 #include "Env.hpp"
 /*!
@@ -23,9 +23,12 @@ public :
 	Sol(Env* env_param = nullptr, std::string type = "SOL", int profondeur = 0, double vitesse = 0.0);
 	
 	void setCouleur() override;
+	
+	Polluant* getPolluant() const;
 		
 private : 
 
+Polluant* polluant_;
 int profondeur_;
 }; 
 

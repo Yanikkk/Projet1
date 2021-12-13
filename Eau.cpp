@@ -76,8 +76,9 @@ void Eau::setProfondeur(int actuelle){
 	profondeur_ =	actuelle;
 }
 
-
-
+Polluant* Eau::getPolluant() const{
+	return polluant_;
+}
 
 
 

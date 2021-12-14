@@ -2,7 +2,6 @@
 #define EAU_HPP
 
 #pragma once
-#include "Polluant.hpp"
 #include "Matiere.hpp"
 #include "Env.hpp"
 
@@ -21,7 +20,7 @@ public :
      *
      * @param ........
      */
-	Eau(Env* env_param = nullptr, std::string type = "EAU", int profondeur = 0, double vitesse = 0.0);
+	Eau(Env* env_param = nullptr, std::string type = "EAU", int profondeur = 0, double vitesse = 0.0,Polluant* polluant = nullptr);
 	
     /*!
      * @brief utilise la formule de Manning Strickler pour déterminer la vitesse de l'eau
@@ -32,13 +31,13 @@ public :
 	
 	void setCouleur() override;
 	int getProfondeur() const override;
-	void setProfondeur(int)override;
-	
-	//Polluant* getPolluant() const;
+	void setProfondeur(int) override;
+	void setPolluant(std::string, int) override;
+	Polluant* getPolluant()const override;
 	
 private : 
 
-//Polluant* polluant_;
+Polluant* polluant_;
 int profondeur_;
 }; 
 

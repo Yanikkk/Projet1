@@ -1,40 +1,46 @@
-/*#include <iostream>
-
+#include <iostream>
 #include "Polluant.hpp"
+using namespace std;
 
-Polluant::Polluant(std::string nom, int etat_dilution_) 
-	: nom_(nom), etat_dilution_(etat_dilution)
+Polluant::Polluant(std::string nom, int dilution) 
+	: nom_(nom), etat_dilution_(dilution)
 {
 	setPolluant(nom);
 }
 
 
 void Polluant::setPolluant(std::string nom) {
-	
-	switch (nom) {
-		case "fer" : 
-			nom_cmap_ = "Reds"	
-			facteur_dilution_ = 1.0;
-					
+	int type = 0;
+	enum pollution{fer = 1, phosphate = 2, amonia = 3};
+	if( nom == "fer"){
+		type = 1;
+	}
+	switch (type) 
+	{
+		case fer : 
+			nom_cmap_ = "Reds";
+			coeff_dispersion_ = 0.5;
+				
 			break; 
-		case "algue" : 
+		case phosphate : 
 			nom_cmap_ = "Greens"	
-			facteur_dilution_ = 1.0;
+			coeff_dispersion_ = 1.0;
 					
 			break; 
-		case "boue" : 
+		case amonia : 
 			nom_cmap_ = "copper"	
-			facteur_dilution_ = 1.0;
+			coeff_dispersion_ = 0.8;
 
 			break; 
-		case "petrole" : 
+		/*case "petrole" : 
 			nom_cmap_ = "Greys"	
-			facteur_dilution_ = 1.0;
+			coeff_dispersion_ = 1.0;
 					
 			break; 
 		default :  //polluant inconnue facteur de dilution aux hasards
 			nom_cmap_ = "binary"	
-			facteur_dilution_ = 1.0;
+			coeff_dispersion_ = 1.0;
+	*/
 	}
 }
 
@@ -53,4 +59,3 @@ std::string Polluant::getNom() const {
 std::string Polluant::getNomCmap() const {
 	return nom_cmap_;
 } 
-*/

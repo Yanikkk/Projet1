@@ -8,7 +8,7 @@ import keyboard
 
 largeur = 2
 hauteur = 5
-longueur = 12
+longueur = 6
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -128,7 +128,6 @@ def change_meteo():
 				j += 1
 			compteur += 1
 			couleur_air[i] = j
-#pollution_state = 0	
 '''
 def change_taille():
 	global size_case
@@ -149,6 +148,10 @@ def change_taille():
 		for i in range(len(S_air)) : 
 			S_air[i] = size_case
 '''
+
+#test avec le fer
+pollution_state = 1	
+
 def animation_frame(i):
 	#fait avancer les cases EAU
 	
@@ -157,7 +160,10 @@ def animation_frame(i):
 	if keyboard.is_pressed('space'):
 		keyboard.wait('space')
 	'''
-	#Noyau.pollution(pollution_state)
+	Noyau.pollution(pollution_state)
+	if pollution_state == 1:
+		pollution_state = 0
+	
 	
 	Noyau.ecoulement(i)
 	change_meteo()

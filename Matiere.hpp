@@ -2,7 +2,7 @@
 #define MATIERE_HPP
 
 #pragma once
-
+#include "Polluant.hpp"
 /*!
  * @brief pré-déclaration de la Classe Env
 */
@@ -49,7 +49,8 @@ public :
 	// enlever le virtual non ? on a changé
 	
 	int getCouleur() const; 
-	
+	virtual void setPolluant(std::string, int);
+	virtual Polluant* getPolluant()const;
 	virtual void setProfondeur(int);
 	virtual void setCouleur();
 	virtual int getProfondeur() const;

@@ -25,8 +25,8 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 
 void cleanFirstline(int w){
 	cout << "case enlevée: "<< w << endl;
-	//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-	//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+	cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+	cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 				
 	delete riviere.getTableau()[w].getMatiere();
 	riviere.getTableau()[w].setMatiere(nullptr);
@@ -57,20 +57,20 @@ void ecoulementPlat(int w){
 				riviere.getTableau()[w - crossSection].setMatiere(riviere.getTableau()[w].getMatiere());
 				riviere.getTableau()[w - crossSection].getMatiere()->setProfondeur(profondeur);
 				cout << "case enlevée: "<< w << endl;
-				//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-				//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
-				//cout << " profondeur transmise "<< riviere.getTableau()[w].getMatiere()->getProfondeur() << endl;
+				cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+				cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+				cout << " profondeur transmise "<< riviere.getTableau()[w].getMatiere()->getProfondeur() << endl;
 				riviere.getTableau()[w].setMatiere(nullptr);
 				cout << "case remise : " << w - crossSection<< endl;
-				//cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;	
-				//cout << " profondeur transmise "<< riviere.getTableau()[w-crossSection].getMatiere()->getProfondeur() << endl;					
+				cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;	
+				cout << " profondeur transmise "<< riviere.getTableau()[w-crossSection].getMatiere()->getProfondeur() << endl;					
 			if(w/(crossSection) == riviere.getLongueur()-1){
 				if(riviere.getTableau()[w].getMatiere() == nullptr){
 					profondeur = calculeProfondeur(w);
 					riviere.getTableau()[w].setMatiere(riviere.creation(w,profondeur));
 					cout << "case remiseeeee : " << w << endl;
-					//cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
-					//cout << " profondeur "<< prof << endl;
+					cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
+					cout << " profondeur "<< profondeur << endl;
 				}
 			}
 		}
@@ -89,13 +89,13 @@ void ecoulementPalier(int w){
 				riviere.getTableau()[w - crossSection].setMatiere(riviere.getTableau()[w].getMatiere());
 				riviere.getTableau()[w - crossSection].getMatiere()->setProfondeur(profondeur);
 				cout << "case enlevée: "<< w << endl;
-				//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-				//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
-				//cout << " profondeur transmise "<< riviere.getTableau()[w].getMatiere()->getProfondeur() << endl;
+				cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+				cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+				cout << " profondeur transmise "<< riviere.getTableau()[w].getMatiere()->getProfondeur() << endl;
 				riviere.getTableau()[w].setMatiere(nullptr);
 				cout << "case remise : " << w - crossSection<< endl;
-				//cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;	
-				//cout << " profondeur transmise "<< riviere.getTableau()[w-crossSection].getMatiere()->getProfondeur() << endl;					
+				cout << "couleur de la case remise: "<<riviere.getTableau()[w - (riviere.getLargeur()*riviere.getHauteur())].getMatiere()->getCouleur()<< endl;	
+				cout << " profondeur transmise "<< riviere.getTableau()[w-crossSection].getMatiere()->getProfondeur() << endl;					
 			}
 			if(w/(crossSection) == riviere.getLongueur()-1){
 
@@ -103,8 +103,8 @@ void ecoulementPalier(int w){
 					profondeur = calculeProfondeur(w);
 					riviere.getTableau()[w].setMatiere(riviere.creation(w,profondeur));
 					cout << "case remiseeeee : " << w << endl;
-					//cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
-					//cout << " profondeur "<< profondeur << endl;
+					cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
+					cout << " profondeur "<< profondeur << endl;
 				}
 			}
 			
@@ -136,12 +136,12 @@ void ecoulement_transversale(int w, int crossSection){
 				h_chgmnt_palier = profond_actuelle - profond_suivante;
 				position = w + h_chgmnt_palier *riviere.getLargeur() + (crossSection);
 				cout << "case ajoutée : " << w << endl;
-				//cout << "couleur de la case ajoutée: "<<riviere.getTableau()[position].getMatiere()->getCouleur()<< endl;	
+				cout << "couleur de la case ajoutée: "<<riviere.getTableau()[position].getMatiere()->getCouleur()<< endl;	
 				riviere.getTableau()[w].setMatiere(riviere.getTableau()[position].getMatiere());
 				profondeur = calculeProfondeur(w);
 				riviere.getTableau()[w].getMatiere()->setProfondeur(profondeur);
 				cout << "case enlevée : " << position << endl;
-				//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
+				cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
 				riviere.getTableau()[position].setMatiere(nullptr);
 			}											
 		}
@@ -151,8 +151,8 @@ void ecoulement_transversale(int w, int crossSection){
 					profondeur = calculeProfondeur(w);
 					riviere.getTableau()[w].setMatiere(riviere.creation(w,profondeur));
 					cout << "case remiseeeee : " << w << endl;
-					//cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
-					//cout << " profondeur "<< profondeur << endl;
+					cout << "couleur de la case remise: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
+					cout << " profondeur "<< profondeur << endl;
 				}
 			}
 }
@@ -201,13 +201,13 @@ void parPalier(int q, int w, double temps, double seuil_cumule, int crossSection
 											riviere.getTableau()[q- (crossSection)].setMatiere(riviere.getTableau()[q].getMatiere());
 											profondeur = calculeProfondeur(q-(crossSection));
 											cout << "case remise : " << q-crossSection << endl;
-											//cout << "couleur de la case remise: "<<riviere.getTableau()[q-crossSection].getMatiere()->getCouleur()<< endl;	
-											//cout << " profondeur calculée "<< profondeur << endl;
-											//cout << " profondeur transmise "<< riviere.getTableau()[q-crossSection].getMatiere()->getProfondeur() << endl;
+											cout << "couleur de la case remise: "<<riviere.getTableau()[q-crossSection].getMatiere()->getCouleur()<< endl;	
+											cout << " profondeur calculée "<< profondeur << endl;
+											cout << " profondeur transmise "<< riviere.getTableau()[q-crossSection].getMatiere()->getProfondeur() << endl;
 											riviere.getTableau()[q - (crossSection)].getMatiere()->setProfondeur(profondeur);
 											cout << "case enlevée: "<< q << endl;
-											//cout << "couleur de la case enlevée: "<<riviere.getTableau()[q].getMatiere()->getCouleur()<< endl;
-											//cout <<"type de la case enelvée: " << riviere.getTableau()[q].getMatiere()->getType() << endl;
+											cout << "couleur de la case enlevée: "<<riviere.getTableau()[q].getMatiere()->getCouleur()<< endl;
+											cout <<"type de la case enelvée: " << riviere.getTableau()[q].getMatiere()->getType() << endl;
 											riviere.getTableau()[q].setMatiere(nullptr);
 											}
 												if(riviere.getTableau()[q].getMatiere() == nullptr){
@@ -222,12 +222,12 @@ void parPalier(int q, int w, double temps, double seuil_cumule, int crossSection
 												h_chgmnt_palier = profond_actuelle - profond_suivante;
 												position = q + h_chgmnt_palier *riviere.getLargeur() + (crossSection);
 												cout << "case ajoutée : " << q << endl;
-												//cout << "couleur de la case ajoutée: "<<riviere.getTableau()[position].getMatiere()->getCouleur()<< endl;	
+												cout << "couleur de la case ajoutée: "<<riviere.getTableau()[position].getMatiere()->getCouleur()<< endl;	
 												riviere.getTableau()[q].setMatiere(riviere.getTableau()[position].getMatiere());
 												profondeur = calculeProfondeur(q);
 												riviere.getTableau()[q].getMatiere()->setProfondeur(profondeur);
 												cout << "case enlevée : " << position << endl;
-												//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;	
+												cout << "couleur de la case enlevée: "<<riviere.getTableau()[q].getMatiere()->getCouleur()<< endl;	
 												riviere.getTableau()[position].setMatiere(nullptr);
 												}											
 											}
@@ -286,6 +286,10 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 			simulation_non_conforme(w, crossSection);
+			if(riviere.getTableau()[w].getMatiere()->getPolluant() != nullptr){
+				cout <<"w:" << w << endl;
+				cout << " VOIL " << riviere.getTableau()[w].getMatiere()->getPolluant()->getNom() << endl;
+			}
 		}
 	}
 	if(riviere.getTableau()[taille-1].getMatiere()->getType() == "SOL"){
@@ -295,9 +299,10 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	double temps;
 	double vitesse = 0;
 	if (! PyArg_ParseTuple(args, "d", &temps)) return NULL;
-	//le nombre de seconde pour que une case d'eau avance de 1 case
-	//cas si la rivière est plus petite que un palier
-	//(donc si elle est plate)
+	/*!
+	 * cas si la rivière est plus petite que un palier
+	 * donc si elle est plate
+	 * */
 	if(riviere.getPalier() >= taille/crossSection){
 		for(int w = 0; w < taille; w++){
 			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
@@ -389,30 +394,31 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 		}
 	return Py_BuildValue("i",0);
 }
-/*
+
 static PyObject * pollution(PyObject * self, PyObject * args){
 	int pollution_state;
+	int w = 0;
 	if (! PyArg_ParseTuple(args, "i", &pollution_state)) return NULL;
-	
 	int z_maxEau = 0;
 	int xmax = riviere.getLongueur()-1;
 	//cas du Fer par exemple
 	if(pollution_state == 1){
-		for(int w = taille -1; w >= taille - (riviere.getLargeur*getLongueur()); w--){
+		for(int w = taille -1; w >= taille - (riviere.getLargeur()*riviere.getLongueur()); w--){
 			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 				z_maxEau = (w -xmax*riviere.getLargeur() * riviere.getHauteur())/riviere.getLargeur();
 				break;
 			}
 		}
+		cout << z_maxEau<< endl;
 		//génère un nombre sur la dernière ligne d'eau de la dernière crossSection de la simulation
-		w = rand() % (get.Largeur()-1) + taille - (getHauteur()-1- zmax) * getLargeur(); 
-		//riviere.getTableau()[w].getMatiere()->setPolluant("fer",)
+		w = rand() % riviere.getLargeur() + taille - (riviere.getHauteur()- z_maxEau) * riviere.getLargeur(); 
+		riviere.getTableau()[w].getMatiere()->setPolluant("fer", 100);
 	}
 	
 	
 	
 return Py_BuildValue("i",0);
-}*/
+}
 
 
 static PyObject * coord_X(PyObject * self, PyObject * args){
@@ -482,6 +488,7 @@ static PyObject * getCouleur_eau(PyObject * self, PyObject * args){
 static PyMethodDef methods[] = {
 	{"initialisation", initialisation, METH_VARARGS, "Initialisation de environnement riviere."},
 	{"ecoulement", ecoulement, METH_VARARGS, "Fait avancer les cases EAU"},
+	{"pollution", pollution, METH_VARARGS,"Propage les polluants dans l'eau"},
 	{"coord_X", coord_X, METH_VARARGS, "Les coordonnee x de matieres"},
 	{"coord_Y", coord_Y, METH_VARARGS, "Les coordonnee y de matieres"},
 	{"coord_Z", coord_Z, METH_VARARGS, "Les coordonnee z de matieres"},

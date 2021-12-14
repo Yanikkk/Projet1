@@ -5,8 +5,8 @@
 #include "Eau.hpp"
 
 
-Eau::Eau(Env* env_param, std::string type, int profondeur, double vitesse)
-	:Matiere(env_param, type, vitesse), profondeur_(profondeur)
+Eau::Eau(Env* env_param, std::string type, int profondeur, double vitesse, Polluant* polluant)
+	:Matiere(env_param, type, vitesse), profondeur_(profondeur), polluant_(polluant)
 {
 	setVitesse();
 	setCouleur(); // il passe aussi dans le setCouleur de matière avant... 
@@ -71,15 +71,17 @@ void Eau::setCouleur() {
 int Eau::getProfondeur() const{
 	return profondeur_;
 }
-
 void Eau::setProfondeur(int actuelle){
 	profondeur_ =	actuelle;
 }
-/*
+void Eau::setPolluant(std::string nom ,int etat_dilution){
+	polluant_ = new Polluant(nom, etat_dilution);
+}
 Polluant* Eau::getPolluant() const{
 	return polluant_;
 }
-*/
+
+
 
 
 

@@ -31,6 +31,11 @@ void Matiere::setType(std::string nom){
 double Matiere::getVitesse() const {
 	return vitesse_;
 }
+void Matiere::setPolluant(std::string nom, int w){
+}
+Polluant* Matiere::getPolluant()const{
+	return nullptr;
+}
 void Matiere::setProfondeur(int actuelle){
 }
 

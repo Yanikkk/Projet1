@@ -2,7 +2,6 @@
 #define SOL_HPP
 
 #pragma once
-#include "Polluant.hpp"
 #include "Matiere.hpp"
 #include "Env.hpp"
 /*!

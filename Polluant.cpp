@@ -2,8 +2,8 @@
 #include "Polluant.hpp"
 using namespace std;
 
-Polluant::Polluant(std::string nom, int dilution) 
-	: nom_(nom), etat_dilution_(dilution)
+Polluant::Polluant(std::string nom, int dilution, double masse, int depot_x) 
+	: nom_(nom), etat_dilution_(dilution), masse_(masse), depot_x_(depot_x)
 {
 	setPolluant(nom);
 }

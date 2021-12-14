@@ -22,7 +22,7 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	riviere.initTableau();
 	return Py_BuildValue("i",0);
 }
-
+//metre constante globale crossSection (voir le site)
 void cleanFirstline(int w){
 	cout << "case enlevée: "<< w << endl;
 	cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
@@ -45,14 +45,20 @@ int calculeProfondeur(int w){
 	}
 	return zb;
 }
+int C_polluant_x (){
+	
 
-void ecoulementPlat(int w){
+}
+void ecoulementPlat(int w, int temps){
 	int crossSection = riviere.getLargeur()*riviere.getHauteur();
 		if(w/(crossSection)-1 < 0){
 			cleanFirstline(w);
 		}else{
 			int profondeur;
-			if(riviere.getTableau()[w - crossSection].getMatiere() == nullptr){	
+			if(riviere.getTableau()[w - crossSection].getMatiere() == nullptr){
+				if(riviere.getTableau()[w].getMatiere->getPolluant() != nullptr){
+					C_polluant(w, temps, case_pollue);
+				}	
 				profondeur = calculeProfondeur(w - crossSection);
 				riviere.getTableau()[w - crossSection].setMatiere(riviere.getTableau()[w].getMatiere());
 				riviere.getTableau()[w - crossSection].getMatiere()->setProfondeur(profondeur);
@@ -278,24 +284,32 @@ void erreur_de_palier(){
 		cout << "--------------------------------------------------------------"<< endl;
 		exit(0);
 }
-
-double seuil_cumule = 0.0;
-static PyObject * ecoulement(PyObject * self, PyObject * args){
-	int crossSection = riviere.getLargeur() * riviere.getHauteur();	
-	int last_w = 0;
+void detection_erreur(){
 	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 			simulation_non_conforme(w, crossSection);
-			if(riviere.getTableau()[w].getMatiere()->getPolluant() != nullptr){
-				cout <<"w:" << w << endl;
-				cout << " VOIL " << riviere.getTableau()[w].getMatiere()->getPolluant()->getNom() << endl;
-			}
 		}
 	}
 	if(riviere.getTableau()[taille-1].getMatiere()->getType() == "SOL"){
 		erreur_de_palier();
 	}
+}
+
+double seuil_cumule = 0.0;
+static PyObject * ecoulement(PyObject * self, PyObject * args){
+	int crossSection = riviere.getLargeur() * riviere.getHauteur();
+	/*!
+	 * On détecte une possible erreur de dimension 
+	 * du tableau ou du palier choisit.
+	 */	
+	detection_erreur();
+	int case_pollue = 0;
 	
+	/*!
+	 * Cette boucle va détecter le point de dépot du polluant (x,y,z).
+	 * Sachant qu'il ne peut que être déposer sur le dessus de l'eau en
+	 * 
+	 */
 	double temps;
 	double vitesse = 0;
 	if (! PyArg_ParseTuple(args, "d", &temps)) return NULL;
@@ -311,7 +325,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 					seuil_cumule = seuil_cumule + 1/vitesse;
 				}
 				if(temps >= seuil_cumule){
-					ecoulementPlat(w);
+					ecoulementPlat(w, temps);
 				}
 			}
 		}
@@ -412,7 +426,7 @@ static PyObject * pollution(PyObject * self, PyObject * args){
 		cout << z_maxEau<< endl;
 		//génère un nombre sur la dernière ligne d'eau de la dernière crossSection de la simulation
 		w = rand() % riviere.getLargeur() + taille - (riviere.getHauteur()- z_maxEau) * riviere.getLargeur(); 
-		riviere.getTableau()[w].getMatiere()->setPolluant("fer", 100);
+		riviere.getTableau()[w].getMatiere()->setPolluant("fer", 100, 1.0, riviere.getLongueur() -1);
 	}
 	
 	

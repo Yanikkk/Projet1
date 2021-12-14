@@ -14,7 +14,7 @@ public :
      *
      * @param .........
      */
-	Polluant(std::string nom, int etat_dilution_);
+	Polluant(std::string nom, int etat_dilution_, double masse, int depot_x = 0);
 	
 	void setPolluant(std::string nom);  
 	
@@ -27,6 +27,7 @@ public :
 	std::string getNomCmap() const;
 	 		
 private : 
+/*!-------------------------------------
 //coefficient de dispersion
 //longitudinale, paramètre essentiel pour pouvoir prédire avec précision l’évolution spatiotemporelle d’un polluant dans un cours d’eau au moyen de l’Equation d’Advection
 //Dispersion. 
@@ -45,12 +46,17 @@ private :
 //H = hauteur d'eau[m]
 //U* = vitesse de cisaillement[m/s] 
 //(p.148) en const on va mettre entre 0.053+-0.031
-
+*/
+double masse_; //[kg]
+//coeff de dispersion 0-1
+//plus il est élevé plus il se disperse
 double coeff_dispersion_;
-//sa concentration en % 1 = 100%
-double etat_dilution_;			///< augmenter l'etat de dilution quand il se propage
+//sa concentration en % 1-100%
+double etat_dilution_;			/// augmenter l'etat de dilution quand il se propage
 std::string nom_;
 std::string nom_cmap_;
+//où le polluat est déposé en x
+int depot_x_;
 }; 
 
 #endif // POLLUANT_HPP

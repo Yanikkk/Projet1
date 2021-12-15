@@ -74,8 +74,8 @@ int Eau::getProfondeur() const{
 void Eau::setProfondeur(int actuelle){
 	profondeur_ =	actuelle;
 }
-void Eau::setPolluant_mat(std::string nom ,int etat_dilution, double masse, int depot_x){
-	polluant_ = new Polluant(nom, etat_dilution, masse, depot_x);
+void Eau::setPolluant(std::string nom, double masse, int depot_x, double vitesse){
+	polluant_ = new Polluant(nom, masse, depot_x, vitesse);
 }
 Polluant* Eau::getPolluant() const{
 	return polluant_;

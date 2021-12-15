@@ -32,7 +32,7 @@ public :
 	void setCouleur() override;
 	int getProfondeur() const;
 	void setProfondeur(int);
-	void setPolluant_mat(std::string, int, double, int);
+	void setPolluant(std::string, double, int, double);
 	Polluant* getPolluant()const;
 	
 private : 

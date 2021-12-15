@@ -14,13 +14,22 @@ public :
      *
      * @param .........
      */
-	Polluant(std::string nom, int etat_dilution_, double masse = 0, int depot_x = 0);
+	Polluant(std::string nom = "Inconnu", double masse = 0, int depot_x = 0, double vitesse = 0);
 	
 	void setPolluant(std::string nom);  
 	
 	double getDilution() const; 
 		
 	double getCoeffDispersion() const;
+	
+	double getMasse() const;
+	
+	void setMasse(double);
+	
+	double getVitesse() const;
+	
+	int getCaseDepart() const;
+	
 	
 	std::string getNom() const; 
 	
@@ -48,15 +57,16 @@ private :
 //(p.148) en const on va mettre entre 0.053+-0.031
 */
 double masse_; //[kg]
+double vitesse_; //[m/s]
 //coeff de dispersion 0-1
-//plus il est élevé plus il se disperse
+//plus il est élevé moins il se disperse
+//dans des cases différentes(1-10)
 double coeff_dispersion_;
-//sa concentration en % 1-100%
-double etat_dilution_;			/// augmenter l'etat de dilution quand il se propage
 std::string nom_;
 std::string nom_cmap_;
 //où le polluat est déposé en x
 int depot_x_;
+
 }; 
 
 #endif // POLLUANT_HPP

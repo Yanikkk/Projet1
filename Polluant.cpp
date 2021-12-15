@@ -2,8 +2,8 @@
 #include "Polluant.hpp"
 using namespace std;
 
-Polluant::Polluant(std::string nom, int dilution, double masse, int depot_x) 
-	: nom_(nom), etat_dilution_(dilution), masse_(masse), depot_x_(depot_x)
+Polluant::Polluant(std::string nom,double masse, int depot_x,double vitesse) 
+	: nom_(nom), masse_(masse), depot_x_(depot_x), vitesse_(vitesse)
 {
 	setPolluant(nom);
 }
@@ -19,17 +19,17 @@ void Polluant::setPolluant(std::string nom) {
 	{
 		case fer : 
 			nom_cmap_ = "Reds";
-			coeff_dispersion_ = 0.5;
+			coeff_dispersion_ = 4;
 				
 			break; 
 		case phosphate : 
 			nom_cmap_ = "Greens";	
-			coeff_dispersion_ = 1.0;
+			coeff_dispersion_ = 2.0;
 					
 			break; 
 		case amonia : 
 			nom_cmap_ = "copper";	
-			coeff_dispersion_ = 0.8;
+			coeff_dispersion_ = 3.0;
 
 			break; 
 		/*case "petrole" : 
@@ -43,14 +43,28 @@ void Polluant::setPolluant(std::string nom) {
 	*/
 	}
 }
-
+/*
 double Polluant::getDilution() const {
 	return etat_dilution_;
 } 
-
+*/
 double Polluant::getCoeffDispersion() const {
 	return coeff_dispersion_;
 } 
+
+double Polluant::getMasse() const{
+	return masse_;
+}
+void Polluant::setMasse(double nouvelle_m){
+	masse_ = nouvelle_m;
+}
+double Polluant::getVitesse() const{
+	return vitesse_;
+}
+
+int Polluant::getCaseDepart() const{
+	return depot_x_;
+}
 
 std::string Polluant::getNom() const {
 	return nom_;

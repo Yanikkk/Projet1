@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import keyboard
 
-largeur = 2
+largeur = 10
 hauteur = 5
-longueur = 12
+longueur = 40
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -17,6 +17,7 @@ longueur = 12
 #initialise le tableau/environnement
 
 Noyau.initialisation(largeur, hauteur, longueur)
+Noyau.pollution(1)
 
 # Graphe 3D
 from mpl_toolkits.mplot3d import Axes3D
@@ -150,7 +151,8 @@ def change_taille():
 '''
 
 #test avec le fer
-pollution_state = 1	
+
+
 
 def animation_frame(i):
 	#fait avancer les cases EAU
@@ -161,8 +163,8 @@ def animation_frame(i):
 		keyboard.wait('space')
 	'''
 	'''
-	Noyau.pollution(pollution_state)
 	if pollution_state == 1:
+		Noyau.pollution(pollution_state)
 		pollution_state = 0
 	'''
 	

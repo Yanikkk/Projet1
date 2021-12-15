@@ -30,10 +30,10 @@ public :
 	*/
 	
 	void setCouleur() override;
-	int getProfondeur() const override;
-	void setProfondeur(int) override;
-	void setPolluant(std::string, int) override;
-	Polluant* getPolluant()const override;
+	int getProfondeur() const;
+	void setProfondeur(int);
+	void setPolluant_mat(std::string, int, double, int);
+	Polluant* getPolluant()const;
 	
 private : 
 

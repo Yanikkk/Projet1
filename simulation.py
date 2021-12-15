@@ -8,7 +8,7 @@ import keyboard
 
 largeur = 2
 hauteur = 5
-longueur = 6
+longueur = 12
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -160,10 +160,11 @@ def animation_frame(i):
 	if keyboard.is_pressed('space'):
 		keyboard.wait('space')
 	'''
+	'''
 	Noyau.pollution(pollution_state)
 	if pollution_state == 1:
 		pollution_state = 0
-	
+	'''
 	
 	Noyau.ecoulement(i)
 	change_meteo()

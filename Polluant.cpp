@@ -23,12 +23,12 @@ void Polluant::setPolluant(std::string nom) {
 				
 			break; 
 		case phosphate : 
-			nom_cmap_ = "Greens"	
+			nom_cmap_ = "Greens";	
 			coeff_dispersion_ = 1.0;
 					
 			break; 
 		case amonia : 
-			nom_cmap_ = "copper"	
+			nom_cmap_ = "copper";	
 			coeff_dispersion_ = 0.8;
 
 			break; 

@@ -14,7 +14,7 @@ public :
      *
      * @param .........
      */
-	Polluant(std::string nom, int etat_dilution_, double masse, int depot_x = 0);
+	Polluant(std::string nom, int etat_dilution_, double masse = 0, int depot_x = 0);
 	
 	void setPolluant(std::string nom);  
 	

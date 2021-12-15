@@ -31,18 +31,12 @@ void Matiere::setType(std::string nom){
 double Matiere::getVitesse() const {
 	return vitesse_;
 }
-void Matiere::setPolluant(std::string nom, int w){
+/*
+void Matiere::setPolluant_mat(std::string nom, int w, double a, int b){
 }
 Polluant* Matiere::getPolluant()const{
 	return nullptr;
-}
-void Matiere::setProfondeur(int actuelle){
-}
-
-int Matiere::getProfondeur() const{
-	return 0;
-}
-
+}*/
 int Matiere::getCouleur() const {
 	return couleur_;
 }

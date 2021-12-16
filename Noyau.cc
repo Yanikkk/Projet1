@@ -30,10 +30,9 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	return Py_BuildValue("i",0);
 }
 void cleanFirstline(int w){
-	//cout << "case enlevée: "<< w << endl;
+	cout << "case enlevée: "<< w << endl;
 	//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
 	//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
-				
 	delete riviere.getTableau()[w].getMatiere();
 	riviere.getTableau()[w].setMatiere(nullptr);
 }
@@ -146,6 +145,10 @@ void dispersion(vector<double> pollution, Polluant tampon){
 				Eau* eau_pollu =(Eau*)riviere.getTableau()[position].getMatiere();
 				eau_pollu->setPolluant(tampon.getNom(),masse, position/crossSection, tampon.getVitesse());
 				eau_pollu->setCouleur();
+				cout << "--------------"<< endl;
+				cout << "Case avec polluant: "<< position << endl;
+				cout << "Et leur concentrations: "<< eau_pollu->getPolluant()->getMasse() << endl;
+				cout << "--------------"<< endl;
 				pollution[i+1] = pollution[i+1] - masse;
 			}
 		}
@@ -185,7 +188,7 @@ void ecoulementPlat(int w, double temps){
 					tampon = *eau_pollu->getPolluant() ;
 					//!le reste est dispersé dans les cases d'eau environnante (en bas, en haut et gauche droite)
 					transvaser = 1;
-				}	
+				}
 				profondeur = calculeProfondeur(w - crossSection);
 				riviere.getTableau()[w - crossSection].setMatiere(riviere.getTableau()[w].getMatiere());
 				Eau* eau =(Eau*)riviere.getTableau()[w-crossSection].getMatiere();
@@ -199,7 +202,7 @@ void ecoulementPlat(int w, double temps){
 						conc = 0;
 					}*/
 					eau->getPolluant()->setMasse(conc);
-					eau->getPolluant()->setCouleur();
+					eau->getPolluant()->setCouleur();;
 					//cout << "conc après " << eau->getPolluant()->getMasse() << endl;
 					transvaser = 0;
 				}
@@ -221,7 +224,7 @@ void ecoulementPlat(int w, double temps){
 	}
 	if(w == taille -1 ){
 				//! si toutes les cases ont avancées, alors on peut disperser les polluant
-				dispersion(pollution, tampon);
+				//dispersion(pollution, tampon);
 	}
 }
 
@@ -431,6 +434,12 @@ void erreur_de_palier(){
 void detection_erreur(){
 	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+			////////////////////////////
+				Eau* eau =(Eau*)riviere.getTableau()[w].getMatiere();
+				if(eau->getPolluant() != nullptr){
+					cout << "DDDDD "<< w << " DDDDDDD  " << eau->getPolluant() << endl;
+				}
+				///////////////////////////
 			simulation_non_conforme(w);
 		}
 	}
@@ -718,8 +727,9 @@ static PyObject * getCouleur_eau(PyObject * self, PyObject * args){
 	return data_animation;
 }
 static PyObject * Cmap(PyObject * self, PyObject * args){
-	char* polluant;
-	if (! PyArg_ParseTuple(args, "s", &polluant)) return NULL;
+	char* p;
+	if (! PyArg_ParseTuple(args, "s", &p)) return NULL;
+	string polluant = p;
 	PyObject * data_animation = PyList_New(0);
 	if(polluant == "fer"){
 		for(int w = 0; w < taille; w++){	

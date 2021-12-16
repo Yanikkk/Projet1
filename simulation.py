@@ -7,9 +7,9 @@ from matplotlib.animation import FuncAnimation
 import keyboard
 import time
 
-largeur = 10
+largeur = 2
 hauteur = 5
-longueur = 40
+longueur = 12
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -238,7 +238,7 @@ def animation_frame(i):
 	#pour pause -> enlever si on garde l'espace
 	fig.canvas.mpl_connect('button_press_event', onClick)
 	'''
-anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=10, blit=False)
+anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=100, blit=False)
 
 #tester si juste ça ça passe déjà
 #FFwriter = animation.FFMpegWriter()

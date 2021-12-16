@@ -32,6 +32,9 @@ public :
 	void setProfondeur(int);
 	void setPolluant(std::string, double, int, double);
 	Polluant* getPolluant()const;
+	Eau(){
+		delete polluant_;
+		polluant_ = nullptr;}
 	
 private : 
 

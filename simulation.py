@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import keyboard
+import time
 
 largeur = 10
 hauteur = 5
@@ -33,7 +34,7 @@ ax.set_zlabel('Hauteur')
 ax.set_zlim(0,40)
 
 textstr = ' Arrêt/Marche : Espace\n\n up : augmente la taille\n des cases\n down : diminue la taille\n des cases\n\n changer la météo : \n\n j = jour (par défaut)\n n = nuit\n b = brouillard\n p = pluie\n r = sunrise\n s = sunset\n w = rainbow\n'
-plt.figtext(0, 0, textstr, fontsize = 8)
+plt.figtext(0, 1, textstr, fontsize = 8)
 #plt.grid(True)
 
 #retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
@@ -140,8 +141,9 @@ def change_taille():
 		for i in range(len(S_eau)) : 
 			S_eau[i] = size_case 
 		for i in range(len(S_air)) : 
-			S_air[i] = size_case 	
-	if keyboard.is_pressed('down') and size_case >= 10 : 
+			S_air[i] = size_case 
+		time.sleep(0.1)	
+	if keyboard.is_pressed('down') and size_case > 10 : 
 		size_case -= 10
 		for i in range(len(S_sol)) : 
 			S_sol[i] = size_case
@@ -149,11 +151,13 @@ def change_taille():
 			S_eau[i] = size_case
 		for i in range(len(S_air)) : 
 			S_air[i] = size_case
+		time.sleep(0.1)
 		
 
 #test avec le fer
 
 '''
+#pour pause -> enleve si on garde space
 	#décale tout animation_frame dans cette fonction
 	def run_animation():
 		anim_running = True
@@ -172,17 +176,17 @@ def animation_frame(i):
 	#fait avancer les cases EAU
 	
 	#tester si ça arrête et redémarre quand on appuie sur space
-	'''
+	
 	if keyboard.is_pressed('space'):
 		keyboard.wait('space')
-		break
-	'''
+		time.sleep(0.1)
+	
 	'''
 	if pollution_state == 1:
 		Noyau.pollution(pollution_state)
 		pollution_state = 0
 	'''
-	
+	#print(i)
 	Noyau.ecoulement(i)
 	change_meteo()
 	change_taille()
@@ -207,16 +211,11 @@ def animation_frame(i):
 	scatter_eau.set_array(couleur_eau)
 	scatter_air.set_array(couleur_air)
 	
-	scatter_eau.SizeData(S_eau)
-	scatter_air.SizeData(S_air)
-	scatter_sol.SizeData(S_sol)
-	'''
-	#tester (si marche pas comme ça mettre le SizeData aux 3 scatter avant et remettre les tableau à la place de size_case)
-	global size_case
-	scatter_air.SizeData = size_case
-	scatter_eau.SizeData = size_case
-	scatter_sol.SizeData = size_case
-'''
+	#voir si on peut trouver quelque chose qui changera pas la couleur en même temps
+	scatter_eau.set_sizes(S_eau)
+	scatter_air.set_sizes(S_air)
+	scatter_sol.set_sizes(S_sol)
+	
 	'''
 	scatter_eau.stale = True
 	scatter_sol.stale = True
@@ -226,11 +225,13 @@ def animation_frame(i):
 	scatters = [scatter_sol, scatter_eau, scatter_air]
 	return scatters
 	'''
+	#pour pause -> enlever si on garde l'espace
 	fig.canvas.mpl_connect('button_press_event', onClick)
 	'''
-animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=10, blit=False)
+anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=10, blit=False)
 
 #tester si juste ça ça passe déjà
-#animation.save("rivière.mp4")
+#FFwriter = animation.FFMpegWriter()
+#anim.save('animation.mp4', writer = FFwriter, fps=10)
 
 plt.show()

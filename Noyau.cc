@@ -196,7 +196,7 @@ void ecoulementPlat(int w, double temps){
 						conc = 0;
 					}
 					eau->getPolluant()->setMasse(conc);
-					cout << "conc après " << eau->getPolluant()->getMasse() << endl;
+					//cout << "conc après " << eau->getPolluant()->getMasse() << endl;
 					transvaser = 0;
 				}
 				//cout << " profondeur transmise aaaaa "<< eau2->getProfondeur() << endl;

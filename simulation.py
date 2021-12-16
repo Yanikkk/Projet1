@@ -38,10 +38,20 @@ plt.figtext(0, 1, textstr, fontsize = 8)
 #plt.grid(True)
 
 #retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
+'''
 X_eau = np.array(Noyau.coord_X("EAU"))
 Y_eau = np.array(Noyau.coord_Y("EAU"))
 Z_eau = np.array(Noyau.coord_Z("EAU"))
 couleur_eau = np.array(Noyau.getCouleur_eau())
+'''
+X_eau_pure = np.array(Noyau.coord_X("EAU"))
+Y_eau_pure = np.array(Noyau.coord_Y("EAU"))
+Z_eau_pure = np.array(Noyau.coord_Z("EAU"))
+X_eau_pollue = np.array(Noyau.coord_X("EAU_POLLUE"))
+Y_eau_pollue = np.array(Noyau.coord_Y("EAU_POLLUE"))
+Z_eau_pollue = np.array(Noyau.coord_Z("EAU_POLLUE"))
+couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU")) #on verra la couleur
+couleur_eau_pollue = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
 
 X_sol = np.array(Noyau.coord_X("SOL"))
 Y_sol = np.array(Noyau.coord_Y("SOL"))
@@ -55,17 +65,23 @@ couleur_air = np.array(Noyau.getCouleur_air())
 
 size_case = 30
 
+s_eau_pure = []
+for i in range(len(X_eau_pure)) : 
+	s_eau_pure.append(size_case)
+S_eau_pure = np.array(s_eau_pure)
+s_eau_pure.clear()
+
+s_eau_pollue = []
+for i in range(len(X_eau_pollue)) : 
+	s_eau_pollue.append(size_case)
+S_eau_pollue = np.array(s_eau_pollue)
+s_eau_pollue.clear()
+
 s_sol = []
 for i in range(len(X_sol)) : 
 	s_sol.append(size_case)
 S_sol = np.array(s_sol)
 s_sol.clear()
-
-s_eau = []
-for i in range(len(X_eau)) : 
-	s_eau.append(size_case)
-S_eau = np.array(s_eau)
-s_eau.clear()
 
 s_air = []
 for i in range(len(X_air)) : 
@@ -75,32 +91,12 @@ s_air.clear()
 
 scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = S_sol, alpha=0.3, vmin = 0, vmax = 100)
 scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", marker='s', s = S_air, alpha=0.005, vmin = 0, vmax = 100) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
-scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = S_eau, alpha=0.2, vmin = 0, vmax = 100)
-'''
-def setup_plot():
-	X_eau = Noyau.coord_Xeau()
-	Y_eau = Noyau.coord_Yeau()
-	Z_eau = Noyau.coord_Zeau()
-	couleur_eau = Noyau.getCouleur_eau()
+#scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = S_eau, alpha=0.2, vmin = 0, vmax = 100)
+scatter_eau_pure = ax.scatter(X_eau_pure, Y_eau_pure, Z_eau_pure, c = couleur_eau_pure, cmap = "Blues", marker='s', s = S_eau_pure, alpha=0.2, vmin = 0, vmax = 100)
+if Noyau.Cmap("fer") != 0 : 
+	cmap_pollue = Noyau.Cmap("fer")
+	scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = S_eau_pollue, alpha=0.2, vmin = 0, vmax = 100)
 
-	X_sol = Noyau.coord_Xsol()
-	Y_sol = Noyau.coord_Ysol()
-	Z_sol = Noyau.coord_Zsol()
-	couleur_sol = Noyau.getCouleur_sol()
-
-	X_air = Noyau.coord_Xair()
-	Y_air = Noyau.coord_Yair()
-	Z_air = Noyau.coord_Zair()
-	#couleur_air = Noyau.getCouleur_air() si on fait ?
-
-	scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = 10, alpha=0.3, vmin = 0, vmax = 100)
-	scatter_air = ax.scatter(X_air, Y_air, Z_air, c = 'skyblue', marker='s', s = 10, alpha=0.002) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
-	scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = 10, alpha=0.2, vmin = 0, vmax = 100)
-	
-	scatters = [scatter_sol, scatter_eau, scatter_air]
-	print(X_eau)
-	return scatters
-'''
 
 def change_meteo():
 	if keyboard.is_pressed('j'): #jour (de base)
@@ -138,8 +134,10 @@ def change_taille():
 		size_case += 10
 		for i in range(len(S_sol)) : 
 			S_sol[i] = size_case 
-		for i in range(len(S_eau)) : 
-			S_eau[i] = size_case 
+		for i in range(len(S_eau_pure)) : 
+			S_eau_pure[i] = size_case 
+		for i in range(len(S_eau_pollue)) : 
+			S_eau_pollue[i] = size_case 
 		for i in range(len(S_air)) : 
 			S_air[i] = size_case 
 		time.sleep(0.1)	
@@ -147,8 +145,10 @@ def change_taille():
 		size_case -= 10
 		for i in range(len(S_sol)) : 
 			S_sol[i] = size_case
-		for i in range(len(S_eau)) : 
-			S_eau[i] = size_case
+		for i in range(len(S_eau_pure)) : 
+			S_eau_pure[i] = size_case
+		for i in range(len(S_eau_pollue)) : 
+			S_eau_pollue[i] = size_case
 		for i in range(len(S_air)) : 
 			S_air[i] = size_case
 		time.sleep(0.1)
@@ -175,8 +175,6 @@ def change_taille():
 def animation_frame(i):
 	#fait avancer les cases EAU
 	
-	#tester si ça arrête et redémarre quand on appuie sur space
-	
 	if keyboard.is_pressed('space'):
 		keyboard.wait('space')
 		time.sleep(0.1)
@@ -186,14 +184,18 @@ def animation_frame(i):
 		Noyau.pollution(pollution_state)
 		pollution_state = 0
 	'''
-	#print(i)
+
 	Noyau.ecoulement(i)
 	change_meteo()
 	change_taille()
-	X_eau = np.array(Noyau.coord_X("EAU"))
-	Y_eau = np.array(Noyau.coord_Y("EAU"))
-	Z_eau = np.array(Noyau.coord_Z("EAU"))
-	couleur_eau = np.array(Noyau.getCouleur_eau())
+	X_eau_pure = np.array(Noyau.coord_X("EAU"))
+	Y_eau_pure = np.array(Noyau.coord_Y("EAU"))
+	Z_eau_pure = np.array(Noyau.coord_Z("EAU"))
+	X_eau_pollue = np.array(Noyau.coord_X("EAU_POLLUE"))
+	Y_eau_pollue = np.array(Noyau.coord_Y("EAU_POLLUE"))
+	Z_eau_pollue = np.array(Noyau.coord_Z("EAU_POLLUE"))
+	couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU")) #on verra la couleur
+	couleur_eau_pollue = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
 	
 	X_sol = np.array(Noyau.coord_X("SOL"))
 	Y_sol = np.array(Noyau.coord_Y("SOL"))
@@ -205,14 +207,18 @@ def animation_frame(i):
 	Z_air = np.array(Noyau.coord_Z("AIR"))
 	#couleur_air = Noyau.getCouleur_air() 
 	
-	scatter_eau._offsets3d = (X_eau, Y_eau, Z_eau)
+	#scatter_eau._offsets3d = (X_eau, Y_eau, Z_eau)
+	scatter_eau_pure._offsets3d = (X_eau_pure, Y_eau_pure, Z_eau_pure)
+	scatter_eau_pollue._offsets3d = (X_eau_pollue, Y_eau_pollue, Z_eau_pollue)
 	scatter_sol._offsets3d = (X_sol, Y_sol, Z_sol)
 	scatter_air._offsets3d = (X_air, Y_air, Z_air)
-	scatter_eau.set_array(couleur_eau)
+	scatter_eau_pure.set_array(couleur_eau_pure)
+	scatter_eau_pollue.set_array(couleur_eau_pollue)
 	scatter_air.set_array(couleur_air)
 	
-	#voir si on peut trouver quelque chose qui changera pas la couleur en même temps
-	scatter_eau.set_sizes(S_eau)
+	#scatter_eau.set_sizes(S_eau)
+	scatter_eau_pure.set_sizes(S_eau_pure)
+	scatter_eau_pollue.set_sizes(S_eau_pollue)
 	scatter_air.set_sizes(S_air)
 	scatter_sol.set_sizes(S_sol)
 	
@@ -221,8 +227,7 @@ def animation_frame(i):
 	scatter_sol.stale = True
 	scatter_air.stale = True
 	'''
-	
-	scatters = [scatter_sol, scatter_eau, scatter_air]
+	scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pure, scatter_air]
 	return scatters
 	'''
 	#pour pause -> enlever si on garde l'espace

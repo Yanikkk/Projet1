@@ -26,10 +26,8 @@ public :
      * @brief utilise la formule de Manning Strickler pour déterminer la vitesse de l'eau
      */	
 	void setVitesse();
-	/*double getVitesse() const override;
-	*/
 	
-	void setCouleur() override;
+	void setCouleur();
 	int getProfondeur() const;
 	void setProfondeur(int);
 	void setPolluant(std::string, double, int, double);

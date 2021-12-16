@@ -30,6 +30,9 @@ public :
 	
 	int getCaseDepart() const;
 	
+	void setCouleur();
+	
+	int getCouleur() const;
 	
 	std::string getNom() const; 
 	
@@ -66,6 +69,7 @@ std::string nom_;
 std::string nom_cmap_;
 //où le polluat est déposé en x
 int depot_x_;
+int couleur_;
 
 }; 
 

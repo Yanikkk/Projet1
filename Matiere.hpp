@@ -49,9 +49,6 @@ public :
 	// enlever le virtual non ? on a changé
 	
 	int getCouleur() const; 
-	//virtual void setPolluant_mat(std::string, int, double , int);
-	//virtual Polluant* getPolluant()const;
-	virtual void setCouleur();
 	virtual ~Matiere(){}
 	
 protected : 

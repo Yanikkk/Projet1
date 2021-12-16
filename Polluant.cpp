@@ -6,6 +6,7 @@ Polluant::Polluant(std::string nom,double masse, int depot_x,double vitesse)
 	: nom_(nom), masse_(masse), depot_x_(depot_x), vitesse_(vitesse)
 {
 	setPolluant(nom);
+	setCouleur();
 }
 
 
@@ -22,7 +23,7 @@ void Polluant::setPolluant(std::string nom) {
 			coeff_dispersion_ = 4;
 				
 			break; 
-		case phosphate : 
+		/*case phosphate : 
 			nom_cmap_ = "Greens";	
 			coeff_dispersion_ = 2.0;
 					
@@ -32,7 +33,7 @@ void Polluant::setPolluant(std::string nom) {
 			coeff_dispersion_ = 3.0;
 
 			break; 
-		/*case "petrole" : 
+		case "petrole" : 
 			nom_cmap_ = "Greys"	
 			coeff_dispersion_ = 1.0;
 					
@@ -60,6 +61,40 @@ void Polluant::setMasse(double nouvelle_m){
 }
 double Polluant::getVitesse() const{
 	return vitesse_;
+}
+void Polluant::setCouleur() {
+	//remettre constexpr int si on trouve comment mettre c++11 ?
+	int MIN; 
+	int MAX; 
+	std::random_device rd;
+    std::default_random_engine eng(rd());
+
+
+	if (masse_ > 10.0) {
+		MIN = 80;
+		MAX = 100;
+		std::uniform_int_distribution<int> distr(MIN, MAX);
+		couleur_ = distr(eng);
+	} else if (masse_ > 7.5) {
+		MIN = 60;
+		MAX = 80;
+		std::uniform_int_distribution<int> distr(MIN, MAX);
+		couleur_ = distr(eng);
+	} else if (masse_ > 5.0) {
+		MIN = 40;
+		MAX = 60;
+		std::uniform_int_distribution<int> distr(MIN, MAX);
+		couleur_ = distr(eng);
+	} else {
+		MIN = 20;
+		MAX = 40;
+		std::uniform_int_distribution<int> distr(MIN, MAX);
+		couleur_ = distr(eng);
+	} 
+}
+
+int Polluant::getCouleur() const{
+	return couleur_;
 }
 
 int Polluant::getCaseDepart() const{

@@ -21,7 +21,7 @@ public :
      */
 	Sol(Env* env_param = nullptr, std::string type = "SOL", int profondeur = 0, double vitesse = 0.0);
 	
-	void setCouleur() override;
+	void setCouleur();
 	
 	//Polluant* getPolluant() const;
 		

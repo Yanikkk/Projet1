@@ -25,7 +25,6 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	riviere.initTableau();
 	return Py_BuildValue("i",0);
 }
-//metre constante globale crossSection (voir le site)
 void cleanFirstline(int w){
 	//cout << "case enlevée: "<< w << endl;
 	//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
@@ -142,6 +141,7 @@ void dispersion(vector<double> pollution, Polluant tampon){
 				* */
 				Eau* eau_pollu =(Eau*)riviere.getTableau()[position].getMatiere();
 				eau_pollu->setPolluant(tampon.getNom(),masse, position/crossSection, tampon.getVitesse());
+				eau_pollu->setCouleur();
 				pollution[i+1] = pollution[i+1] - masse;
 			}
 		}
@@ -162,8 +162,7 @@ void ecoulementPlat(int w, double temps){
 	int point_dispersion;
 	Polluant tampon;
 	int transvaser = 0;
-	//int crossSection = riviere.getLargeur()*riviere.getHauteur();
-		if(w/(crossSection)-1 < 0){
+	if(w/(crossSection)-1 < 0){
 			cleanFirstline(w);
 		}else{
 			int profondeur;
@@ -196,6 +195,7 @@ void ecoulementPlat(int w, double temps){
 						conc = 0;
 					}
 					eau->getPolluant()->setMasse(conc);
+					eau.getPolluant().setCouleur();
 					//cout << "conc après " << eau->getPolluant()->getMasse() << endl;
 					transvaser = 0;
 				}
@@ -254,7 +254,7 @@ void ecoulementPalier(int w){
 			
 }
 
-void ecoulement_transversale(int w/*, int crossSection*/){
+void ecoulement_transversale(int w){
 		int profondeur = 0;
 		int profond_actuelle = 0;
 		int profond_suivante = 0;
@@ -301,7 +301,7 @@ void ecoulement_transversale(int w/*, int crossSection*/){
 			}
 }
 
-void parPalier(int q, int w, double temps, double seuil_cumule,/* int crossSection,*/ double vitesse) {
+void parPalier(int q, int w, double temps, double seuil_cumule, double vitesse) {
 		int state = 0;
 		int profondeur = 0;
 		int lastcrossSection = 0;
@@ -381,7 +381,7 @@ void parPalier(int q, int w, double temps, double seuil_cumule,/* int crossSecti
 
 								}
 }
-void simulation_non_conforme(int w/*, int crossSection*/){
+void simulation_non_conforme(int w){
 	int x = w/crossSection;
 	int z = (w -x * riviere.getLargeur() * riviere.getHauteur()) / riviere.getLargeur();
 	int hauteur_eau = riviere.getH_eau()-riviere.getH_sol();
@@ -425,10 +425,9 @@ void erreur_de_palier(){
 		exit(0);
 }
 void detection_erreur(){
-	//int crossSection = riviere.getLargeur() * riviere.getHauteur();
 	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-			simulation_non_conforme(w/*, crossSection*/);
+			simulation_non_conforme(w);
 		}
 	}
 	if(riviere.getTableau()[taille-1].getMatiere()->getType() == "SOL"){
@@ -439,7 +438,6 @@ void detection_erreur(){
 
 double seuil_cumule = 0.0;
 static PyObject * ecoulement(PyObject * self, PyObject * args){
-	//int crossSection = riviere.getLargeur() * riviere.getHauteur();
 	/*!
 	 * On détecte une possible erreur de dimension 
 	 * du tableau ou du palier choisit.
@@ -490,7 +488,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 										seuil_cumule =  1/vitesse;
 									}
 						}else{ continue;}
-							parPalier(q,w, temps, seuil_cumule/*, crossSection */, vitesse);
+							parPalier(q,w, temps, seuil_cumule, vitesse);
 					}
 				}
 			if(temps >= seuil_cumule){
@@ -502,7 +500,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
      * cas palier = 1;
      * */
 		for(int w = 0; w < taille; w++ ){
-					ecoulement_transversale(w/*, crossSection*/);
+					ecoulement_transversale(w);
 		}
 	}else{ 
 			/*!
@@ -518,7 +516,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 										seuil_cumule =  1/vitesse;
 									}
 						}else{ continue;}
-						parPalier(q,w, temps, seuil_cumule,/* crossSection,*/ vitesse);
+						parPalier(q,w, temps, seuil_cumule, vitesse);
 				}
 			}
 				for(int w = taille - caseRestante + crossSection; w < taille; w++){
@@ -577,22 +575,42 @@ static PyObject * pollution(PyObject * self, PyObject * args){
 return Py_BuildValue("i",0);
 }
 
-
 static PyObject * coord_X(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
 	char* matiere;
 	if (! PyArg_ParseTuple(args, "s", &matiere)) return NULL;
-	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == matiere){
-			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
+	if(matiere == "EAU_POLLUE"){
+		for(int w = 0; w < taille; w++){	
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
+				if(eau_pollu->getPolluant() != nullptr){
+					PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
+				}	
+			}
 		}
 	}
+	for(int w = 0; w < taille; w++){
+			if(riviere.getTableau()[w].getMatiere()->getType() == matiere){
+				PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
+			}
+		}
+	
 	return data_animation;
 }
 static PyObject * coord_Y(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
 	char* matiere;
 	if (! PyArg_ParseTuple(args, "s", &matiere)) return NULL;
+	if(matiere == "EAU_POLLUE"){
+		for(int w = 0; w < taille; w++){	
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
+				if(eau_pollu->getPolluant() != nullptr){
+					PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
+				}	
+			}
+		}
+	}
 	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere()->getType() == matiere){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getY()));
@@ -604,6 +622,16 @@ static PyObject * coord_Z(PyObject * self, PyObject * args){
 	PyObject * data_animation = PyList_New(0);
 	char* matiere;
 	if (! PyArg_ParseTuple(args, "s", &matiere)) return NULL;
+	if(matiere == "EAU_POLLUE"){
+		for(int w = 0; w < taille; w++){	
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
+				if(eau_pollu->getPolluant() != nullptr){
+					PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getX()));
+				}	
+			}
+		}
+	}
 	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere()->getType() == matiere){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getZ()));
@@ -630,14 +658,47 @@ static PyObject * getCouleur_air(PyObject * self, PyObject * args){
 	return data_animation;
 }
 static PyObject * getCouleur_eau(PyObject * self, PyObject * args){
+	char* matiere;
+	if (! PyArg_ParseTuple(args, "s", &matiere)) return NULL;
 	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getMatiere()->getCouleur()));
+	if(matiere == "EAU_POLLUE"){
+		for(int w = 0; w < taille; w++){	
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
+				if(eau_pollu->getPolluant() != nullptr){
+					PyList_Append(data_animation, Py_BuildValue("i",eau_pollu->getPolluant()->getCouleur()));
+				}	
+			}
+		}	
+	}
+	if(matiere == "EAU"){
+		for(int w = 0; w < taille; w++){
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getMatiere()->getCouleur()));
+			}
 		}
 	}
 	return data_animation;
 }
+static PyObject * Cmap(PyObject * self, PyObject * args){
+	char* polluant;
+	if (! PyArg_ParseTuple(args, "s", &polluant)) return NULL;
+	PyObject * data_animation = PyList_New(0);
+	if(polluant == "fer"){
+		for(int w = 0; w < taille; w++){	
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
+				if(eau_pollu->getPolluant() != nullptr){
+					if(eau_pollu->getPolluant()->getNom() == "fer"){
+						return Py_BuildValue("s",eau_pollu->getPolluant()->getNom());
+					}
+				}	
+			}
+		}	
+	}
+	return  Py_BuildValue("i",0);
+}
+
 //iii = int int intn
 //liste python marche mais gourmand
 //autre possibilité renvoyer un numpy
@@ -652,6 +713,7 @@ static PyMethodDef methods[] = {
 	{"getCouleur_sol", getCouleur_sol, METH_VARARGS, "Les couleurs des cases de sol"},
 	{"getCouleur_air", getCouleur_air, METH_VARARGS, "Les couleurs des cases d'air"},
 	{"getCouleur_eau", getCouleur_eau, METH_VARARGS, "Les couleurs des cases d'eau"},
+	{"getCmap", getCmap, METH_VARARGS, "Les couleurs de polluant"},
 	//nom en python, nom en C, comment gérer les arguments(voir internet), description de la fonction(no interest
 	{NULL, NULL, 0, NULL}
 	};

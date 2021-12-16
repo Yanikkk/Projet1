@@ -702,8 +702,9 @@ static PyObject * getCouleur_air(PyObject * self, PyObject * args){
 	return data_animation;
 }
 static PyObject * getCouleur_eau(PyObject * self, PyObject * args){
-	char* matiere;
-	if (! PyArg_ParseTuple(args, "s", &matiere)) return NULL;
+	char* m;
+	if (! PyArg_ParseTuple(args, "s", &m)) return NULL;
+	string matiere = m;
 	PyObject * data_animation = PyList_New(0);
 	if(matiere == "EAU_POLLUE"){
 		for(int w = 0; w < taille; w++){	
@@ -737,7 +738,7 @@ static PyObject * Cmap(PyObject * self, PyObject * args){
 				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
 				if(eau_pollu->getPolluant() != nullptr){
 					if(eau_pollu->getPolluant()->getNom() == "fer"){
-						return Py_BuildValue("s",eau_pollu->getPolluant()->getNom().c_str());
+						return Py_BuildValue("s","Reds");
 					}
 				}	
 			}

@@ -53,6 +53,7 @@ Z_air = np.array(Noyau.coord_Z("AIR"))
 couleur_air = np.array(Noyau.getCouleur_air())
 
 size_case = 30
+'''
 s_sol = []
 for i in range(len(X_sol)) : 
 	s_sol.append(size_case)
@@ -70,10 +71,10 @@ for i in range(len(X_air)) :
 	s_air.append(size_case)
 S_air = np.array(s_air)
 s_air.clear()
-
-scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = S_sol, alpha=0.3, vmin = 0, vmax = 100)
-scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", marker='s', s = S_air, alpha=0.005, vmin = 0, vmax = 100) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
-scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = S_eau, alpha=0.2, vmin = 0, vmax = 100)
+'''
+scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = size_case, alpha=0.3, vmin = 0, vmax = 100)
+scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", marker='s', s = size_case, alpha=0.005, vmin = 0, vmax = 100) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
+scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = size_case, alpha=0.2, vmin = 0, vmax = 100)
 '''
 def setup_plot():
 	X_eau = Noyau.coord_Xeau()
@@ -129,30 +130,46 @@ def change_meteo():
 				j += 1
 			compteur += 1
 			couleur_air[i] = j
-'''
+
 def change_taille():
 	global size_case
 	if keyboard.is_pressed('up') : 
 		size_case += 10
+		'''
 		for i in range(len(S_sol)) : 
 			S_sol[i] = size_case 
 		for i in range(len(S_eau)) : 
 			S_eau[i] = size_case 
 		for i in range(len(S_air)) : 
 			S_air[i] = size_case 
+		'''
 	if keyboard.is_pressed('down') and size_case >= 10 : 
 		size_case -= 10
+		'''
 		for i in range(len(S_sol)) : 
 			S_sol[i] = size_case
 		for i in range(len(S_eau)) : 
 			S_eau[i] = size_case
 		for i in range(len(S_air)) : 
 			S_air[i] = size_case
-'''
+		'''
 
 #test avec le fer
 
+'''
+	#décale tout animation_frame dans cette fonction
+	def run_animation():
+		anim_running = True
 
+		def onClick(event):
+			nonlocal anim_running
+			if anim_running:
+				anim.event_source.stop()
+				anim_running = False
+			else:
+				anim.event_source.start()
+				anim_running = True
+'''
 
 def animation_frame(i):
 	#fait avancer les cases EAU
@@ -161,6 +178,7 @@ def animation_frame(i):
 	'''
 	if keyboard.is_pressed('space'):
 		keyboard.wait('space')
+		break
 	'''
 	'''
 	if pollution_state == 1:
@@ -170,7 +188,7 @@ def animation_frame(i):
 	
 	Noyau.ecoulement(i)
 	change_meteo()
-	#change_taille()
+	change_taille()
 	X_eau = np.array(Noyau.coord_X("EAU"))
 	Y_eau = np.array(Noyau.coord_Y("EAU"))
 	Z_eau = np.array(Noyau.coord_Z("EAU"))
@@ -196,6 +214,11 @@ def animation_frame(i):
 	scatter_air.set_array(S_air)
 	scatter_sol.set_array(S_sol)
 	'''
+	#tester (si marche pas comme ça mettre le SizeData aux 3 scatter avant et remettre les tableau à la place de size_case)
+	global size_case
+	scatter_air.SizeData = size_case
+	scatter_eau.SizeData = size_case
+	scatter_sol.SizeData = size_case
 
 	'''
 	scatter_eau.stale = True
@@ -205,6 +228,12 @@ def animation_frame(i):
 	
 	scatters = [scatter_sol, scatter_eau, scatter_air]
 	return scatters
-
+	'''
+	fig.canvas.mpl_connect('button_press_event', onClick)
+	'''
 animation = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=10, blit=False)
+
+#tester si juste ça ça passe déjà
+#animation.save("rivière.mp4")
+
 plt.show()

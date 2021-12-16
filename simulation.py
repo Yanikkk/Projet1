@@ -14,7 +14,6 @@ longueur = 12
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
 	
-
 #initialise le tableau/environnement
 
 Noyau.initialisation(largeur, hauteur, longueur)
@@ -22,8 +21,8 @@ Noyau.pollution(1)
 
 # Graphe 3D
 from mpl_toolkits.mplot3d import Axes3D
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+fig = plt.figure(1)
+ax = fig.add_subplot(121, projection='3d')
 
 ax.set_title('Belle rivière !')
 ax.set_xlabel('Longueur')
@@ -89,14 +88,16 @@ for i in range(len(X_air)) :
 S_air = np.array(s_air)
 s_air.clear()
 
+if Noyau.Cmap("fer") != 0 : 
+	cmap_pollue = Noyau.Cmap("fer")
+else :
+	cmap_pollue = "Greys"
+
 scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = S_sol, alpha=0.3, vmin = 0, vmax = 100)
 scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", marker='s', s = S_air, alpha=0.005, vmin = 0, vmax = 100) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
 #scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = S_eau, alpha=0.2, vmin = 0, vmax = 100)
 scatter_eau_pure = ax.scatter(X_eau_pure, Y_eau_pure, Z_eau_pure, c = couleur_eau_pure, cmap = "Blues", marker='s', s = S_eau_pure, alpha=0.2, vmin = 0, vmax = 100)
-
-if Noyau.Cmap("fer") != 0 : 
-	cmap_pollue = Noyau.Cmap("fer")
-	scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = S_eau_pollue, alpha=0.2, vmin = 0, vmax = 100)
+scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = S_eau_pollue, alpha=0.2, vmin = 0, vmax = 100)
 
 def change_meteo():
 	if keyboard.is_pressed('j'): #jour (de base)
@@ -244,4 +245,37 @@ anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), i
 #FFwriter = animation.FFMpegWriter()
 #anim.save('animation.mp4', writer = FFwriter, fps=10)
 
+#plt.show()
+
+'''
+DEUXIEME GRAPHIQUE
+'''
+
+fig2 = plt.figure(1)
+ax2 = fig2.add_subplot(122, projection='3d')
+ax2.set_title('Beau Polluant !')
+ax2.set_xlabel('Longueur')
+ax2.set_xlim(0,40)
+ax2.set_ylabel('Largeur')
+ax2.set_ylim(-5,25)
+ax2.set_zlabel('Hauteur')
+ax2.set_zlim(0,40)
+
+if Noyau.Cmap("fer") != 0 :
+	cmap_pollue = Noyau.Cmap("fer")
+else :
+	cmap_pollue = "Greys"
+
+scatter_eau_pollue2 = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = S_eau_pollue, alpha=0.2, vmin = 0, vmax = 100)
+
+anim2 = FuncAnimation(fig2, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=100, blit=False)
+
 plt.show()
+
+
+
+
+
+
+
+

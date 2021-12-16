@@ -7,9 +7,9 @@ from matplotlib.animation import FuncAnimation
 import keyboard
 import time
 
-largeur = 2
-hauteur = 5
-longueur = 12
+largeur = 1
+hauteur = 4
+longueur = 5
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -197,17 +197,14 @@ def animation_frame(i):
 	Z_eau_pollue = np.array(Noyau.coord_Z("EAU_POLLUE"))
 	couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU")) #on verra la couleur
 	couleur_eau_pollue = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
-	
 	X_sol = np.array(Noyau.coord_X("SOL"))
 	Y_sol = np.array(Noyau.coord_Y("SOL"))
 	Z_sol = np.array(Noyau.coord_Z("SOL"))
 	couleur_sol = np.array(Noyau.getCouleur_sol())
-
 	X_air = np.array(Noyau.coord_X("AIR"))
 	Y_air = np.array(Noyau.coord_Y("AIR"))
 	Z_air = np.array(Noyau.coord_Z("AIR"))
 	#couleur_air = Noyau.getCouleur_air() 
-	
 	#scatter_eau._offsets3d = (X_eau, Y_eau, Z_eau)
 	scatter_eau_pure._offsets3d = (X_eau_pure, Y_eau_pure, Z_eau_pure)
 	#scatter_eau_pollue._offsets3d = (X_eau_pollue, Y_eau_pollue, Z_eau_pollue)
@@ -216,7 +213,6 @@ def animation_frame(i):
 	scatter_eau_pure.set_array(couleur_eau_pure)
 	#scatter_eau_pollue.set_array(couleur_eau_pollue)
 	scatter_air.set_array(couleur_air)
-	
 	#scatter_eau.set_sizes(S_eau)
 	scatter_eau_pure.set_sizes(S_eau_pure)
 	#scatter_eau_pollue.set_sizes(S_eau_pollue)
@@ -231,8 +227,22 @@ def animation_frame(i):
 	scatter_sol.stale = True
 	scatter_air.stale = True
 	'''
-
-	if Noyau.Cmap("fer") != 0 : 
+	if Noyau.Cmap("fer") != 0 :
+		print("----DD-----")
+		print(X_eau_pollue)
+		print("---------")
+		print(X_eau_pure) 
+		print("-----b----")
+		print("----c----")
+		print(Y_eau_pollue)
+		print("---------")
+		print(Y_eau_pure) 
+		print("----s----")
+		print("----c----")
+		print(Z_eau_pollue)
+		print("---------")
+		print(Z_eau_pure) 
+		print("----DD----")
 		scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pure, scatter_air]
 	scatters = [scatter_sol, scatter_eau_pure, scatter_air]
 	return scatters

@@ -434,12 +434,6 @@ void erreur_de_palier(){
 void detection_erreur(){
 	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-			////////////////////////////
-				Eau* eau =(Eau*)riviere.getTableau()[w].getMatiere();
-				if(eau->getPolluant() != nullptr){
-					cout << "DDDDD "<< w << " DDDDDDD  " << eau->getPolluant() << endl;
-				}
-				///////////////////////////
 			simulation_non_conforme(w);
 		}
 	}

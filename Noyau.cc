@@ -720,7 +720,7 @@ static PyObject * Cmap(PyObject * self, PyObject * args){
 				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
 				if(eau_pollu->getPolluant() != nullptr){
 					if(eau_pollu->getPolluant()->getNom() == "fer"){
-						return Py_BuildValue("s",eau_pollu->getPolluant()->getNom());
+						return Py_BuildValue("s",eau_pollu->getPolluant()->getNom().c_str());
 					}
 				}	
 			}

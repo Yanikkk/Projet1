@@ -114,8 +114,8 @@ int alea_pos(int i){
 	return position;
 }
 double alea_conc(double conce){
-	if(conce < 1e-5){
-		return conce;
+	if(conce < 1e-10){
+		return conce = 0.0;
 	}
 	return conce *(rand() % 50)/100;
 }
@@ -192,7 +192,7 @@ void ecoulementPlat(int w, double temps){
 				//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 				//la case qui a avancé contient la concentration initiale, on garde seulement la masse de polluant qui a avancé tout droit.
 				if(transvaser == 1){
-					if(conc < 1e-5){
+					if(conc < 1e-10){
 						conc = 0;
 					}
 					eau->getPolluant()->setMasse(conc);

@@ -129,6 +129,7 @@ def change_meteo():
 			compteur += 1
 			couleur_air[i] = j
 
+
 def change_taille():
 	global size_case
 	if keyboard.is_pressed('up') : 
@@ -153,7 +154,7 @@ def change_taille():
 		for i in range(len(S_air)) : 
 			S_air[i] = size_case
 		time.sleep(0.1)
-		
+	
 
 #test avec le fer
 
@@ -187,8 +188,8 @@ def animation_frame(i):
 	'''
 
 	Noyau.ecoulement(i)
-	change_meteo()
-	change_taille()
+	#change_meteo()
+	#change_taille()
 	X_eau_pure = np.array(Noyau.coord_X("EAU"))
 	Y_eau_pure = np.array(Noyau.coord_Y("EAU"))
 	Z_eau_pure = np.array(Noyau.coord_Z("EAU"))

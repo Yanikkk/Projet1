@@ -230,7 +230,9 @@ def animation_frame(i):
 	scatter_sol.stale = True
 	scatter_air.stale = True
 	'''
-	scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pure, scatter_air]
+	if Noyau.Cmap("fer") != 0 : 
+		scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pure, scatter_air]
+	scatters = [scatter_sol, scatter_eau_pure, scatter_air]
 	return scatters
 	'''
 	#pour pause -> enlever si on garde l'espace

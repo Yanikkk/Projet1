@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Polluant.hpp"
+#include <random>
 using namespace std;
 
 Polluant::Polluant(std::string nom,double masse, int depot_x,double vitesse) 

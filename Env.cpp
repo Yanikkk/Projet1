@@ -54,9 +54,10 @@ Matiere* Env::creation(int w, int profondeur){
 
 void Env::writeCSV(){
 	std::ofstream myfile;
-	myfile.open("river_Data.csv");
-	myfile << "X,Y,Z,Vitesse,Matiere,Surface mouillee riviere\n";
+	myfile.open("river_Data.csv"); // adapter
+	myfile << "X,Y,Z,Vitesse,Matiere,Surface mouillee riviere\n"; // adapter
 	for(int i = 0; i< hauteur_ * largeur_ * longueur_; i++){
+	/*
 	myfile << tableau_[i].getX() <<","<< tableau_[i].getY() << "," << tableau_[i].getZ();
 		if(tableau_[i].matiere_->getType() == "EAU"){
 			myfile <<","<< tableau_[i].matiere_->getVitesse();
@@ -64,8 +65,18 @@ void Env::writeCSV(){
 			myfile <<", -";
 		}// chaque case 1mx1m => surface en [m^2]
 		myfile << "," << tableau_[i].matiere_->getType()<< "," << largeur_ * (h_eau_ - h_sol_)<< "\n";
+	*/
+	/*	if(tableau_[i].matiere_->getType() == "EAU"){
+			myfile << tableau_[i].getX() <<","<< tableau_[i].getY() << "," << tableau_[i].getZ();
+			Eau* eau_pollu =(Eau*)tableau_[i].matiere_;
+			if(eau_pollu->getPolluant() != nullptr){
+				myfile << "," << eau_pollu->getPolluant()->getNom() << eau_pollu->getPolluant()->getMasse() << "\n";
+			}
+		}	
+	*/	
 	}
-	//mettre string en attribut matière de si "EAU" "SOL" ou "AIR" puis dans python lire ce string et en déduire une couleur
+	// appel read csv (avec 4 pour la colonne et toutes les lignes sauf la première) et read csv (ou une autre fonction) s'occupe de calculer la somme de la colonne 4 en fonction du nom
+	// qui est en colonne 3 et cout sur le terminal quantité total de "nom (fer)" = "somme" ; "nom2" = "somme2" ; etc. 
 	myfile.close();
 	
 }

@@ -8,8 +8,8 @@ import keyboard
 import time
 
 largeur = 10
-hauteur = 10
-longueur = 20
+hauteur = 5
+longueur = 12
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -288,7 +288,7 @@ def animation_frame(i):
 	#if Noyau.Cmap("fer") != 0 :
 	scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pollue_bis, scatter_eau_pure, scatter_air]
 	#scatters = [scatter_sol, scatter_eau_pure, scatter_air]
-	
+	'''
 	print("----DD-----")
 	#print(X_eau_pollue)
 	print(len(X_eau_pollue))
@@ -308,7 +308,7 @@ def animation_frame(i):
 	print(len(couleur_eau_pure))
 	print(len(S_eau_pure))
 	print("----DD----")
-	
+	'''
 	
 	return scatters
 	'''

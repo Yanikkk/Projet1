@@ -55,7 +55,7 @@ Matiere* Env::creation(int w, int profondeur){
 
 void Env::writeCSV(){
 	std::ofstream myfile;
-	myfile.open("river_Data.csv"); // adapter
+	myfile.open("pollution_Data.csv"); // adapter
 	myfile << "X,Y,Z,Vitesse,Matiere,Surface mouillee riviere\n"; // adapter
 	for(int i = 0; i< hauteur_ * largeur_ * longueur_; i++){
 	/*

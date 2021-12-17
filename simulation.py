@@ -188,8 +188,8 @@ def animation_frame(i):
 	'''
 
 	Noyau.ecoulement(i)
-	#change_meteo()
-	#change_taille()
+	change_meteo()
+	change_taille()
 	X_eau_pure = np.array(Noyau.coord_X("EAU"))
 	Y_eau_pure = np.array(Noyau.coord_Y("EAU"))
 	Z_eau_pure = np.array(Noyau.coord_Z("EAU"))
@@ -216,38 +216,43 @@ def animation_frame(i):
 	scatter_air.set_array(couleur_air)
 	#scatter_eau.set_sizes(S_eau)
 	scatter_eau_pure.set_sizes(S_eau_pure)
-	#scatter_eau_pollue.set_sizes(S_eau_pollue)
+	scatter_eau_pollue.set_sizes(S_eau_pollue)
 	scatter_air.set_sizes(S_air)
 	scatter_sol.set_sizes(S_sol)
-	if Noyau.Cmap("fer") != 0 : 
-		scatter_eau_pollue._offsets3d = (X_eau_pollue, Y_eau_pollue, Z_eau_pollue)
-		scatter_eau_pollue.set_array(couleur_eau_pollue)
-		scatter_eau_pollue.set_sizes(S_eau_pollue)
+	#if Noyau.Cmap("fer") != 0 : 
+	scatter_eau_pollue._offsets3d = (X_eau_pollue, Y_eau_pollue, Z_eau_pollue)
+	scatter_eau_pollue.set_array(couleur_eau_pollue)
+	scatter_eau_pollue.set_sizes(S_eau_pollue)
 	'''
 	scatter_eau.stale = True
 	scatter_sol.stale = True
 	scatter_air.stale = True
 	'''
-	if Noyau.Cmap("fer") != 0 :
-		'''
-		print("----DD-----")
-		print(X_eau_pollue)
-		print("---------")
-		print(X_eau_pure) 
-		print("-----b----")
-		print("----c----")
-		print(Y_eau_pollue)
-		print("---------")
-		print(Y_eau_pure) 
-		print("----s----")
-		print("----c----")
-		print(Z_eau_pollue)
-		print("---------")
-		print(Z_eau_pure) 
-		print("----DD----")
-		'''
-		scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pure, scatter_air]
-	scatters = [scatter_sol, scatter_eau_pure, scatter_air]
+	#if Noyau.Cmap("fer") != 0 :
+	scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pure, scatter_air]
+	#scatters = [scatter_sol, scatter_eau_pure, scatter_air]
+	
+	print("----DD-----")
+	print(X_eau_pollue)
+	print(len(X_eau_pollue))
+	print(Y_eau_pollue)
+	print(len(Y_eau_pollue))
+	print(Z_eau_pollue)
+	print(len(Z_eau_pollue))
+	print(len(couleur_eau_pollue))
+	print(len(S_eau_pollue))
+	print("---------")
+	print(X_eau_pure) 
+	print(len(X_eau_pure))
+	print(Y_eau_pure) 
+	print(len(Y_eau_pure))
+	print(Z_eau_pure) 
+	print(len(Z_eau_pure))
+	print(len(couleur_eau_pure))
+	print(len(S_eau_pure))
+	print("----DD----")
+	
+	
 	return scatters
 	'''
 	#pour pause -> enlever si on garde l'espace

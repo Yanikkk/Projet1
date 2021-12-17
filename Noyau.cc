@@ -737,7 +737,7 @@ static PyObject * Cmap(PyObject * self, PyObject * args){
 					}
 				}	
 			}
-		}	
+		}cout << "a" << endl;
 	}
 	return  Py_BuildValue("i",0);
 }

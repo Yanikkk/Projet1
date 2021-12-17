@@ -71,22 +71,22 @@ void Polluant::setCouleur() {
     std::default_random_engine eng(rd());
 
 
-	if (masse_ >= 10.0) {
+	if (masse_ >= 1.0) {
 		MIN = 85;
 		MAX = 100;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
-	} else if (masse_ > 8.0) {
+	} else if (masse_ > 0.1) {
 		MIN = 70;
 		MAX = 84;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
-	} else if (masse_ > 6.0) {
+	} else if (masse_ > 0.01) {
 		MIN = 55;
 		MAX = 69;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
-	} else if (masse_ > 4.0) {
+	} else if (masse_ > 0.001) {
 		MIN = 40;
 		MAX = 54;
 		std::uniform_int_distribution<int> distr(MIN, MAX);

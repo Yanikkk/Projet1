@@ -5,12 +5,14 @@
 Air::Air(Env* env_param, std::string type, double vitesse)
 	:Matiere(env_param, type, vitesse)
 {
-	//setCouleur();
+	setCouleur();
 }
 
-/*
+
 void Air::setCouleur() {
 
+	couleur_ = 30;
+	/* 
 	if ((GetKeyState(112) & 0x8000) == 1) { // p luie
 		couleur_ = 15;	
 	} else if ((GetKeyState(98) & 0x8000) == 1) { // b rouillard
@@ -23,5 +25,6 @@ void Air::setCouleur() {
 		couleur_ = 75;
 	}
 	// peut-être pas besoin les == 1
+	*/
 }
-*/
+

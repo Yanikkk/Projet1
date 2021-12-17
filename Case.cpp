@@ -55,8 +55,6 @@ void Case::initMatiere() {
 	
 	} else if( z_ <= env->getH_eau()) {
 		//std::cout << "eau" << std::endl;
-		
-		
 		matiere_ = new Eau(env,"EAU", z_ - env->getH_sol());
 	} else {
 		//std::cout << "air" << std::endl;

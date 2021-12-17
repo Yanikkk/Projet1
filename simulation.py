@@ -9,7 +9,7 @@ import time
 
 largeur = 10
 hauteur = 5
-longueur = 12
+longueur = 14
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -17,7 +17,7 @@ longueur = 12
 #initialise le tableau/environnement
 
 Noyau.initialisation(largeur, hauteur, longueur)
-Noyau.pollution(1)
+#Noyau.pollution(1)
 
 # Graphe 3D
 from mpl_toolkits.mplot3d import Axes3D

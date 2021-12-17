@@ -30,9 +30,9 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	return Py_BuildValue("i",0);
 }
 void cleanFirstline(int w){
-	cout << "case enlevée: "<< w << endl;
-	cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-	cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+	//cout << "case enlevée: "<< w << endl;
+	//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+	//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 	delete riviere.getTableau()[w].getMatiere();
 	riviere.getTableau()[w].setMatiere(nullptr);
 }
@@ -357,7 +357,7 @@ void parPalier(int q, int w, double temps, double seuil_cumule, double vitesse) 
 											//cout << " profondeur calculée "<< profondeur << endl;
 											Eau* eau =(Eau*)riviere.getTableau()[q-crossSection].getMatiere();
 											eau->setProfondeur(profondeur);
-											cout << "case enlevée: "<< q << endl;
+											//cout << "case enlevée: "<< q << endl;
 											//cout << "couleur de la case enlevée: "<<riviere.getTableau()[q].getMatiere()->getCouleur()<< endl;
 											//cout <<"type de la case enelvée: " << riviere.getTableau()[q].getMatiere()->getType() << endl;
 											riviere.getTableau()[q].setMatiere(nullptr);
@@ -576,9 +576,6 @@ static PyObject * pollution(PyObject * self, PyObject * args){
 		Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
 		eau_pollu->setPolluant("fer", 10.0, riviere.getLongueur() -1, eau_pollu->getVitesse());
 	}
-	
-	
-	
 return Py_BuildValue("i",0);
 }
 
@@ -737,7 +734,7 @@ static PyObject * Cmap(PyObject * self, PyObject * args){
 					}
 				}	
 			}
-		}cout << "a" << endl;
+		}
 	}
 	return  Py_BuildValue("i",0);
 }

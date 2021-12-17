@@ -74,7 +74,6 @@ void Env::writeCSV(){
 				myfile << "," << eau_pollu->getPolluant()->getNom() << eau_pollu->getPolluant()->getMasse() << "\n";
 			}
 		}	
-		
 	}
 	// appel read csv (avec 4 pour la colonne et toutes les lignes sauf la première) et read csv (ou une autre fonction) s'occupe de calculer la somme de la colonne 4 en fonction du nom
 	// qui est en colonne 3 et cout sur le terminal quantité total de "nom (fer)" = "somme" ; "nom2" = "somme2" ; etc. 

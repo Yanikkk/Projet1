@@ -31,8 +31,8 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 }
 void cleanFirstline(int w){
 	cout << "case enlevée: "<< w << endl;
-	//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
-	//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
+	cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
+	cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 	delete riviere.getTableau()[w].getMatiere();
 	riviere.getTableau()[w].setMatiere(nullptr);
 }
@@ -203,7 +203,8 @@ void ecoulementPlat(int w, double temps){
 					}*/
 					eau->getPolluant()->setMasse(conc);
 					eau->getPolluant()->setCouleur();;
-					//cout << "conc après " << eau->getPolluant()->getMasse() << endl;
+					cout << "case avec polluant après" << w-crossSection << endl;
+					cout << "conc après " << eau->getPolluant()->getMasse() << endl;
 					transvaser = 0;
 				}
 				//cout << " profondeur transmise aaaaa "<< eau2->getProfondeur() << endl;

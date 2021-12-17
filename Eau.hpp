@@ -33,6 +33,7 @@ public :
 	void setPolluant(std::string, double, int, double);
 	Polluant* getPolluant()const;
 	~Eau(){
+		cout << "AdA" << endl;
 		delete polluant_;
 		polluant_ = nullptr;}
 	

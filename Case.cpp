@@ -36,7 +36,7 @@ int Case::getZ() const{
 	return z_;
 }
 void Case::setMatiere(Matiere* a){
-		matiere_ = a;
+	matiere_ = a;
 }
 
 Matiere* Case::creation(int w, int profondeur){	

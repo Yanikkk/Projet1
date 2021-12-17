@@ -4,7 +4,7 @@ import Noyau
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-#import keyboard
+import keyboard
 import time
 
 largeur = 2
@@ -123,7 +123,7 @@ scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c
 '''
 FIN DEUXIEME GRAPHIQUE
 '''
-'''
+
 def change_meteo():
 	if keyboard.is_pressed('j'): #jour (de base)
 		for i in range(len(couleur_air)): 
@@ -183,7 +183,7 @@ def change_taille():
 			S_air[i] = size_case
 		
 		time.sleep(0.1)
-'''
+
 
 #test avec le fer
 
@@ -206,11 +206,11 @@ def change_taille():
 
 def animation_frame(i):
 	#fait avancer les cases EAU
-	'''
+	
 	if keyboard.is_pressed('space'):
 		keyboard.wait('space')
 		time.sleep(0.1)
-	'''
+	
 	'''
 	if pollution_state == 1:
 		Noyau.pollution(pollution_state)
@@ -218,8 +218,8 @@ def animation_frame(i):
 	'''
 
 	Noyau.ecoulement(i)
-	#change_meteo()
-	#change_taille()
+	change_meteo()
+	change_taille()
 	X_eau_pure = np.array(Noyau.coord_X("EAU"))
 	Y_eau_pure = np.array(Noyau.coord_Y("EAU"))
 	Z_eau_pure = np.array(Noyau.coord_Z("EAU"))

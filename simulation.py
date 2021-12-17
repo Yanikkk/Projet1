@@ -7,9 +7,9 @@ from matplotlib.animation import FuncAnimation
 import keyboard
 import time
 
-largeur = 2
-hauteur = 5
-longueur = 12
+largeur = 20
+hauteur = 30
+longueur = 40
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -62,7 +62,7 @@ Y_air = np.array(Noyau.coord_Y("AIR"))
 Z_air = np.array(Noyau.coord_Z("AIR"))
 couleur_air = np.array(Noyau.getCouleur_air())
 
-size_case = 30
+size_case = 10
 
 s_eau_pure = []
 for i in range(len(X_eau_pure)) : 
@@ -97,7 +97,7 @@ scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", 
 scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", marker='s', s = S_air, alpha=0.005, vmin = 0, vmax = 100) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
 #scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = S_eau, alpha=0.2, vmin = 0, vmax = 100)
 scatter_eau_pure = ax.scatter(X_eau_pure, Y_eau_pure, Z_eau_pure, c = couleur_eau_pure, cmap = "Blues", marker='s', s = S_eau_pure, alpha=0.2, vmin = 0, vmax = 100)
-scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = S_eau_pollue, alpha=0.8, edgecolors = "black", vmin = 0, vmax = 100)
+scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = S_eau_pollue, alpha=0.8, vmin = 0, vmax = 100)
 
 '''
 DEUXIEME GRAPHIQUE
@@ -118,7 +118,7 @@ if Noyau.Cmap("fer") != 0 :
 else :
 	cmap_pollue = "Greys"
 
-scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = S_eau_pollue, alpha=0.8, edgecolors = "black", vmin = 0, vmax = 100)
+scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = S_eau_pollue, alpha=0.8, vmin = 0, vmax = 100)
 
 '''
 FIN DEUXIEME GRAPHIQUE
@@ -158,7 +158,7 @@ def change_meteo():
 def change_taille():
 	global size_case
 	if keyboard.is_pressed('up') : 
-		size_case += 10
+		size_case += 5
 		
 		for i in range(len(S_sol)) : 
 			S_sol[i] = size_case 
@@ -170,8 +170,8 @@ def change_taille():
 			S_air[i] = size_case 
 		
 		time.sleep(0.1)	
-	if keyboard.is_pressed('down') and size_case > 10 : 
-		size_case -= 10
+	if keyboard.is_pressed('down') and size_case > 5 : 
+		size_case -= 5
 		
 		for i in range(len(S_sol)) : 
 			S_sol[i] = size_case

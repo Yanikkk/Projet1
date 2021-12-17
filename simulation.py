@@ -237,7 +237,7 @@ def animation_frame(i):
 	#if Noyau.Cmap("fer") != 0 :
 	scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pure, scatter_air]
 	#scatters = [scatter_sol, scatter_eau_pure, scatter_air]
-	
+	'''
 	print("----DD-----")
 	print(X_eau_pollue)
 	print(len(X_eau_pollue))
@@ -257,7 +257,7 @@ def animation_frame(i):
 	print(len(couleur_eau_pure))
 	#print(len(S_eau_pure))
 	print("----DD----")
-	
+	'''
 	
 	return scatters
 	'''

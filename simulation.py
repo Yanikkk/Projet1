@@ -7,9 +7,9 @@ from matplotlib.animation import FuncAnimation
 import keyboard
 import time
 
-largeur = 1
-hauteur = 4
-longueur = 5
+largeur = 10
+hauteur = 5
+longueur = 12
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -226,6 +226,8 @@ def animation_frame(i):
 	#if Noyau.Cmap("fer") != 0 : 
 	scatter_eau_pollue._offsets3d = (X_eau_pollue, Y_eau_pollue, Z_eau_pollue)
 	scatter_eau_pollue.set_array(couleur_eau_pollue)
+	scatter_eau_pollue_bis._offsets3d = (X_eau_pollue, Y_eau_pollue, Z_eau_pollue)
+	scatter_eau_pollue_bis.set_array(couleur_eau_pollue)
 	#scatter_eau_pollue.set_sizes(S_eau_pollue)
 	'''
 	scatter_eau.stale = True
@@ -289,7 +291,7 @@ if Noyau.Cmap("fer") != 0 :
 else :
 	cmap_pollue = "Greys"
 
-scatter_eau_pollue2 = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = size_case, alpha=0.2, vmin = 0, vmax = 100)
+scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = size_case, alpha=0.2, vmin = 0, vmax = 100)
 
 anim2 = FuncAnimation(fig2, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=100, blit=False)
 

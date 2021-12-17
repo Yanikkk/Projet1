@@ -215,6 +215,7 @@ def animation_frame(i):
 	if pollution_state == 1:
 		Noyau.pollution(pollution_state)
 		pollution_state = 0
+		
 	'''
 
 	Noyau.ecoulement(i)

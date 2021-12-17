@@ -64,7 +64,7 @@ double Polluant::getVitesse() const{
 	return vitesse_;
 }
 void Polluant::setCouleur() {
-	//remettre constexpr int si on trouve comment mettre c++11 ?
+	//remettre constexpr int si on trouve comment mettre c++11  ?
 	int MIN; 
 	int MAX; 
 	std::random_device rd;

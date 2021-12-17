@@ -31,7 +31,7 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	return Py_BuildValue("i",0);
 }
 void cleanFirstline(int w){
-	//cout << "case enlevée: "<< w << endl;
+	cout << "case enlevée: "<< w << endl;
 	//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
 	//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 	delete riviere.getTableau()[w].getMatiere();
@@ -132,6 +132,8 @@ double alea_conc(double/* * */ conce){
 	return (/* * */conce) *(rand() % 50)/100;
 }
 void dispersion(/*vector<double*> pollution,*/ Polluant tampon){
+	//juste faire boucle for et tcheck les point de dispersion, si position = point de dispertion
+	//alors le polluant s'ajoute
 	int position = 0;
 	double masse = 0;
 	/*!
@@ -260,12 +262,14 @@ void ecoulementPlat(int w, double temps/*, vector<double*> pollution*/){
 		cout << "----------------------" << endl;
 		exit(0);
 	}
-	if(w == last_eau() ){
+	if(pollution_tab.size() != 0){
+		if(w == last_eau() ){
 	//	cout << "rentre" << endl;
 				//! si toutes les cases ont avancées, alors on peut disperser les polluant
 		
 	//	cout << " avec: " << pollution_tab.size() << endl;
 				dispersion(/*pollution,*/ tampon);
+		}
 	}
 }
 

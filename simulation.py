@@ -7,9 +7,9 @@ from matplotlib.animation import FuncAnimation
 import keyboard
 import time
 
-largeur = 20
-hauteur = 30
-longueur = 40
+largeur = 2
+hauteur = 5
+longueur = 12
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -260,7 +260,7 @@ def animation_frame(i):
 		s_air.append(size_case)
 	S_air = np.array(s_air)
 	s_air.clear()
-	print(couleur_eau_pollue)
+	#print(couleur_eau_pollue)
 	#scatter_eau._offsets3d = (X_eau, Y_eau, Z_eau)
 	scatter_eau_pure._offsets3d = (X_eau_pure, Y_eau_pure, Z_eau_pure)
 	scatter_sol._offsets3d = (X_sol, Y_sol, Z_sol)

@@ -7,9 +7,9 @@ from matplotlib.animation import FuncAnimation
 import keyboard
 import time
 
-largeur = 2
-hauteur = 5
-longueur = 6
+largeur = 20
+hauteur = 30
+longueur = 40
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -17,11 +17,13 @@ longueur = 6
 #initialise le tableau/environnement
 
 Noyau.initialisation(largeur, hauteur, longueur)
-Noyau.pollution(1)
+#Noyau.pollution(1)
 
 # Graphe 3D
 from mpl_toolkits.mplot3d import Axes3D
-fig = plt.figure(1)
+fig = plt.figure()
+plt.gcf().subplots_adjust(left = 0.05, bottom = 0.2,
+                       right = 0.95, top = 1.0, wspace = 0.3, hspace = 0)
 ax = fig.add_subplot(121, projection='3d')
 
 ax.set_title('Belle rivière !')
@@ -32,8 +34,11 @@ ax.set_ylim(-5,25)
 ax.set_zlabel('Hauteur')
 ax.set_zlim(0,40)
 
-textstr = ' Arrêt/Marche : Espace\n\n up : augmente la taille\n des cases\n down : diminue la taille\n des cases\n\n changer la météo : \n\n j = jour (par défaut)\n n = nuit\n b = brouillard\n p = pluie\n r = sunrise\n s = sunset\n w = rainbow\n'
-plt.figtext(0, 1, textstr, fontsize = 8)
+text_pause = '          Arrêt/Marche : Espace\n\n'
+text_up_down = '          up : augmente la taille des cases ; down : diminue la taille des cases\n\n'
+text_meteo = '          Changer la météo : \n                    j = jour (par défaut) ; n = nuit ; b = brouillard ; p = pluie ; r = sunrise ; s = sunset ; w = rainbow\n\n'
+text_polluant = '          Ajouter un polluant : \n                    1 = fer ; 2 = ammonium ; 3 = phosphore \n'
+plt.figtext(0, 0, text_pause+text_up_down+text_meteo+text_polluant, fontsize = 8)
 #plt.grid(True)
 
 #retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
@@ -88,23 +93,25 @@ for i in range(len(X_air)) :
 S_air = np.array(s_air)
 s_air.clear()
 
+'''
 if Noyau.Cmap("fer") != 0 : 
 	cmap_pollue = Noyau.Cmap("fer")
 else :
 	cmap_pollue = "Greys"
+'''
+#Voir si le nom de la cmap dans les attributs de polluant est nécessaire vu qu'on donne direct le nom dans le scatter.
 
 scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = S_sol, alpha=0.3, vmin = 0, vmax = 100)
 scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", marker='s', s = S_air, alpha=0.005, vmin = 0, vmax = 100) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
 #scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = S_eau, alpha=0.2, vmin = 0, vmax = 100)
-scatter_eau_pure = ax.scatter(X_eau_pure, Y_eau_pure, Z_eau_pure, c = couleur_eau_pure, cmap = "Blues", marker='s', s = S_eau_pure, alpha=0.2, vmin = 0, vmax = 100)
-scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = S_eau_pollue, alpha=0.8, vmin = 0, vmax = 100)
+scatter_eau_pure = ax.scatter(X_eau_pure, Y_eau_pure, Z_eau_pure, c = couleur_eau_pure, cmap = "Blues", marker='s', s = S_eau_pure, alpha=0.1, vmin = 0, vmax = 100)
+scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=1.0, vmin = 0, vmax = 100)
 
 '''
 DEUXIEME GRAPHIQUE
 '''
 
-fig2 = plt.figure(1)
-ax2 = fig2.add_subplot(122, projection='3d')
+ax2 = fig.add_subplot(122, projection='3d')
 ax2.set_title('Beau Polluant !')
 ax2.set_xlabel('Longueur')
 ax2.set_xlim(0,40)
@@ -113,12 +120,14 @@ ax2.set_ylim(-5,25)
 ax2.set_zlabel('Hauteur')
 ax2.set_zlim(0,40)
 
+'''
 if Noyau.Cmap("fer") != 0 :
 	cmap_pollue = Noyau.Cmap("fer")
 else :
 	cmap_pollue = "Greys"
+'''
 
-scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = S_eau_pollue, alpha=0.8, vmin = 0, vmax = 100)
+scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=1.0, vmin = 0, vmax = 100)
 
 '''
 FIN DEUXIEME GRAPHIQUE
@@ -203,7 +212,6 @@ def change_taille():
 				anim_running = True
 '''
 
-
 def animation_frame(i):
 	#fait avancer les cases EAU
 	
@@ -211,13 +219,16 @@ def animation_frame(i):
 		keyboard.wait('space')
 		time.sleep(0.1)
 	
+	if keyboard.is_pressed('1'):
+		Noyau.pollution(1)
+		time.sleep(0.15)
+		#je suis chaud de faire qu'il se disperse plus si possible. si c'est juste changer une valeur limite ou quoi. ça rendrait mieux visuellement et physiquement. (la ça reste en petite boule)
 	'''
 	if pollution_state == 1:
 		Noyau.pollution(pollution_state)
 		pollution_state = 0
 		
 	'''
-
 	Noyau.ecoulement(i)
 	change_meteo()
 	change_taille()
@@ -236,7 +247,8 @@ def animation_frame(i):
 	X_air = np.array(Noyau.coord_X("AIR"))
 	Y_air = np.array(Noyau.coord_Y("AIR"))
 	Z_air = np.array(Noyau.coord_Z("AIR"))
-	#couleur_air = Noyau.getCouleur_air() 
+	#couleur_air = Noyau.getCouleur_air()
+	
 	global size_case
 	s_eau_pure = []
 	for i in range(len(X_eau_pure)) : 
@@ -261,6 +273,7 @@ def animation_frame(i):
 		s_air.append(size_case)
 	S_air = np.array(s_air)
 	s_air.clear()
+	
 	#print(couleur_eau_pollue)
 	#scatter_eau._offsets3d = (X_eau, Y_eau, Z_eau)
 	scatter_eau_pure._offsets3d = (X_eau_pure, Y_eau_pure, Z_eau_pure)
@@ -289,7 +302,7 @@ def animation_frame(i):
 	#if Noyau.Cmap("fer") != 0 :
 	scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pollue_bis, scatter_eau_pure, scatter_air]
 	#scatters = [scatter_sol, scatter_eau_pure, scatter_air]
-	
+	'''
 	print("----DD-----")
 	#print(X_eau_pollue)
 	print(len(X_eau_pollue))
@@ -309,14 +322,14 @@ def animation_frame(i):
 	print(len(couleur_eau_pure))
 	print(len(S_eau_pure))
 	print("----DD----")
-	
+	'''
 	
 	return scatters
 	'''
 	#pour pause -> enlever si on garde l'espace
 	fig.canvas.mpl_connect('button_press_event', onClick)
 	'''
-anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=100, blit=False)
+anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
 
 #tester si juste ça ça passe déjà
 #FFwriter = animation.FFMpegWriter()
@@ -345,7 +358,7 @@ else :
 
 scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = size_case, alpha=0.8, vmin = 0, vmax = 100)
 '''
-anim2 = FuncAnimation(fig2, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=100, blit=False)
+anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
 
 plt.show()
 

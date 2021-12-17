@@ -72,30 +72,35 @@ void Polluant::setCouleur() {
 
 
 	if (masse_ >= 1.0) {
-		MIN = 85;
+		MIN = 90;
 		MAX = 100;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
 	} else if (masse_ > 0.1) {
-		MIN = 70;
-		MAX = 84;
+		MIN = 80;
+		MAX = 89;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
 	} else if (masse_ > 0.01) {
-		MIN = 55;
-		MAX = 69;
+		MIN = 70;
+		MAX = 79;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
 	} else if (masse_ > 0.001) {
-		MIN = 40;
-		MAX = 54;
+		MIN = 60;
+		MAX = 69;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
-	} else {
-		MIN = 30;
-		MAX = 39;
+	} else if (masse_ > 0.0001){
+		MIN = 50;
+		MAX = 59;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);	
+	} else {
+		MIN = 15;
+		MAX = 49;
+		std::uniform_int_distribution<int> distr(MIN, MAX);
+		couleur_ = distr(eng);
 	}
 }
 

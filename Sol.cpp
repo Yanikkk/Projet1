@@ -23,12 +23,12 @@ void Sol::setCouleur() {
 		MAX = 35;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);	
-	} else if (taille_sol - profondeur_ < 3) {
+	} else if (taille_sol - profondeur_ < 4) {
 		MIN = 30;
 		MAX = 50;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
-	} else if (taille_sol - profondeur_ < 4) {
+	} else if (taille_sol - profondeur_ < 6) {
 		MIN = 45;
 		MAX = 60;
 		std::uniform_int_distribution<int> distr(MIN, MAX);

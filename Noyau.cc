@@ -31,7 +31,7 @@ static PyObject * initialisation(PyObject * self, PyObject * args){
 	return Py_BuildValue("i",0);
 }
 void cleanFirstline(int w){
-	cout << "case enlevée: "<< w << endl;
+	//cout << "case enlevée: "<< w << endl;
 	//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
 	//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 	delete riviere.getTableau()[w].getMatiere();

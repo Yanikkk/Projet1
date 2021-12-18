@@ -73,7 +73,7 @@ void Env::writeCSV(std::string filename){
 			if(eau_pollu->getPolluant() != nullptr){
 				compteur += 1;
 				myfile << tableau_[i].getX() <<","<< tableau_[i].getY() << "," << tableau_[i].getZ();
-				myfile << "," << eau_pollu->getPolluant()->getNom() << "," << eau_pollu->getPolluant()->getMasse() << "\n";
+				myfile << "," << eau_pollu->getPolluant()->getNom() << "," << eau_pollu->getPolluant()->getMasse() << ",\n";
 			}
 		}	
 	}
@@ -87,19 +87,10 @@ void Env::affichePolluant(int ligne, std::string filename) {
 	} else {
 		vector<double*> data_masse_pollution;
 		vector<std::string*> data_nom_pollution;
-		for (int i = 1; i < ligne; ++i) {
-			readCsv(5, ligne, filename, data_masse_pollution, 5, i);
-			readCsvString(5, ligne, filename, data_nom_pollution, 4, i);
+		for (int i = 1; i < ligne; i++) {
+			readCsv(5, ligne, filename, data_masse_pollution, 3, i);
+			readCsvString(5, ligne, filename, data_nom_pollution, 2, i);
 		}
-		
-		cout << " taille masse : " << data_masse_pollution.size() << endl;
-		cout << "taille nom : " << data_nom_pollution.size() << endl;
-		cout << "ligne : " << ligne << endl; 
-		/*
-		for (unsigned int i = 0; i < data_masse_pollution.size(); ++i) {
-			cout << *data_masse_pollution[i] << endl;
-		}
-		*/
 		double somme_fer = 0;
 		double somme_ammonium = 0;
 		double somme_phosphore = 0;
@@ -161,6 +152,7 @@ void Env::readCsv(int x, int y, std::string filename, vector<double*>& data, int
 		} else { // plus que l'option ou ligne et colonne != -1
 			if (i % x == colonne && i / x == ligne) { // corriger si on change les conditions précédentes
 				double* cell_d = new double (stod(cell));
+				cout << *cell_d << endl;
 				data.push_back(cell_d);				
 			}
 		}

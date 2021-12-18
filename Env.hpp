@@ -22,19 +22,37 @@ public :
      */
 	Env(int largeur, int hauteur, int longueur);
 	
+	void writeCSV(std::string filename);
 	
+<<<<<<< HEAD
 
 
 	void writeCSV();
 
+=======
+	void affichePolluant(int ligne, std::string filename); // nombre de ligne
+	
+>>>>>>> 02d2c34f5640c6e9585fabc685d7b81eccc7cc0a
 	/*!
-     * @brief permet de modifier la pente de l'environnement
+     * @brief permet d'ouvrir et lire un fichier csv avec différents paramètre rentré en argument 
      *
+<<<<<<< HEAD
      * @param value; sera la nouvelle valeure de l'attribut pente.
      */
 	void setPenteCsv(std::string filename); //vérifier qu'on l'utilises
 
 
+=======
+     * @param x; nombre de colonne du fichier.
+     * @param y; nombre de ligne du fichier.
+     * @param filename; nom du fichier.
+     * @param data; tableau dynamique de double dans lequel on souhaite stocker les valeurs désirées
+     * @param colonne; colonne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les colonnes)
+     * @param ligne; ligne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les lignes)
+     */	
+	void readCsv(int x, int y, std::string filename, std::vector<double*>& data, int colonne = -1, int ligne = -1);
+	
+>>>>>>> 02d2c34f5640c6e9585fabc685d7b81eccc7cc0a
 	/*!
      * @brief permet d'ouvrir et lire un fichier csv avec différents paramètre rentré en argument
      *
@@ -44,11 +62,24 @@ public :
      * @param data; tableau dynamique de double dans lequel on souhaite stocker les valeurs désirées
      * @param colonne; colonne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les colonnes)
      * @param ligne; ligne du fichier que l'on souhaite ajouter au tableau (-1 par défaut pour toutes les lignes)
+<<<<<<< HEAD
      */
 
 	void readCsv(int x, int y, std::string filename, std::vector<double*>& data, int colonne = -1, int ligne = -1);
 
 
+=======
+     */	
+	void readCsvString(int x, int y, std::string filename, std::vector<std::string*>& data, int colonne = -1, int ligne = -1);
+
+	/*!
+     * @brief permet de modifier la pente de l'environnement
+     *
+     * @param value; sera la nouvelle valeure de l'attribut pente.
+     */
+	void setPenteCsv(std::string filename); //vérifier qu'on l'utilises
+	
+>>>>>>> 02d2c34f5640c6e9585fabc685d7b81eccc7cc0a
 	/*!
      * @brief initie le tableau représentant la rivière
      *

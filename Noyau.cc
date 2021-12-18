@@ -11,8 +11,6 @@ using namespace std;
 #include <array>
 #include <vector>
 #include <string.h>
-
-
 Env riviere(0,0,0);
 int taille = 0;
 int crossSection = 0;
@@ -973,6 +971,13 @@ static PyObject * getCouleur_eau(PyObject * self, PyObject * args){
 	}
 	return data_animation;
 }
+static PyObject * writeCsv(PyObject * self, PyObject * args){
+	char* n;
+	if (! PyArg_ParseTuple(args, "s", &n)) return NULL;
+	string nom = n;
+	riviere.writeCSV(nom);
+	return  Py_BuildValue("i",0);
+}
 static PyObject * Cmap(PyObject * self, PyObject * args){
 	char* p;
 	if (! PyArg_ParseTuple(args, "s", &p)) return NULL;
@@ -1010,7 +1015,7 @@ static PyMethodDef methods[] = {
 	{"Cmap", Cmap, METH_VARARGS, "Les couleurs de polluant"},
 	//nom en python, nom en C, comment gérer les arguments(voir internet), description de la fonction(no interest
 	{NULL, NULL, 0, NULL}
-	};
+};
 
 static struct PyModuleDef moduleDefinition = { //struct de config de module
     PyModuleDef_HEAD_INIT,
@@ -1018,7 +1023,8 @@ static struct PyModuleDef moduleDefinition = { //struct de config de module
     "Simulation d une riviere.", //même que en haut
     -1, //point tech.
     methods
-	};
+};
+	
 PyMODINIT_FUNC
 PyInit_Noyau(void) { //main de mon module , accède avec le import
 	// Module avec les méthodes

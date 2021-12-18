@@ -20,6 +20,8 @@ longueur = 10
 Noyau.initialisation(largeur, hauteur, longueur)
 #Noyau.pollution(1)
 
+Noyau.writeCsv("nom")
+
 # Graphe 3D
 from mpl_toolkits.mplot3d import Axes3D
 fig = plt.figure()

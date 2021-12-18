@@ -8,19 +8,17 @@ import keyboard
 import time
 import matplotlib.patches as mpatches
 
-largeur = 10
+largeur = 2
 hauteur = 5
-longueur = 10
+longueur = 12
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
-	
+
 #initialise le tableau/environnement
 
 Noyau.initialisation(largeur, hauteur, longueur)
 #Noyau.pollution(1)
-
-Noyau.writeCsv("nom")
 
 # Graphe 3D
 from mpl_toolkits.mplot3d import Axes3D
@@ -80,31 +78,31 @@ couleur_air = np.array(Noyau.getCouleur_air())
 size_case = 10
 
 s_eau_pure = []
-for i in range(len(X_eau_pure)) : 
+for i in range(len(X_eau_pure)) :
 	s_eau_pure.append(size_case)
 S_eau_pure = np.array(s_eau_pure)
 s_eau_pure.clear()
 
 s_eau_pollue = []
-for i in range(len(X_eau_pollue)) : 
+for i in range(len(X_eau_pollue)) :
 	s_eau_pollue.append(size_case)
 S_eau_pollue = np.array(s_eau_pollue)
 s_eau_pollue.clear()
 
 s_sol = []
-for i in range(len(X_sol)) : 
+for i in range(len(X_sol)) :
 	s_sol.append(size_case)
 S_sol = np.array(s_sol)
 s_sol.clear()
 
 s_air = []
-for i in range(len(X_air)) : 
+for i in range(len(X_air)) :
 	s_air.append(size_case)
 S_air = np.array(s_air)
 s_air.clear()
 
 '''
-if Noyau.Cmap("fer") != 0 : 
+if Noyau.Cmap("fer") != 0 :
 	cmap_pollue = Noyau.Cmap("fer")
 else :
 	cmap_pollue = "Greys"
@@ -149,22 +147,22 @@ FIN DEUXIEME GRAPHIQUE
 
 def change_meteo():
 	if keyboard.is_pressed('j'): #jour (de base)
-		for i in range(len(couleur_air)): 
-			couleur_air[i] = 35 
+		for i in range(len(couleur_air)):
+			couleur_air[i] = 35
 	if keyboard.is_pressed('p'): #pluie
-		for i in range(len(couleur_air)): 
+		for i in range(len(couleur_air)):
 			couleur_air[i] = 15
 	if keyboard.is_pressed('b'): #brouillard (pas trouver dans cette cmap)
-		for i in range(len(couleur_air)): 
+		for i in range(len(couleur_air)):
 			couleur_air[i] = 100
 	if keyboard.is_pressed('n'): #nuit
-		for i in range(len(couleur_air)): 
+		for i in range(len(couleur_air)):
 			couleur_air[i] = 0
 	if keyboard.is_pressed('r'): #sunrise
-		for i in range(len(couleur_air)): 
+		for i in range(len(couleur_air)):
 			couleur_air[i] = 90
 	if keyboard.is_pressed('s'): #sunset
-		for i in range(len(couleur_air)): 
+		for i in range(len(couleur_air)):
 			couleur_air[i] = 75
 	if keyboard.is_pressed('w'): #arc-en-ciel
 		palier = len(couleur_air)/100
@@ -172,7 +170,7 @@ def change_meteo():
 		compteur = 0
 		for i in range(len(couleur_air)):
 			if compteur > palier :
-				compteur = 0 
+				compteur = 0
 				j += 1
 			compteur += 1
 			couleur_air[i] = j
@@ -180,31 +178,31 @@ def change_meteo():
 
 def change_taille():
 	global size_case
-	if keyboard.is_pressed('up') : 
+	if keyboard.is_pressed('up') :
 		size_case += 5
-		
-		for i in range(len(S_sol)) : 
-			S_sol[i] = size_case 
-		for i in range(len(S_eau_pure)) : 
-			S_eau_pure[i] = size_case 
-		for i in range(len(S_eau_pollue)) : 
-			S_eau_pollue[i] = size_case 
-		for i in range(len(S_air)) : 
-			S_air[i] = size_case 
-		
-		time.sleep(0.1)	
-	if keyboard.is_pressed('down') and size_case > 5 : 
-		size_case -= 5
-		
-		for i in range(len(S_sol)) : 
+
+		for i in range(len(S_sol)) :
 			S_sol[i] = size_case
-		for i in range(len(S_eau_pure)) : 
+		for i in range(len(S_eau_pure)) :
 			S_eau_pure[i] = size_case
-		for i in range(len(S_eau_pollue)) : 
+		for i in range(len(S_eau_pollue)) :
 			S_eau_pollue[i] = size_case
-		for i in range(len(S_air)) : 
+		for i in range(len(S_air)) :
 			S_air[i] = size_case
-		
+
+		time.sleep(0.1)
+	if keyboard.is_pressed('down') and size_case > 5 :
+		size_case -= 5
+
+		for i in range(len(S_sol)) :
+			S_sol[i] = size_case
+		for i in range(len(S_eau_pure)) :
+			S_eau_pure[i] = size_case
+		for i in range(len(S_eau_pollue)) :
+			S_eau_pollue[i] = size_case
+		for i in range(len(S_air)) :
+			S_air[i] = size_case
+
 		time.sleep(0.1)
 
 
@@ -229,14 +227,14 @@ compteur_csv = 1
 
 def animation_frame(i):
 	#fait avancer les cases EAU
-	
+
 	if keyboard.is_pressed('space'):
 		keyboard.wait('space')
 		time.sleep(0.1)
 	'''
 	if keyboard.is_pressed('c'):
 		global compteur
-		filename = "data_pollution" + str(compteur_csv) + ".csv" 
+		filename = "data_pollution" + str(compteur_csv) + ".csv"
 		Noyau.writeCsv(filename) #revoir le nom; mettre un compteur qu'on passe en argument en plus du nom du fichier pour qu'à chaque fois on est un nouveau fichier créer avec nom1, nom2, nom3, etc
 		compteur_csv += 1
 		time.sleep(0.1)
@@ -249,7 +247,7 @@ def animation_frame(i):
 	if pollution_state == 1:
 		Noyau.pollution(pollution_state)
 		pollution_state = 0
-		
+
 	'''
 	Noyau.ecoulement(i)
 	change_meteo()
@@ -270,32 +268,32 @@ def animation_frame(i):
 	Y_air = np.array(Noyau.coord_Y("AIR"))
 	Z_air = np.array(Noyau.coord_Z("AIR"))
 	#couleur_air = Noyau.getCouleur_air()
-	
+
 	global size_case
 	s_eau_pure = []
-	for i in range(len(X_eau_pure)) : 
+	for i in range(len(X_eau_pure)) :
 		s_eau_pure.append(size_case)
 	S_eau_pure = np.array(s_eau_pure)
 	s_eau_pure.clear()
 
 	s_eau_pollue = []
-	for i in range(len(X_eau_pollue)) : 
+	for i in range(len(X_eau_pollue)) :
 		s_eau_pollue.append(size_case)
 	S_eau_pollue = np.array(s_eau_pollue)
 	s_eau_pollue.clear()
 
 	s_sol = []
-	for i in range(len(X_sol)) : 
+	for i in range(len(X_sol)) :
 		s_sol.append(size_case)
 	S_sol = np.array(s_sol)
 	s_sol.clear()
 
 	s_air = []
-	for i in range(len(X_air)) : 
+	for i in range(len(X_air)) :
 		s_air.append(size_case)
 	S_air = np.array(s_air)
 	s_air.clear()
-	
+
 	#print(couleur_eau_pollue)
 	#scatter_eau._offsets3d = (X_eau, Y_eau, Z_eau)
 	scatter_eau_pure._offsets3d = (X_eau_pure, Y_eau_pure, Z_eau_pure)
@@ -307,8 +305,8 @@ def animation_frame(i):
 	scatter_eau_pure.set_sizes(S_eau_pure)
 	scatter_air.set_sizes(S_air)
 	scatter_sol.set_sizes(S_sol)
-	#if Noyau.Cmap("fer") != 0 : 
-	
+	#if Noyau.Cmap("fer") != 0 :
+
 	scatter_eau_pollue._offsets3d = (X_eau_pollue, Y_eau_pollue, Z_eau_pollue)
 	scatter_eau_pollue.set_array(couleur_eau_pollue)
 	scatter_eau_pollue.set_sizes(S_eau_pollue)
@@ -335,25 +333,23 @@ def animation_frame(i):
 	print(len(couleur_eau_pollue))
 	print(len(S_eau_pollue))
 	print("---------")
-	#print(X_eau_pure) 
+	#print(X_eau_pure)
 	print(len(X_eau_pure))
-	#print(Y_eau_pure) 
+	#print(Y_eau_pure)
 	print(len(Y_eau_pure))
-	#print(Z_eau_pure) 
+	#print(Z_eau_pure)
 	print(len(Z_eau_pure))
 	print(len(couleur_eau_pure))
 	print(len(S_eau_pure))
 	print("----DD----")
 	'''
-	
+
 	return scatters
 	'''
 	#pour pause -> enlever si on garde l'espace
 	fig.canvas.mpl_connect('button_press_event', onClick)
 	'''
-
 anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 100, 0.1), interval=100, blit=False)
-
 
 #tester si juste ça ça passe déjà
 #FFwriter = animation.FFMpegWriter()
@@ -385,11 +381,3 @@ scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c
 anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 100, 0.1), interval=100, blit=False)
 
 plt.show()
-
-
-
-
-
-
-
-

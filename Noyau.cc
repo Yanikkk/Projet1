@@ -67,7 +67,7 @@ double C_polluant_x(Eau* eau, Polluant* polluant, int position, double temps, in
 	//dans notre modèle le polluant avance tout droit ou se disperse dans les autres directions, mais il ne peut faire que un des deux pendant
 	//que les cases bougent
 	//retourne la concentration dans la case devant celle contenant le polluant, le reste s'est dispersé
-	cout << concentration << "aha" << endl;
+//	cout << concentration << "aha" << endl;
 	return concentration * surface_mouille;
 }
 int alea_bis(int i){
@@ -79,7 +79,7 @@ int alea_bis(int i){
 	int direction = 0;
 	while (state == 0){
 		direction = rand() % 7 + 1;
-		cout << "directiona "<< direction << endl;
+		//cout << "directiona "<< direction << endl;
 		switch (direction) 
 		{
 			case 1 : 
@@ -208,7 +208,7 @@ int alea_pos(int i){
 	 * */
 	while (state == 0){
 		direction = rand() % 4 + 1;
-		cout << "direction "<< direction << endl;
+		//cout << "direction "<< direction << endl;
 		switch (direction) 
 		{
 			case 1 : 
@@ -326,13 +326,13 @@ void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*/ int type){
 							//cout << "e" << endl;
 						
 				}else{
-						cout << "tampon->getNom() celui qui est creer" << code_to_string(round(pollution_tab[i+2])) << endl;
+						//cout << "tampon->getNom() celui qui est creer" << code_to_string(round(pollution_tab[i+2])) << endl;
 						eau_pollu->setPolluant(code_to_string(round(pollution_tab[i+2])),masse, position/crossSection, pollution_tab[i+3]);
 						eau_pollu->setCouleur();
-						cout << "--------------"<< endl;
-						cout << "Case avec polluant: "<< position << endl;
-						cout << "Et leur concentrations: "<< eau_pollu->getPolluant()->getMasse() << endl;
-						cout << "--------------"<< endl;
+						//cout << "--------------"<< endl;
+						//cout << "Case avec polluant: "<< position << endl;
+						//cout << "Et leur concentrations: "<< eau_pollu->getPolluant()->getMasse() << endl;
+						//cout << "--------------"<< endl;
 						pollution_tab[i+1] = pollution_tab[i+1] - masse;
 				}
 			}
@@ -384,8 +384,8 @@ void ecoulementPlat(int w, double temps/*, vector<double*> pollution*/){
 			if(riviere.getTableau()[w - crossSection].getMatiere() == nullptr){
 				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
 				if(eau_pollu->getPolluant() != nullptr){
-					cout << "Case avec  corps polluant: "<< w << endl;
-					cout << "Et leur a concentrations: "<< eau_pollu->getPolluant()->getMasse() << endl;
+					//cout << "Case avec  corps polluant: "<< w << endl;
+					//cout << "Et leur a concentrations: "<< eau_pollu->getPolluant()->getMasse() << endl;
 					//!calcule la concentration de la case devant
 					//point_dispersion = new double(w);
 					point_dispersion = w;
@@ -453,7 +453,7 @@ void ecoulementPlat(int w, double temps/*, vector<double*> pollution*/){
 		if(w == last_eau() ){
 				//! si toutes les cases ont avancées, alors on peut disperser les polluant
 		
-		cout << " avec: " << pollution_tab.size() << endl;
+		//cout << " avec: " << pollution_tab.size() << endl;
 				//cout << tampon->getNom()<< " nom qui appel la dispersion" << endl;
 				dispersion(/*pollution,*/ /*(tampon),*/ 1);
 				verifie_disp(/*tampon*/);

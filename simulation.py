@@ -10,7 +10,7 @@ import matplotlib.patches as mpatches
 
 largeur = 5
 hauteur = 5
-longueur = 12
+longueur = 3
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200

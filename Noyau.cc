@@ -1012,6 +1012,7 @@ static PyMethodDef methods[] = {
 	{"getCouleur_sol", getCouleur_sol, METH_VARARGS, "Les couleurs des cases de sol"},
 	{"getCouleur_air", getCouleur_air, METH_VARARGS, "Les couleurs des cases d'air"},
 	{"getCouleur_eau", getCouleur_eau, METH_VARARGS, "Les couleurs des cases d'eau"},
+	{"writeCsv", writeCsv, METH_VARARGS, "Fonction écrit un csv des données"},
 	{"Cmap", Cmap, METH_VARARGS, "Les couleurs de polluant"},
 	//nom en python, nom en C, comment gérer les arguments(voir internet), description de la fonction(no interest
 	{NULL, NULL, 0, NULL}

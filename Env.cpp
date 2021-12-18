@@ -152,7 +152,6 @@ void Env::readCsv(int x, int y, std::string filename, vector<double*>& data, int
 		} else { // plus que l'option ou ligne et colonne != -1
 			if (i % x == colonne && i / x == ligne) { // corriger si on change les conditions précédentes
 				double* cell_d = new double (stod(cell));
-				cout << *cell_d << endl;
 				data.push_back(cell_d);				
 			}
 		}

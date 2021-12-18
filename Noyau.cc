@@ -289,7 +289,7 @@ void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*/ int type){
 	 * */
 	 //cout << " size " << pollution_tab.size()<< endl;
 	for(int i = 0 ; i < pollution_tab.size()-1; i += 4){
-		while(pollution_tab[i+1] >= 1e-10){
+		while(pollution_tab[i+1] >= 1e-6){
 			if(type == 1){
 			//	cout << "type = 1 " << endl;
 			position = alea_pos(round(/* * */pollution_tab[i]));
@@ -308,13 +308,13 @@ void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*/ int type){
 
 			
 			if(position == -1){
-						if(masse < 1e-10){
+						if(masse < 1e-6){
 							pollution_tab[i+1] = pollution_tab[i+1] - masse;
 						}else{
 							pollution_tab[i+1] = /* * */pollution_tab[i+1] - masse;
 						}		
 			}else{
-				if( masse < 1e-10 ){
+				if( masse < 1e-6 ){
 					pollution_tab[i+1] = pollution_tab[i+1] - masse;
 					continue;
 				}
@@ -432,7 +432,7 @@ void ecoulementPlat(int w, double temps/*, vector<double*> pollution*/){
 					reste = eau_pollu->getPolluant()->getMasse() - conc;
 					//cout << " reste " << reste << endl;
 					//reste = new double(eau_pollu->getPolluant()->getMasse() - conc);
-					if(reste >= 1e-10){
+					if(reste >= 1e-6){
 						pollution_tab.push_back(point_dispersion);
 						pollution_tab.push_back(reste);
 						pollution_tab.push_back(string_to_code( eau_pollu->getPolluant()->getNom()));
@@ -451,7 +451,7 @@ void ecoulementPlat(int w, double temps/*, vector<double*> pollution*/){
 				//cout <<"type de la case enelvée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;
 				//la case qui a avancé contient la concentration initiale, on garde seulement la masse de polluant qui a avancé tout droit.
 				if(transvaser == 1){
-					if(conc < 1e-10){
+					if(conc < 1e-6){
 						conc = 0;
 						delete eau->getPolluant();
 						eau->setPolluant("nullptr");
@@ -866,7 +866,7 @@ static PyObject * pollution(PyObject * self, PyObject * args){
 		w = rand() % riviere.getLargeur() + taille - (riviere.getHauteur()- z_maxEau) * riviere.getLargeur(); 
 		cout << "ad "<< w << endl;
 		Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
-		eau_pollu->setPolluant("fer", 10.0, riviere.getLongueur() -1, eau_pollu->getVitesse());
+		eau_pollu->setPolluant("fer", 1, riviere.getLongueur() -1, eau_pollu->getVitesse());
 	}
 return Py_BuildValue("i",0);
 }

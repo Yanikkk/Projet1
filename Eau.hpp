@@ -30,7 +30,7 @@ public :
 	void setCouleur();
 	int getProfondeur() const;
 	void setProfondeur(int);
-	void setPolluant(std::string, double, int, double);
+	void setPolluant(std::string nom = "Inconnu", double masse = 0, int depot_x = 0, double vitesse = 0);
 	Polluant* getPolluant()const;
 	~Eau(){
 		delete polluant_;

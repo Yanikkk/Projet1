@@ -329,7 +329,7 @@ def animation_frame(i):
 	#pour pause -> enlever si on garde l'espace
 	fig.canvas.mpl_connect('button_press_event', onClick)
 	'''
-anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
+anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.01), interval=100, blit=False)
 
 #tester si juste ça ça passe déjà
 #FFwriter = animation.FFMpegWriter()

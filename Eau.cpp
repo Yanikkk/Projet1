@@ -75,7 +75,11 @@ void Eau::setProfondeur(int actuelle){
 	profondeur_ =	actuelle;
 }
 void Eau::setPolluant(std::string nom, double masse, int depot_x, double vitesse){
-	polluant_ = new Polluant(nom, masse, depot_x, vitesse);
+	if(nom == "nullptr"){
+		polluant_ = nullptr;
+	}else{
+		polluant_ = new Polluant(nom, masse, depot_x, vitesse);
+	}
 }
 Polluant* Eau::getPolluant() const{
 	return polluant_;

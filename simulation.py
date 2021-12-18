@@ -34,13 +34,15 @@ ax.set_ylabel('Largeur')
 ax.set_ylim(-5,25)
 ax.set_zlabel('Hauteur')
 ax.set_zlim(0,40)
-pause_patch = mpatches.Patch(color='black', label='Fer')
-up_down__patch = mpatches.Patch(color='black', label='Ammonium')
-meteo_patch = mpatches.Patch(color='black', label='Phosphore')
-polluant_patch = mpatches.Patch(color='black', label='Phosphore')
-csv_patch = mpatches.Patch(color='black', label='Phosphore')
-ax.legend(handles=[pause_patch, up_down__patch, meteo_patch, polluant_patch, csv_patch], handleheight =0.01, handlelength = 1.0, loc ='lower center')
+pause_patch = mpatches.Patch(color='black', label='Espace = Arrêt/Marche ;')
+up_down__patch = mpatches.Patch(color='black', label='up ↑ = augmente la taille des cases ;\ndown ↓ = diminue la taille des cases ;')
+meteo_patch = mpatches.Patch(color='black', label='Changer la météo :  j = jour (par défaut) ; n = nuit ; b = brouillard ; \np = pluie ; r = sunrise ; s = sunset ; w = rainbow ;')
+polluant_patch = mpatches.Patch(color='black', label='1 = ajoute fer ;  2 = ajoute ammonium ;  3 = ajoute phosphore ;')
+csv_patch = mpatches.Patch(color='black', label= "c = relever les polluants présents à l'instant ;")
+ax.legend(handles=[pause_patch, up_down__patch, meteo_patch, polluant_patch, csv_patch],
+handleheight =0.01, handlelength = 1.0, loc ='lower left', bbox_to_anchor=(0.0, -0.6), facecolor='skyblue', edgecolor='black', fontsize = 8)
 
+'''
 text_pause = '          Arrêt/Marche = Espace\n\n'
 text_up_down = '          up = augmente la taille des cases ; down = diminue la taille des cases\n\n'
 text_meteo = '          Changer la météo : \n                    j = jour (par défaut) ; n = nuit ; b = brouillard ; p = pluie ; r = sunrise ; s = sunset ; w = rainbow\n\n'
@@ -48,7 +50,7 @@ text_polluant = '          Ajouter un polluant : \n                    1 = fer ;
 text_csv = '                    relever les polluants présents = c \n'
 plt.figtext(0, 0, text_pause+text_up_down+text_meteo+text_polluant+text_csv, fontsize = 8)
 #plt.grid(True)
-
+'''
 #retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
 '''
 X_eau = np.array(Noyau.coord_X("EAU"))
@@ -231,14 +233,14 @@ def animation_frame(i):
 	if keyboard.is_pressed('space'):
 		keyboard.wait('space')
 		time.sleep(0.1)
-	'''
+	
 	if keyboard.is_pressed('c'):
-		global compteur
+		global compteur_csv
 		filename = "data_pollution" + str(compteur_csv) + ".csv"
 		Noyau.writeCsv(filename) #revoir le nom; mettre un compteur qu'on passe en argument en plus du nom du fichier pour qu'à chaque fois on est un nouveau fichier créer avec nom1, nom2, nom3, etc
 		compteur_csv += 1
 		time.sleep(0.1)
-	'''
+	
 	if keyboard.is_pressed('1'):
 		Noyau.pollution(1)
 		time.sleep(0.15)

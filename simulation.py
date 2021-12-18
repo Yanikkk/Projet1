@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import keyboard
 import time
+import matplotlib.patches as mpatches
 
 largeur = 2
 hauteur = 5
@@ -22,8 +23,8 @@ Noyau.initialisation(largeur, hauteur, longueur)
 # Graphe 3D
 from mpl_toolkits.mplot3d import Axes3D
 fig = plt.figure()
-plt.gcf().subplots_adjust(left = 0.05, bottom = 0.2,
-                       right = 0.95, top = 1.0, wspace = 0.3, hspace = 0)
+plt.gcf().subplots_adjust(left = 0.03, bottom = 0.2,
+                       right = 0.90, top = 1.0, wspace = 0.3, hspace = 0)
 ax = fig.add_subplot(121, projection='3d')
 
 ax.set_title('Belle rivière !')
@@ -33,12 +34,19 @@ ax.set_ylabel('Largeur')
 ax.set_ylim(-5,25)
 ax.set_zlabel('Hauteur')
 ax.set_zlim(0,40)
+pause_patch = mpatches.Patch(color='black', label='Fer')
+up_down__patch = mpatches.Patch(color='black', label='Ammonium')
+meteo_patch = mpatches.Patch(color='black', label='Phosphore')
+polluant_patch = mpatches.Patch(color='black', label='Phosphore')
+csv_patch = mpatches.Patch(color='black', label='Phosphore')
+ax.legend(handles=[pause_patch, up_down__patch, meteo_patch, polluant_patch, csv_patch], handleheight =0.01, handlelength = 1.0, loc ='lower center')
 
-text_pause = '          Arrêt/Marche : Espace\n\n'
-text_up_down = '          up : augmente la taille des cases ; down : diminue la taille des cases\n\n'
+text_pause = '          Arrêt/Marche = Espace\n\n'
+text_up_down = '          up = augmente la taille des cases ; down = diminue la taille des cases\n\n'
 text_meteo = '          Changer la météo : \n                    j = jour (par défaut) ; n = nuit ; b = brouillard ; p = pluie ; r = sunrise ; s = sunset ; w = rainbow\n\n'
-text_polluant = '          Ajouter un polluant : \n                    1 = fer ; 2 = ammonium ; 3 = phosphore \n'
-plt.figtext(0, 0, text_pause+text_up_down+text_meteo+text_polluant, fontsize = 8)
+text_polluant = '          Ajouter un polluant : \n                    1 = fer ; 2 = ammonium ; 3 = phosphore'
+text_csv = '                    relever les polluants présents = c \n'
+plt.figtext(0, 0, text_pause+text_up_down+text_meteo+text_polluant+text_csv, fontsize = 8)
 #plt.grid(True)
 
 #retourne les coordonnées x des cases du tableau contenant l'eau à l'instant i
@@ -119,6 +127,10 @@ ax2.set_ylabel('Largeur')
 ax2.set_ylim(-5,25)
 ax2.set_zlabel('Hauteur')
 ax2.set_zlim(0,40)
+red_patch = mpatches.Patch(color='red', label='Fer')
+orange_patch = mpatches.Patch(color='orange', label='Ammonium')
+green_patch = mpatches.Patch(color='green', label='Phosphore')
+ax2.legend(handles=[red_patch, orange_patch, green_patch], facecolor='skyblue', edgecolor='blue', handlelength =0.7)
 
 '''
 if Noyau.Cmap("fer") != 0 :
@@ -211,6 +223,7 @@ def change_taille():
 				anim.event_source.start()
 				anim_running = True
 '''
+compteur_csv = 1
 
 def animation_frame(i):
 	#fait avancer les cases EAU
@@ -218,7 +231,14 @@ def animation_frame(i):
 	if keyboard.is_pressed('space'):
 		keyboard.wait('space')
 		time.sleep(0.1)
-	
+	'''
+	if keyboard.is_pressed('c'):
+		global compteur
+		filename = "data_pollution" + str(compteur_csv) + ".csv" 
+		Noyau.writeCsv(filename) #revoir le nom; mettre un compteur qu'on passe en argument en plus du nom du fichier pour qu'à chaque fois on est un nouveau fichier créer avec nom1, nom2, nom3, etc
+		compteur_csv += 1
+		time.sleep(0.1)
+	'''
 	if keyboard.is_pressed('1'):
 		Noyau.pollution(1)
 		time.sleep(0.15)
@@ -329,7 +349,7 @@ def animation_frame(i):
 	#pour pause -> enlever si on garde l'espace
 	fig.canvas.mpl_connect('button_press_event', onClick)
 	'''
-anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
+anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 100, 0.1), interval=100, blit=False)
 
 #tester si juste ça ça passe déjà
 #FFwriter = animation.FFMpegWriter()
@@ -358,7 +378,7 @@ else :
 
 scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = size_case, alpha=0.8, vmin = 0, vmax = 100)
 '''
-anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
+anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 100, 0.1), interval=100, blit=False)
 
 plt.show()
 

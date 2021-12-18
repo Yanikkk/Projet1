@@ -53,10 +53,11 @@ Matiere* Env::creation(int w, int profondeur){
 	return tableau_[w].creation(w,profondeur);
 }
 
-void Env::writeCSV(){
+void Env::writeCSV(std::string filename){
 	std::ofstream myfile;
-	myfile.open("pollution_Data.csv"); // adapter
-	myfile << "X,Y,Z,Vitesse,Matiere,Surface mouillee riviere\n"; // adapter
+	myfile.open(filename); // mettre le nom du fichier créer en argument ? ainsi qu'un int et faire nom0, nom1, nom2, ...
+	myfile << "X,Y,Z,polluant,masse_polluant\n"; 
+	int compteur = 1;
 	for(int i = 0; i< hauteur_ * largeur_ * longueur_; i++){
 	/*
 	myfile << tableau_[i].getX() <<","<< tableau_[i].getY() << "," << tableau_[i].getZ();
@@ -71,16 +72,53 @@ void Env::writeCSV(){
 			myfile << tableau_[i].getX() <<","<< tableau_[i].getY() << "," << tableau_[i].getZ();
 			Eau* eau_pollu =(Eau*)tableau_[i].matiere_;
 			if(eau_pollu->getPolluant() != nullptr){
+				compteur += 1;
 				myfile << "," << eau_pollu->getPolluant()->getNom() << eau_pollu->getPolluant()->getMasse() << "\n";
 			}
 		}	
 	}
-	// appel read csv (avec 4 pour la colonne et toutes les lignes sauf la première) et read csv (ou une autre fonction) s'occupe de calculer la somme de la colonne 4 en fonction du nom
-	// qui est en colonne 3 et cout sur le terminal quantité total de "nom (fer)" = "somme" ; "nom2" = "somme2" ; etc. 
 	myfile.close();
-	
+	affichePolluant(compteur, filename); // passer nom en argument !!!
 }
 
+void Env::affichePolluant(int ligne, std::string filename) {
+
+	vector<double*> data_masse_pollution;
+	vector<std::string*> data_nom_pollution;
+	for (int i = 1; i < ligne; ++i) {
+		readCsv(5, ligne, filename, data_masse_pollution, 5, i);
+		readCsvString(5, ligne, filename, data_nom_pollution, 4, i);
+	}
+	double somme_fer = 0;
+	double somme_ammonium = 0;
+	double somme_phosphore = 0;
+	for(unsigned int i = 0; i < data_masse_pollution.size(); i++){
+		if(*data_nom_pollution[i] == "fer") {
+			somme_fer += *data_masse_pollution[i];
+			delete data_masse_pollution[i];
+			delete data_nom_pollution[i];
+			data_masse_pollution[i] = nullptr;
+			data_nom_pollution[i] = nullptr;
+		} else if (*data_nom_pollution[i] == "ammonium") {
+			somme_ammonium += *data_masse_pollution[i];
+			delete data_masse_pollution[i];
+			delete data_nom_pollution[i];
+			data_masse_pollution[i] = nullptr;
+			data_nom_pollution[i] = nullptr;
+		} else if(*data_nom_pollution[i] == "phosphore") {
+			somme_phosphore += *data_masse_pollution[i];
+			delete data_masse_pollution[i];
+			delete data_nom_pollution[i];
+			data_masse_pollution[i] = nullptr;
+			data_nom_pollution[i] = nullptr;		
+		}
+	}
+	double somme_tot = somme_fer + somme_ammonium + somme_phosphore;
+	cout << "La masse de fer est de : " << somme_fer << " kg." << endl;
+	cout << "La masse d'ammonium est de : " << somme_ammonium << " kg." << endl;
+	cout << "La masse de phosphore est de : " << somme_phosphore << " kg." << endl;
+	cout << "La masse de tous les polluants de la rivière réunis est : " << somme_tot << " kg." << endl;
+}
 
 //mettre main sûrement?
 void Env::readCsv(int x, int y, std::string filename, vector<double*>& data, int colonne, int ligne) { // Mettre dans main ?
@@ -88,46 +126,65 @@ void Env::readCsv(int x, int y, std::string filename, vector<double*>& data, int
 	std::ifstream myFile;
 	myFile.open(filename); // mettre que si pas ouvert erreur
 	std::string cell;
-	
-	
-	for(int i = 0; i < x * y; i++) {
 		
+	for(int i = 0; i < x * y; i++) {		
 		if (myFile.good()) {
-			getline(myFile, cell, ',');
-			
-			
+			getline(myFile, cell, ',');			
 		} else {
 			break; // si c'est pas good on veut que ça finisse la boucle for
 		}
-		
-		
-
 		if (colonne == -1 && ligne == -1) {
 			double* cell_d = new double (stod(cell));
 			data.push_back(cell_d);
-			
-
 		} else if (colonne == -1) {
-
 			if (i / x == ligne) { //vérifier
 				double* cell_d = new double (stod(cell));
 				data.push_back(cell_d);
 			}
-
 		} else if (ligne == -1) {
-
 			if (i % x == colonne) { // le i != colonne pour éviter la première ligne de titre mais un peu trop spécifique à ce fichier ? est ce qu'il compte  dans le fichier csv ?
 				double* cell_d = new double (stod(cell));
 				data.push_back(cell_d);
 			}
-
 		} else { // plus que l'option ou ligne et colonne != -1
-
 			if (i % x == colonne && i / x == ligne) { // corriger si on change les conditions précédentes
-				
 				double* cell_d = new double (stod(cell));
+				data.push_back(cell_d);				
+			}
+		}
+	}
+}
+
+void Env::readCsvString(int x, int y, std::string filename, vector<std::string*>& data, int colonne, int ligne) { // Mettre dans main ?
+
+	std::ifstream myFile;
+	myFile.open(filename); // mettre que si pas ouvert erreur
+	std::string cell;
+
+	for(int i = 0; i < x * y; i++) {
+		
+		if (myFile.good()) {
+			getline(myFile, cell, ',');	
+		} else {
+			break; // si c'est pas good on veut que ça finisse la boucle for
+		}		
+		if (colonne == -1 && ligne == -1) {
+			std::string* cell_d = new std::string (cell); // tester sans ça avec cell direct dans le push_back()
+			data.push_back(cell_d);			
+		} else if (colonne == -1) {
+			if (i / x == ligne) { //vérifier
+				std::string* cell_d = new std::string (cell);
 				data.push_back(cell_d);
-				
+			}
+		} else if (ligne == -1) {
+			if (i % x == colonne) { // le i != colonne pour éviter la première ligne de titre mais un peu trop spécifique à ce fichier ? est ce qu'il compte  dans le fichier csv ?
+				std::string* cell_d = new std::string (cell);
+				data.push_back(cell_d);
+			}
+		} else { // plus que l'option ou ligne et colonne != -1
+			if (i % x == colonne && i / x == ligne) { // corriger si on change les conditions précédentes			
+				std::string* cell_d = new std::string (cell);
+				data.push_back(cell_d);				
 			}
 		}
 	}
@@ -139,7 +196,7 @@ void Env::setPenteCsv(std::string filename) {
 	vector<double*> data_pente; ///< données csv
 	//colonne 9 (8) 36 x 23 (cases tableau)
 	for (int i = 1; i < y_size; i++) { // la boucle permet d'appeler readCsv pour toutes les lignes sauf la première (comme ça la fonction readCsv est plus général, pas besoin d'y enlever la première ligne)
-	readCsv(x_size, y_size, filename, data_pente, 8, i);
+		readCsv(x_size, y_size, filename, data_pente, 8, i);
 	}
 	double somme = 0;
 	for(unsigned int i = 0; i< data_pente.size(); i++){

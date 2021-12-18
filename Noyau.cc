@@ -253,7 +253,7 @@ double alea_conc(double/* * */ conce){
 	if(conce <= 0.0){
 		return 0.0;
 	}
-	return /* * */conce *(rand() % 50)/100;
+	return /* * */conce *(rand() % 40)/100 + conce * 1/2;
 }
 int string_to_code(std::string nom_pollu){
 	if(nom_pollu == "fer"){
@@ -272,9 +272,10 @@ string code_to_string(int numero_pollu){
 //! pré-déclaration de la fonction
 //! verifie_disp
 void verifie_disp(vector<double> bis);
-void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*/ int type){
+void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*//* int type*/){
 	//juste faire boucle for et tcheck les point de dispersion, si position = point de dispertion
 	//alors le polluant s'ajoute
+	int type = 1;
 	int position = 0;
 	double masse = 0;
 	vector<double> bis;
@@ -289,17 +290,23 @@ void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*/ int type){
 	 * */
 	 //cout << " size " << pollution_tab.size()<< endl;
 	for(int i = 0 ; i < pollution_tab.size()-1; i += 4){
-		while(pollution_tab[i+1] >= 1e-6){
-			if(type == 1){
+		while(pollution_tab[i+1] >= 1e-5){
+			
+				if( type == rand() %2 +1){
+					position = alea_pos(round(pollution_tab[i]));
+				}else{
+					position = alea_bis(round(pollution_tab[i]));
+					}
+			/*if(type == 1){
 			//	cout << "type = 1 " << endl;
-			position = alea_pos(round(/* * */pollution_tab[i]));
+			position = alea_pos(round(/* * *//*pollution_tab[i]));
 			//cout << position<< endl;
-			}
+			/*}
 			if(type == 2){
-				//cout << "type = 2 " << endl;
+				cout << "type = 2 " << endl;
 			position = alea_bis(round(pollution_tab[i]));
-				//cout << position<< endl;
-			}
+				cout << position<< endl;
+			}*/
 			/*!
 			* si la case sort du tableau, on enlève une fraction
 			* du polluant
@@ -308,54 +315,54 @@ void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*/ int type){
 
 			
 			if(position == -1){
-						if(masse < 1e-6){
+					/*	if(masse < 1e-6){
 							pollution_tab[i+1] = pollution_tab[i+1] - masse;
-						}else{
+						}else{*/
 							pollution_tab[i+1] = /* * */pollution_tab[i+1] - masse;
-						}		
+						/*}	*/	
 			}else{
-				if( masse < 1e-6 ){
+				/*if( masse < 1e-6 ){
 					pollution_tab[i+1] = pollution_tab[i+1] - masse;
 					continue;
-				}
+				}*/
 	
 				Eau* eau_pollu =(Eau*)riviere.getTableau()[position].getMatiere();
 				 if(eau_pollu->getPolluant() != nullptr){
 						//donc si elle avait déjà un polluant
-							//eau_pollu->getPolluant()->setMasse(masse + eau_pollu->getPolluant()->getMasse());
-							//pollution_tab[i+1] = pollution_tab[i+1] - masse;			
-							//eau_pollu->setCouleur();
-							if(type == 1){
-								for(int j = 0 ; j < pollution_tab.size()-1; j += 4){
-									//cout << position<< endl;
-									//cout << pollution_tab[j] << endl;
+							eau_pollu->getPolluant()->setMasse(masse + eau_pollu->getPolluant()->getMasse());
+							pollution_tab[i+1] = pollution_tab[i+1] - masse;			
+							eau_pollu->setCouleur();
+							/*if(type == 1){
+								/*for(int j = 0 ; j < pollution_tab.size()-1; j += 4){
+									cout<< "elle " << position<< endl;
+									cout << "et " << pollution_tab[j] << endl;
 									if(position == pollution_tab[j]){
 										bis.push_back(j);
 										bis.push_back(masse);
 										bis.push_back(pollution_tab[j+2]);
 										bis.push_back(pollution_tab[j+3]);
 										pollution_tab[i+1] = pollution_tab[i+1] - masse;
-										//cout << bis[0] << endl;
-										//cout << bis[1] << endl;
-										//cout << bis[2] << endl;
-										//cout << bis[3] << endl;
+										cout << bis[0] << endl;
+										cout << bis[1] << endl;
+										cout << bis[2] << endl;
+										cout << bis[3] << endl;
 										masse = 0;
 									}
-								}
-								if(masse != 0){
+								}*/
+								/*if(masse != 0){
 									eau_pollu->getPolluant()->setMasse(masse + eau_pollu->getPolluant()->getMasse());
 									pollution_tab[i+1] = pollution_tab[i+1] - masse;
 									//cout << "Polluant s 'ajoute dans " << position << endl;
 									//cout << "Ca lui fait une masse de " << eau_pollu->getPolluant()->getMasse() << endl;
 									eau_pollu->setCouleur();
 									//cout << " non" << endl;
-								}
-							}
-							if(type == 2){
+								}*/
+							/*}*/
+							/*if(type == 2){
 								eau_pollu->getPolluant()->setMasse(masse + eau_pollu->getPolluant()->getMasse());
 								pollution_tab[i+1] = pollution_tab[i+1] - masse;
 								eau_pollu->setCouleur();
-							}
+							}*/
 				}else{
 						//cout << "Poluant qui est creer  est du : " << code_to_string(round(pollution_tab[i+2])) << endl;
 						eau_pollu->setPolluant(code_to_string(round(pollution_tab[i+2])),masse, position/crossSection, pollution_tab[i+3]);
@@ -369,12 +376,11 @@ void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*/ int type){
 			}
 		}
 	}		
-
-	verifie_disp(bis/*tampon*/);
+	cout << bis.size() << endl;
+//	verifie_disp(bis/*tampon*/);
 }
 void verifie_disp(vector<double> bis/*vector<double*> pollution, Polluant* tampon*/){
-	//cout << " h " << endl;
-	//vector<double> bis;
+	cout << " h " << endl;
 	/*for(int i = 0 ; i < pollution_tab.size()-1; i += 4){
 		if(pollution_tab[i+1] >= 0.0){
 			bis.push_back(pollution_tab[i]);
@@ -383,11 +389,13 @@ void verifie_disp(vector<double> bis/*vector<double*> pollution, Polluant* tampo
 			bis.push_back(pollution_tab[i+3]);
 		}
 	}*/
+	cout << bis.size() << endl;
 	if(bis.size() !=0){		
+		cout << " i" << endl;
 		pollution_tab.clear();
 		pollution_tab = bis;
 		//cout << "a" << endl;
-		dispersion(/*tampon ,*/ 2);
+		dispersion(/*tampon ,*/ /*2*/);
 	}
 }
 int last_eau(){
@@ -493,7 +501,7 @@ void ecoulementPlat(int w, double temps/*, vector<double*> pollution*/){
 				//! si toutes les cases ont avancées, alors on peut disperser les polluant
 		
 	//	cout << " avec: " << pollution_tab.size() << endl;
-		dispersion(/*pollution,*/ /*(tampon),*/ 1);
+		dispersion(/*pollution,*/ /*(tampon),*/ /*1*/);
 				//verifie_disp(/*tampon*/);
 		}
 	}
@@ -866,7 +874,7 @@ static PyObject * pollution(PyObject * self, PyObject * args){
 		w = rand() % riviere.getLargeur() + taille - (riviere.getHauteur()- z_maxEau) * riviere.getLargeur(); 
 		cout << "ad "<< w << endl;
 		Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
-		eau_pollu->setPolluant("fer", 1, riviere.getLongueur() -1, eau_pollu->getVitesse());
+		eau_pollu->setPolluant("fer", 10, riviere.getLongueur() -1, eau_pollu->getVitesse());
 	}
 return Py_BuildValue("i",0);
 }

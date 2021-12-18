@@ -69,11 +69,11 @@ void Env::writeCSV(std::string filename){
 		myfile << "," << tableau_[i].matiere_->getType()<< "," << largeur_ * (h_eau_ - h_sol_)<< "\n";
 	*/
 		if(tableau_[i].matiere_->getType() == "EAU"){
-			myfile << tableau_[i].getX() <<","<< tableau_[i].getY() << "," << tableau_[i].getZ();
 			Eau* eau_pollu =(Eau*)tableau_[i].matiere_;
 			if(eau_pollu->getPolluant() != nullptr){
 				compteur += 1;
-				myfile << "," << eau_pollu->getPolluant()->getNom() << eau_pollu->getPolluant()->getMasse() << "\n";
+				myfile << tableau_[i].getX() <<","<< tableau_[i].getY() << "," << tableau_[i].getZ();
+				myfile << "," << eau_pollu->getPolluant()->getNom() << "," << eau_pollu->getPolluant()->getMasse() << "\n";
 			}
 		}	
 	}
@@ -82,42 +82,54 @@ void Env::writeCSV(std::string filename){
 }
 
 void Env::affichePolluant(int ligne, std::string filename) {
-
-	vector<double*> data_masse_pollution;
-	vector<std::string*> data_nom_pollution;
-	for (int i = 1; i < ligne; ++i) {
-		readCsv(5, ligne, filename, data_masse_pollution, 5, i);
-		readCsvString(5, ligne, filename, data_nom_pollution, 4, i);
-	}
-	double somme_fer = 0;
-	double somme_ammonium = 0;
-	double somme_phosphore = 0;
-	for(unsigned int i = 0; i < data_masse_pollution.size(); i++){
-		if(*data_nom_pollution[i] == "fer") {
-			somme_fer += *data_masse_pollution[i];
-			delete data_masse_pollution[i];
-			delete data_nom_pollution[i];
-			data_masse_pollution[i] = nullptr;
-			data_nom_pollution[i] = nullptr;
-		} else if (*data_nom_pollution[i] == "ammonium") {
-			somme_ammonium += *data_masse_pollution[i];
-			delete data_masse_pollution[i];
-			delete data_nom_pollution[i];
-			data_masse_pollution[i] = nullptr;
-			data_nom_pollution[i] = nullptr;
-		} else if(*data_nom_pollution[i] == "phosphore") {
-			somme_phosphore += *data_masse_pollution[i];
-			delete data_masse_pollution[i];
-			delete data_nom_pollution[i];
-			data_masse_pollution[i] = nullptr;
-			data_nom_pollution[i] = nullptr;		
+	if (ligne == 1) { 
+		cout << "Il n'y a pas ou plus de polluant pour l'instant, réessayez plus tard." << endl;
+	} else {
+		vector<double*> data_masse_pollution;
+		vector<std::string*> data_nom_pollution;
+		for (int i = 1; i < ligne; ++i) {
+			readCsv(5, ligne, filename, data_masse_pollution, 5, i);
+			readCsvString(5, ligne, filename, data_nom_pollution, 4, i);
 		}
+		
+		cout << " taille masse : " << data_masse_pollution.size() << endl;
+		cout << "taille nom : " << data_nom_pollution.size() << endl;
+		cout << "ligne : " << ligne << endl; 
+		/*
+		for (unsigned int i = 0; i < data_masse_pollution.size(); ++i) {
+			cout << *data_masse_pollution[i] << endl;
+		}
+		*/
+		double somme_fer = 0;
+		double somme_ammonium = 0;
+		double somme_phosphore = 0;
+		for(unsigned int i = 0; i < data_masse_pollution.size(); i++){
+			if(*data_nom_pollution[i] == "fer") {
+				somme_fer += *data_masse_pollution[i];
+				delete data_masse_pollution[i];
+				delete data_nom_pollution[i];
+				data_masse_pollution[i] = nullptr;
+				data_nom_pollution[i] = nullptr;
+			} else if (*data_nom_pollution[i] == "ammonium") {
+				somme_ammonium += *data_masse_pollution[i];
+				delete data_masse_pollution[i];
+				delete data_nom_pollution[i];
+				data_masse_pollution[i] = nullptr;
+				data_nom_pollution[i] = nullptr;
+			} else if(*data_nom_pollution[i] == "phosphore") {
+				somme_phosphore += *data_masse_pollution[i];
+				delete data_masse_pollution[i];
+				delete data_nom_pollution[i];
+				data_masse_pollution[i] = nullptr;
+				data_nom_pollution[i] = nullptr;		
+			}
+		}
+		double somme_tot = somme_fer + somme_ammonium + somme_phosphore;
+		cout << "La masse de fer est de : " << somme_fer << " kg." << endl;
+		cout << "La masse d'ammonium est de : " << somme_ammonium << " kg." << endl;
+		cout << "La masse de phosphore est de : " << somme_phosphore << " kg." << endl;
+		cout << "La masse de tous les polluants de la rivière réunis est : " << somme_tot << " kg." << endl;
 	}
-	double somme_tot = somme_fer + somme_ammonium + somme_phosphore;
-	cout << "La masse de fer est de : " << somme_fer << " kg." << endl;
-	cout << "La masse d'ammonium est de : " << somme_ammonium << " kg." << endl;
-	cout << "La masse de phosphore est de : " << somme_phosphore << " kg." << endl;
-	cout << "La masse de tous les polluants de la rivière réunis est : " << somme_tot << " kg." << endl;
 }
 
 //mettre main sûrement?

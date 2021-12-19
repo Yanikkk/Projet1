@@ -1133,7 +1133,7 @@ static PyObject * totMasse(PyObject * self, PyObject * args){
 			if(eau_pollu->getPolluant() == nullptr){
 				masse_totale += eau_pollu->getPolluant()->getMasse();
 			}
-		}
+		}¨
 	}
 	return  Py_BuildValue("d",masse_totale);
 }

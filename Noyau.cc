@@ -1123,20 +1123,6 @@ static PyObject * Cmap(PyObject * self, PyObject * args){
 	cout << "return 0" << endl;
 	return  Py_BuildValue("i",0);
 }
-static PyObject * totMasse(PyObject * self, PyObject * args){
-	int x;
-	if (! PyArg_ParseTuple(args, "i", &x)) return NULL;
-	double masse_totale;
-	for(int w = x * crossSection; w < x*crossSection + crossSection; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-			Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
-			if(eau_pollu->getPolluant() == nullptr){
-				masse_totale += eau_pollu->getPolluant()->getMasse();
-			}
-		}¨
-	}
-	return  Py_BuildValue("d",masse_totale);
-}
 
 static PyMethodDef methods[] = {
 	{"initialisation", initialisation, METH_VARARGS, "Initialisation de environnement riviere."},
@@ -1149,7 +1135,6 @@ static PyMethodDef methods[] = {
 	{"getCouleur_eau", getCouleur_eau, METH_VARARGS, "Les couleurs des cases d'eau"},
 	{"writeCsv", writeCsv, METH_VARARGS, "Fonction écrit un csv des données"},
 	{"Cmap", Cmap, METH_VARARGS, "Les couleurs de polluant"},
-	{"totMasse", totMasse, METH_VARARGS, "Calcule les masses totales de polluant sur une crossSection désignée."},
 	{NULL, NULL, 0, NULL}
 };
 
@@ -1163,7 +1148,7 @@ static struct PyModuleDef moduleDefinition = {
 	
 PyMODINIT_FUNC
 PyInit_Noyau(void) {
-	PyObject * module = PyModule_Create(&moduleDefinition); //donc avec le import appelle cette fonction
+	PyObject * module = PyModule_Create(&moduleDefinition);
 
     return module;
 }

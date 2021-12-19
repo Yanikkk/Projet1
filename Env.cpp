@@ -31,7 +31,6 @@ void Env::copy(Env* tampon){
 } 
 
 void Env::initTableau(int hsol, int heau, double pente) {
-	//std::cout << "Env1" << std::endl;
 	if(hsol < -1){
 		hsol = -1;
 	}
@@ -43,36 +42,27 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		pente = pente_;
 	}
 	int grandeur = hauteur_ *longueur_ * largeur_;
-	//std::cout << grandeur << std::endl;
 	int x = 0;
 	int y = 0;
 	int z = 0;
 	if(pente == 0){
 		cout << "Erreur de pente nulle, division infinie" << endl;
 	}	
-	palier_ = 1/(pente/100.0); ///< Si vous désirez un autre palier, vous pouvez décommenter et indiquer la valeur souhaitée à la ligne d'après.
+	palier_ = 1/(pente/100.0);
 	for(int i = 0; i < grandeur; i++){
-		//std::cout << "Env3"5 << std::endl;
 		y = i % (largeur_);
-		//std::cout << "Env3.1" << std::endl;
 		x = i / (largeur_*hauteur_);
-		//std::cout << "Env3.2" << std::endl;
 		z = (i - x * largeur_ * hauteur_) / largeur_;
-		//std::cout << "Env3.3" << std::endl;
 		tableau_[i].setX(x);
-		//std::cout << "Env3.4" << std::endl;
 		tableau_[i].setY(y);
-		//std::cout << "Env3.5" << std::endl;
 		tableau_[i].setZ(z);
-		//std::cout << "Env3.6" << std::endl;	
-		//cout  << x << "," << z << "," << y << endl;
 	
 		if( ((x % palier_ == 0) && y == 0) && z == 0){
-			hsol = hsol + 1; ///< on sait qu'ils changent de valeurs, mais il garde leur écart relatif,
-			h_sol_ = hsol;   ///< ainsi, on les garde quand même comme attributs.
-			heau = heau + 1; ///< s'ils ne gardaient pas leur écart relatif (pente plus irrégulière),
-			h_eau_ = heau;   ///< cela n'aurait plus de sens de les garder en attributs.
-			//std::cout << h_sol_ << std::endl;	
+			hsol = hsol + 1;
+			h_sol_ = hsol; 
+			heau = heau + 1;
+			h_eau_ = heau;   
+
 		}
 		tableau_[i].initMatiere();
 	}
@@ -213,10 +203,10 @@ void Env::affichePolluant(int ligne, std::string filename) {
 }
 
 void Env::setPenteCsv(std::string filename) {
-	int x_size = 36; ///< colonne du fichier
-	int y_size = 23; ///< ligne du fichier
-	vector<double*> data_pente; ///< données csv
-	for (int i = 1; i < y_size; i++) { ///< la boucle permet d'appeler readCsv pour toutes les lignes sauf la première (car les titres)
+	int x_size = 36; 
+	int y_size = 23; 
+	vector<double*> data_pente; 
+	for (int i = 1; i < y_size; i++) { 
 		readCsv(x_size, y_size, filename, data_pente, 8, i);
 	}
 	double somme = 0;

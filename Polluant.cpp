@@ -26,17 +26,17 @@ void Polluant::setPolluant(std::string nom) {
 	switch (type) {
 		case fer : 
 			nom_cmap_ = "Reds";
-			coeff_dispersion_ = 4.0;
+			coeff_dispersion_ = 1.0;
 				
 			break; 
 		case phosphore : 
 			nom_cmap_ = "Greens";	
-			coeff_dispersion_ = 4.0;
+			coeff_dispersion_ = 0.0001;
 					
 			break; 
 		case ammoniac : 
 			nom_cmap_ = "copper";	
-			coeff_dispersion_ = 4.0;
+			coeff_dispersion_ = 1000.0;
 			
 			break; 
 		default :  //polluant inconnue facteur de dilution aux hasards

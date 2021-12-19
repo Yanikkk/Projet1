@@ -65,7 +65,13 @@ double C_polluant_x(Eau* eau, Polluant* polluant, int position, double temps, in
 	//que les cases bougent
 	//retourne la concentration dans la case devant celle contenant le polluant, le reste s'est dispersé
 	//car fonction empirique, inadaptable
-	return concentration * surface_mouille + polluant->getMasse() *1/4;
+	/*cout << "----"<< endl;
+	cout << surface_mouille*sqrt(4*M_PI*dispersionL*temps)<< endl;
+	cout << exp(-pow((case_aval-polluant->getVitesse() * temps),1) )<< endl;
+	
+	cout << polluant->getVitesse() << endl;
+	cout << "concentration "  << concentration*surface_mouille <<  endl;*/
+	return concentration * surface_mouille;
 }
 int alea_bis(int i){
 	int x = riviere.getTableau()[i].getX();
@@ -197,7 +203,7 @@ int alea_pos(int i, int transversale){
 	int direction = 0;
 	int y = riviere.getTableau()[i].getY();
 	int z = riviere.getTableau()[i].getZ();
-	int compteur = 10;
+	int compteur = 1;
 	int state = 0;
 	/*!
 	 * Regarde où va le polluant
@@ -805,7 +811,7 @@ void parPalier(int q, int w, double temps, double seuil_cumule, double vitesse) 
 	if(pollution_tab.size() != 0){
 		if(q == last_eau() ){
 				//! si toutes les cases ont avancées, alors on peut disperser les polluant
-			dispersion(0);
+			dispersion(1);
 		}
 	}
 								
@@ -1001,7 +1007,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 										if(pollution_tab.size() != 0){
 											if(w == last_eau() ){
 												//! si toutes les cases ont avancées, alors on peut disperser les polluant
-												dispersion(0);
+												dispersion(1);
 																}
 										}
 								}

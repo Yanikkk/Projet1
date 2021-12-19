@@ -1030,7 +1030,15 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 		}
 	return Py_BuildValue("i",0);
 }
-
+int zmax_eau(){
+	for(int w = taille -1; w >= taille - (riviere.getLargeur()*riviere.getLongueur()); w--){
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				z_max = (w -xmax*riviere.getLargeur() * riviere.getHauteur())/riviere.getLargeur();
+				break;
+			}
+		}
+	return z_max;
+}
 static PyObject * pollution(PyObject * self, PyObject * args){
 	int pollution_state;
 	int w = 0;
@@ -1038,19 +1046,36 @@ static PyObject * pollution(PyObject * self, PyObject * args){
 	int z_maxEau = 0;
 	int xmax = riviere.getLongueur()-1;
 	//cas du Fer par exemple
-	if(pollution_state == 1){
+	if(pollution_state == 1){/*
 		for(int w = taille -1; w >= taille - (riviere.getLargeur()*riviere.getLongueur()); w--){
 			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 				z_maxEau = (w -xmax*riviere.getLargeur() * riviere.getHauteur())/riviere.getLargeur();
 				break;
 			}
-		}
+		}*/
+		z_maxEau = zmax_eau();
 		//génère un nombre sur la dernière ligne d'eau de la dernière crossSection de la simulation
 		w = rand() % riviere.getLargeur() + taille - (riviere.getHauteur()- z_maxEau) * riviere.getLargeur(); 
 		cout << "ad "<< w << endl;
 		Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
 		eau_pollu->setPolluant("fer", 10, riviere.getLongueur() -1, eau_pollu->getVitesse());
 	}
+ /*if (pollution_state == 2){
+  * 	z_maxEau = zmax_eau();
+  * 	w = rand() % riviere.getLargeur() + taille - (riviere.getHauteur()- z_maxEau) * riviere.getLargeur();
+  * 	Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
+  * 	eau_pollu->setPolluant("phosphore", 5, riviere.getLongueur() -1, eau_pollu->getVitesse());
+  * }
+  * if (pollution_state == 3){
+  * 	z_maxEau = zmax_eau();
+  * 	w = rand() % riviere.getLargeur() + taille - (riviere.getHauteur()- z_maxEau) * riviere.getLargeur();
+  * 	Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
+  * 	eau_pollu->setPolluant("amonia", 1, riviere.getLongueur() -1, eau_pollu->getVitesse());
+  * }
+  * 
+  *  	
+  */ 
+
 return Py_BuildValue("i",0);
 }
 

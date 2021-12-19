@@ -441,7 +441,7 @@ def animation_frame(i):
 	#pour pause -> enlever si on garde l'espace
 	fig.canvas.mpl_connect('button_press_event', onClick)
 	'''
-anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
+anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 20, 0.1), interval=100, blit=False)
 
 '''
 DEUXIEME GRAPHIQUE
@@ -464,7 +464,7 @@ else :
 
 scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = size_case, alpha=0.8, vmin = 0, vmax = 100)
 '''
-anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
+anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 20, 0.1), interval=100, blit=False)
 
 '''
 Writer = writers['ffmpeg']

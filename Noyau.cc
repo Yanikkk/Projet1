@@ -1042,14 +1042,7 @@ static PyObject * pollution(PyObject * self, PyObject * args){
 	int w = 0;
 	int z_maxEau = 0;
 	if (! PyArg_ParseTuple(args, "i", &pollution_state)) return NULL;
-	//cas du Fer par exemple
 	if(pollution_state == 1){
-		/*for(int w = taille -1; w >= taille - (riviere.getLargeur()*riviere.getLongueur()); w--){
-			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-				z_max = (w -xmax*riviere.getLargeur() * riviere.getHauteur())/riviere.getLargeur();
-				break;
-			}
-		}*/
 		z_maxEau = zmax_eau();
 		//génère un nombre sur la dernière ligne d'eau de la dernière crossSection de la simulation
 		w = rand() % riviere.getLargeur() + taille - (riviere.getHauteur()- z_maxEau) * riviere.getLargeur(); 
@@ -1182,24 +1175,19 @@ static PyObject * coord_Z(PyObject * self, PyObject * args){
 	}
 	return data_animation;
 }
-static PyObject * getCouleur_sol(PyObject * self, PyObject * args){
+static PyObject * getCouleur(PyObject * self, PyObject * args){
+	char* m;
+	if (! PyArg_ParseTuple(args, "s", &m)) return NULL;
+	string matiere = m;
 	PyObject * data_animation = PyList_New(0);
 	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "SOL"){
+		if(riviere.getTableau()[w].getMatiere()->getType() == matiere){
 			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getMatiere()->getCouleur()));
 		}
 	}
 	return data_animation;
 }
-static PyObject * getCouleur_air(PyObject * self, PyObject * args){
-	PyObject * data_animation = PyList_New(0);
-	for(int w = 0; w < taille; w++){
-		if(riviere.getTableau()[w].getMatiere()->getType() == "AIR"){
-			PyList_Append(data_animation, Py_BuildValue("i",riviere.getTableau()[w].getMatiere()->getCouleur()));
-		}
-	}
-	return data_animation;
-}
+
 static PyObject * getCouleur_eau(PyObject * self, PyObject * args){
 	char* m;
 	char* nom;
@@ -1243,44 +1231,13 @@ static PyObject * Cmap(PyObject * self, PyObject * args){
 	string polluant = p;
 	PyObject * data_animation = PyList_New(0);
 	if(polluant == "fer"){
-		for(int w = 0; w < taille; w++){	
-			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
-				if(eau_pollu->getPolluant() != nullptr){
-					if(eau_pollu->getPolluant()->getNom() == "fer"){
-						return Py_BuildValue("s","Reds");
-					}
-				}	
-			}
-		}
+  		return Py_BuildValue("s","Reds");
 	}
 	if(polluant == "phosphore"){
-		cout << "wsh " << endl;
-		for(int w = 0; w < taille; w++){	
-			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
-	  			if(eau_pollu->getPolluant() != nullptr){
-					cout << "wsh 3" << eau_pollu->getPolluant()->getNom() << endl;
-	  				if(eau_pollu->getPolluant()->getNom() == "phosphore"){
-						cout << "wsh 4" << endl;
-						char* c_map = &eau_pollu->getPolluant()->getNomCmap()[0];
-	  					return Py_BuildValue("s","Greens");
-	  				}
-				}
-			}
-	  	}
+  		return Py_BuildValue("s","Greens");
 	}
 	if(polluant == "ammoniac"){
-		for(int w = 0; w < taille; w++){	
-			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
-	  			if(eau_pollu->getPolluant() != nullptr){
-					if(eau_pollu->getPolluant()->getNom() == "ammoniac"){
-						return Py_BuildValue("s","Oranges");
-					}
-				}
-			}
-		}
+  		return Py_BuildValue("s","Oranges");
 	}
 	cout << "return 0" << endl;
 	return  Py_BuildValue("i",0);

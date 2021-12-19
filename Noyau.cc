@@ -203,6 +203,7 @@ int alea_pos(int i, int transversale){
 	 * */
 	while (state == 0){
 		direction = rand() % 4 + 1;
+		//cout << "direction" << direction << endl;
 		if(transversale == 1){
 			compteur--;
 			if(compteur == 0){
@@ -265,7 +266,7 @@ int string_to_code(std::string nom_pollu){
 	if(nom_pollu == "fer"){
 		return 1;
 	}
-	if(nom_pollu == "phoshpore"){
+	if(nom_pollu == "phosphore"){
 		return 2;
 	}
 	if(nom_pollu == "ammoniac"){
@@ -825,7 +826,7 @@ void simulation_non_conforme(int w){
 		cout << "pour une hauteur totale de tableau de : " << riviere.getHauteur() << endl;
 		cout << "Ainsi quand x vaut " << x << " ,alors là hauteur d'eau augmente de" << endl;
 		cout << "une case et vaut: " << z - eau->getProfondeur() + hauteur_eau + 1 <<endl;
-		cout << "La riviere déborde donc !. " << endl;
+		cout << "La riviere deborde donc !. " << endl;
 		
 		cout << "\n\nVeuillez reessayer avec des valeurs conformes" << endl;
 		cout <<"(Ps: par exemple : larg = 20, haut = 30, long = 40)" << endl;
@@ -855,6 +856,10 @@ void detection_erreur(){
 	for(int w = 0; w < taille; w++){
 		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 			simulation_non_conforme(w);
+			Eau* eau =(Eau*)riviere.getTableau()[w].getMatiere();
+			if(	eau->getPolluant() != nullptr){
+					//cout << "polluant au : " << w << endl;
+			}
 		}
 	}
 	if(riviere.getTableau()[taille-1].getMatiere()->getType() == "SOL"){

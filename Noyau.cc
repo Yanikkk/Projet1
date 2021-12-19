@@ -914,30 +914,6 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 		if(temps >= seuil_cumule){
 			seuil_cumule = seuil_cumule + 1/vitesse;
 		}
-	/*}else if(riviere.getLongueur() % riviere.getPalier() == 0 && riviere.getPalier() != 1){ 
-	/*!
-     * @biref
-     * si la rivière à une pente et si le palier sépare la rivière en partie égale sauf cas palier = 1
-     * état 0 => on traite les cases en première ligne
-     * état 1 => on traite les cases en non situation de débordement
-     * état 2 => se met en place quand il y a un état de dépacement
-     * */
-	/*	for(int w = 0; w <= taille - crossSection * riviere.getPalier(); w += crossSection * riviere.getPalier()){
-				for(int q = w; q < w+crossSection * riviere.getPalier(); q++){
-					
-						if(riviere.getTableau()[q].getMatiere() != nullptr && riviere.getTableau()[q].getMatiere()->getType() == "EAU"){
-							vitesse = riviere.getTableau()[q].getMatiere()->getVitesse();
-									if(seuil_cumule == 0){
-										seuil_cumule =  1/vitesse;
-									}
-						}else{ continue;}
-							parPalier(q,w, temps, seuil_cumule, vitesse);
-					}
-				}
-			if(temps >= seuil_cumule){
-				pollution_tab.clear();
-			seuil_cumule = seuil_cumule + 1/vitesse;
-			}*/
 	}else if(riviere.getPalier() == 1){
 	/*!
      * @biref
@@ -1242,6 +1218,20 @@ static PyObject * Cmap(PyObject * self, PyObject * args){
 	cout << "return 0" << endl;
 	return  Py_BuildValue("i",0);
 }
+static PyObject * totMasse(PyObject * self, PyObject * args){
+	int x;
+	if (! PyArg_ParseTuple(args, "i", &x)) return NULL;
+	double masse_totale;
+	for(int w = x * crossSection; w < x*crossSection + crossSection; w++){
+		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+			Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
+			if(eau_pollu->getPolluant() == nullptr){
+				masse_totale += eau_pollu->getPolluant()->getMasse();
+			}
+		}
+	}
+	return  Py_BuildValue("d",masse_totale);
+}
 
 static PyMethodDef methods[] = {
 	{"initialisation", initialisation, METH_VARARGS, "Initialisation de environnement riviere."},
@@ -1254,6 +1244,7 @@ static PyMethodDef methods[] = {
 	{"getCouleur_eau", getCouleur_eau, METH_VARARGS, "Les couleurs des cases d'eau"},
 	{"writeCsv", writeCsv, METH_VARARGS, "Fonction écrit un csv des données"},
 	{"Cmap", Cmap, METH_VARARGS, "Les couleurs de polluant"},
+	{"totMasse", totMasse, METH_VARARGS, "Calcule les masses totales de polluant sur une crossSection désignée."},
 	{NULL, NULL, 0, NULL}
 };
 

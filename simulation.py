@@ -10,13 +10,12 @@ from matplotlib.animation import FuncAnimation, writers
 from mpl_toolkits.mplot3d import Axes3D
 
 largeur = 20
-hauteur = 30
-longueur = 40
+hauteur = 50
+longueur = 24
 
 ''' initialise le tableau/environnement '''
 Noyau.initialisation(largeur, hauteur, longueur)
 
-Noyau.pollution(1)
 
 ''' PREMIER GRAPHIQUE '''
 fig = plt.figure(1)
@@ -135,6 +134,15 @@ scatter_eau_fer_bis = ax2.scatter(X_eau_fer, Y_eau_fer, Z_eau_fer, c = couleur_e
 scatter_eau_phosphore_bis = ax2.scatter(X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore, c = couleur_eau_phosphore, cmap = cmap_phosphore, marker='s', s = S_eau_phosphore, alpha=0.35, vmin = 0, vmax = 100)
 scatter_eau_ammoniac_bis = ax2.scatter(X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac, c = couleur_eau_ammoniac, cmap = cmap_ammoniac, marker='s', s = S_eau_ammoniac, alpha=0.35, vmin = 0, vmax = 100)
 
+''' TROISIEME GRAPHIQUE '''
+'''
+t_data = []
+c_data = []
+fig3, ax3 = plt.subplots(2)
+ax3.set_xlim(0,100)
+ax3.set_ylim(0,10)
+line, = ax3.plot(0,0)
+'''
 def change_meteo():
 	if keyboard.is_pressed('j'): #jour (par défaut)
 		print("Il fait jour")
@@ -217,8 +225,18 @@ def change_taille():
 compteur_csv = 1
 
 def animation_frame(i):
+	''' fait un graphie de la concentration/temps '''
+	''' pour une valeur de x prédéfinie'''
+	'''
+	t_data.append(i)
+	c_data.append(Noyau.totMasse(longueur/2))
+	line.set_xdata(t_data)
+	line.set(c_data)
+	'''
 	''' fait avancer les cases EAU '''
-
+	'''
+	
+	'''
 	if keyboard.is_pressed('space'):
 		print("Arrêt")
 		keyboard.wait('space')
@@ -351,17 +369,19 @@ def animation_frame(i):
 				scatter_eau_ammoniac, scatter_eau_ammoniac_bis, scatter_eau_pure, scatter_air]
 
 	return scatters
-
+'''
+, line,
+'''
 anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
 anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
 
 ''' ---------------> SI ON VEUT ENREGISTRER LA SIMULATION EN gif (OU mp4 EN CHANGEANT LE .gif  EN .mp4) '''
-
+'''
 Writer = writers['ffmpeg']
 writer = Writer(fps=5, metadata={'artist': 'Me'}, bitrate=1800)
 anim.save('riviere_avecpolluant.gif', writer)
 '''
 plt.show()
-'''
+
 print("----------------------FIN----------------------")
 

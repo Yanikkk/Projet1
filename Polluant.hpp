@@ -44,7 +44,6 @@ public :
 	double getMasse() const;
 	double getVitesse() const;	
 	double getCoeffDispersion() const;
-	//double getDilution() const; 
 	std::string getNom() const; 
 	std::string getNomCmap() const;
 	int getCaseDepart() const;

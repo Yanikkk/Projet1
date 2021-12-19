@@ -22,16 +22,10 @@ void Eau::setVitesse() {
 	double I = pente_arrondie/100.0; ///< tout en [m] 
 	vitesse_ = Ks * pow(R, 2.0/3.0) * pow(I, 1.0/2.0); ///< formule de Manning Strickler 
 }
-/*
-double Eau::getVitesse() const{
-	return vitesse_;
-}s
-*/
  
 void Eau::setCouleur() {
 	int taille_eau = getEnv2()->getH_eau() - getEnv2()->getH_sol();
 
-	//remettre constexpr int si on trouve comment mettre c++11 ????????????????????????????????????????????????
 	int MIN; 
 	int MAX; 
 	std::random_device rd;

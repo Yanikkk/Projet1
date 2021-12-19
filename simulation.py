@@ -10,8 +10,8 @@ from matplotlib.animation import FuncAnimation, writers
 from mpl_toolkits.mplot3d import Axes3D
 
 largeur = 20
-hauteur = 50
-longueur = 24
+hauteur = 30
+longueur = 40
 
 ''' initialise le tableau/environnement '''
 Noyau.initialisation(largeur, hauteur, longueur)

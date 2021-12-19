@@ -50,7 +50,6 @@ void Polluant::setMasse(double nouvelle_m){
 }
 
 void Polluant::setCouleur() {
-	//remettre constexpr int si on trouve comment mettre c++11  ?
 	int MIN; 
 	int MAX; 
 	std::random_device rd;
@@ -106,11 +105,7 @@ double Polluant::getVitesse() const{
 double Polluant::getCoeffDispersion() const {
 	return coeff_dispersion_;
 } 
-/*
-double Polluant::getDilution() const {
-	return etat_dilution_;
-} 
-*/
+
 std::string Polluant::getNom() const {
 	return nom_;
 } 

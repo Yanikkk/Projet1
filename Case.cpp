@@ -10,15 +10,10 @@ Case::Case(int x, int y, int z)
 	: x_(x), y_(y), z_(z)
 {
 	matiere_ = nullptr; ///< initialement
-	//cout<< "ok"<< endl;
-	//cout<<x << y << z << endl;
 }
 
 void Case::initMatiere() {
 	
-	//cout<< "case: z : "<<  z_ << endl;
-	//cout<< "case: sol : "<<  env << endl;
-	//cout<< "case: sol : "<<  env->getH_sol() << endl;
 	if(z_ <= env->getH_sol()) {
 		matiere_ = new Sol(env,"SOL",z_);
 	

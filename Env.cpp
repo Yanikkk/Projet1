@@ -48,7 +48,7 @@ void Env::initTableau(int hsol, int heau, double pente) {
 	if(pente == 0){
 		cout << "Erreur de pente nulle, division infinie" << endl;
 	}	
-	palier_ = 1/(pente/100.0);
+	palier_ = 1/(pente/100.0); ///< Si vous désirez un autre palier, vous pouvez décommenter et indiquer la valeur souhaitée à la ligne d'après.
 	for(int i = 0; i < grandeur; i++){
 		y = i % (largeur_);
 		x = i / (largeur_*hauteur_);
@@ -58,11 +58,10 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		tableau_[i].setZ(z);
 	
 		if( ((x % palier_ == 0) && y == 0) && z == 0){
-			hsol = hsol + 1;
-			h_sol_ = hsol; 
-			heau = heau + 1;
-			h_eau_ = heau;   
-
+			hsol = hsol + 1; ///< on sait qu'ils changent de valeurs, mais il garde leur écart relatif,
+			h_sol_ = hsol;   ///< ainsi, on les garde quand même comme attributs.
+			heau = heau + 1; ///< s'ils ne gardaient pas leur écart relatif (pente plus irrégulière),
+			h_eau_ = heau;   ///< cela n'aurait plus de sens de les garder en attributs.
 		}
 		tableau_[i].initMatiere();
 	}
@@ -203,10 +202,10 @@ void Env::affichePolluant(int ligne, std::string filename) {
 }
 
 void Env::setPenteCsv(std::string filename) {
-	int x_size = 36; 
-	int y_size = 23; 
-	vector<double*> data_pente; 
-	for (int i = 1; i < y_size; i++) { 
+	int x_size = 36; ///< colonne du fichier
+	int y_size = 23; ///< ligne du fichier
+	vector<double*> data_pente; ///< données csv
+	for (int i = 1; i < y_size; i++) { ///< la boucle permet d'appeler readCsv pour toutes les lignes sauf la première (car les titres)
 		readCsv(x_size, y_size, filename, data_pente, 8, i);
 	}
 	double somme = 0;

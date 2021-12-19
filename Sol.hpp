@@ -28,12 +28,9 @@ public :
      * @brief initie la couleur du sol par rapport à sa profondeur. 
      */	
 	void setCouleur();
-	
-	//Polluant* getPolluant() const;
 		
 private : 
 
-//Polluant* polluant_;
 int profondeur_; ///< profondeur du sol (valeur plus élevée -> plus haute)
 }; 
 

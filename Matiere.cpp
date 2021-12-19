@@ -19,7 +19,7 @@ Env* Matiere::getEnv2() const{
 }
 
 std::string Matiere::getType() const{
-	//std::cout << "Matiere_a" << std::endl;
+
 	return type_;
 }
 

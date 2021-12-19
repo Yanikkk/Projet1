@@ -12,7 +12,6 @@ Sol::Sol(Env * env_param, std::string type, int profondeur, double vitesse)
 
 void Sol::setCouleur() {
 	int taille_sol = getEnv2()->getH_sol();
-	//remettre constexpr int si on trouve comment mettre c++11 ???????????????????????????????????????????????
 	int MIN; 
 	int MAX; 
 	std::random_device rd;
@@ -40,9 +39,5 @@ void Sol::setCouleur() {
 		couleur_ = distr(eng);
 	} 
 }
-/*
-Polluant* getPolluant() const{
-	return polluant_;
-}*/
-// Pas vraiment faites mais facil une fois que ça marchera pour l'eau casi pareil
+
 

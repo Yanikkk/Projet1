@@ -845,7 +845,7 @@ void simulation_non_conforme(int w){
 		cout <<"(Ps: par exemple : larg = 20, haut = 30, long = 40)" << endl;
 		cout << "--------------------------------------------------------------"<< endl;
 		exit(0);
-	}
+	} 
 }
 void erreur_de_palier(){
 		cout << "\n" << endl;

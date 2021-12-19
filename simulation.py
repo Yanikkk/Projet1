@@ -476,7 +476,6 @@ def animation_frame(i):
 	print(len(S_eau_pure))
 	print("----DD----")
 	'''
-
 	return scatters
 	'''
 	#pour pause -> enlever si on garde l'espace

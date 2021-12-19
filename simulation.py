@@ -134,36 +134,6 @@ scatter_eau_fer_bis = ax2.scatter(X_eau_fer, Y_eau_fer, Z_eau_fer, c = couleur_e
 scatter_eau_phosphore_bis = ax2.scatter(X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore, c = couleur_eau_phosphore, cmap = cmap_phosphore, marker='s', s = S_eau_phosphore, alpha=0.35, vmin = 0, vmax = 100)
 scatter_eau_ammoniac_bis = ax2.scatter(X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac, c = couleur_eau_ammoniac, cmap = cmap_ammoniac, marker='s', s = S_eau_ammoniac, alpha=0.35, vmin = 0, vmax = 100)
 
-''' TROISIEME GRAPHIQUE '''
-'''
-fig3 = plt.figure(2)
-ax3 = fig3.add_subplot(111)
-t_data = []
-c_data = []
-ax3.set_xlim(0,10)
-ax3.set_ylim(0,10)
-
-x = np.linspace(0, 10, 1000)
-ax3.plot(x, np.sin(x));
-'''
-'''
-t = []
-s = []
-
-fig3, ax3 = plt.subplots()
-ax3.plot(t, s)
-
-ax3.set(xlabel='time (s)', ylabel='Concentration',
-       title='Concentration de polluant par rapport au temps')
-ax3.grid()
-
-t_data = []
-c_data = []
-fig3, ax3 = plt.subplots(2)
-ax3.set_xlim(0,100)
-ax3.set_ylim(0,10)
-line, = ax3.plot(0,0)
-'''
 def change_meteo():
 	if keyboard.is_pressed('j'): #jour (par défaut)
 		print("Il fait jour")
@@ -247,12 +217,7 @@ compteur_csv = 1
 
 def animation_frame(i):
 	''' fait avancer les cases EAU '''
-	'''
-	t.append(i)
-	#entier = int(Noyau.totMasse(longueur/2))
-	s.append(i)
-	#Noyau.totMasse(longueur/2)
-	'''
+
 	if keyboard.is_pressed('space'):
 		print("Arrêt")
 		keyboard.wait('space')
@@ -385,30 +350,9 @@ def animation_frame(i):
 				scatter_eau_ammoniac, scatter_eau_ammoniac_bis, scatter_eau_pure, scatter_air]
 
 	return scatters
-	
-x_data = []
-y_data = []
-
-fig3, ax3 = plt.subplots()
-ax3.set_xlim(-100, 105)
-ax3.set_ylim(-100, 100)
-line, = ax3.plot(0, 0)
-
-def animation_frame2(i):
-	x_data.append(i)
-	masse_int = int(Noyau.totMasse(longueur/2))
-	print(masse_int)
-	y_data.append(masse_int)
-
-	line.set_xdata(x_data)
-	line.set_ydata(y_data)
-	return line, 
-
-animation = FuncAnimation(fig3, func=animation_frame2, frames=np.arange(0, 10, 0.1), interval=10)
 
 anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
 anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
-#anim3 = FuncAnimation(fig3, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
 
 ''' ---------------> SI ON VEUT ENREGISTRER LA SIMULATION EN gif (OU mp4 EN CHANGEANT LE .gif  EN .mp4) '''
 '''

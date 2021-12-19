@@ -1254,31 +1254,35 @@ static PyObject * Cmap(PyObject * self, PyObject * args){
 			}
 		}
 	}
-	/*if(polluant == "phosphore"){
-	 * for(int w = 0; w < taille; w++){	
-	 * 		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-	 * 			Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
-	 * 			if(eau_pollu->getPolluant() != nullptr){
-	 * 				if(eau_pollu->getPolluant()->getNom() == "fer"){
-	 * 					return Py_BuildValue("s","Reds");
-	 * 				}
-	 * 			}
-	 * 		}
-	 * 	}
-	 * }
-	 * if(polluant == "ammoniac"){
-	 * for(int w = 0; w < taille; w++){	
-	 * 		if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
-	 * 			Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
-	 * 			if(eau_pollu->getPolluant() != nullptr){
-	 * 				if(eau_pollu->getPolluant()->getNom() == "fer"){
-	 * 					return Py_BuildValue("s","Reds");
-	 * 				}
-	 * 			}
-	 * 		}
-	 * 	}
-	 * }
-	 * */
+	if(polluant == "phosphore"){
+		cout << "wsh " << endl;
+		for(int w = 0; w < taille; w++){	
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
+	  			if(eau_pollu->getPolluant() != nullptr){
+					cout << "wsh 3" << eau_pollu->getPolluant()->getNom() << endl;
+	  				if(eau_pollu->getPolluant()->getNom() == "phosphore"){
+						cout << "wsh 4" << endl;
+						char* c_map = &eau_pollu->getPolluant()->getNomCmap()[0];
+	  					return Py_BuildValue("s","Greens");
+	  				}
+				}
+			}
+	  	}
+	}
+	if(polluant == "ammoniac"){
+		for(int w = 0; w < taille; w++){	
+			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+				Eau* eau_pollu =(Eau*)riviere.getTableau()[w].getMatiere();
+	  			if(eau_pollu->getPolluant() != nullptr){
+					if(eau_pollu->getPolluant()->getNom() == "ammoniac"){
+						return Py_BuildValue("s","Oranges");
+					}
+				}
+			}
+		}
+	}
+	cout << "return 0" << endl;
 	return  Py_BuildValue("i",0);
 }
 

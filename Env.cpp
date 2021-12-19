@@ -50,7 +50,8 @@ void Env::initTableau(int hsol, int heau, double pente) {
 	if(pente == 0){
 		cout << "Erreur de pente nulle, division infinie" << endl;
 	}	
-	palier_ = 1/(pente/100.0);
+	palier_ = 1/(pente/100.0); ///< Si vous désirez un autre palier, vous pouvez décommenter et indiquer la valeur souhaitée à la ligne d'après.
+	palier_ = 4; 
 	//std::cout << "Env2" << std::endl;
 	//std::cout << palier_pente << std::endl;
 	for(int i = 0; i < grandeur; i++){
@@ -192,7 +193,7 @@ void Env::affichePolluant(int ligne, std::string filename) {
 				delete data_nom_pollution[i];
 				data_masse_pollution[i] = nullptr;
 				data_nom_pollution[i] = nullptr;
-			} else if (*data_nom_pollution[i] == "ammonium") {
+			} else if (*data_nom_pollution[i] == "ammoniac") {
 				somme_ammonium += *data_masse_pollution[i];
 				delete data_masse_pollution[i];
 				delete data_nom_pollution[i];
@@ -208,8 +209,8 @@ void Env::affichePolluant(int ligne, std::string filename) {
 		}
 		double somme_tot = somme_fer + somme_ammonium + somme_phosphore;
 		cout << "La masse de fer est de : " << somme_fer << " kg." << endl;
-		cout << "La masse d'ammonium est de : " << somme_ammonium << " kg." << endl;
 		cout << "La masse de phosphore est de : " << somme_phosphore << " kg." << endl;
+		cout << "La masse d'ammoniac est de : " << somme_ammonium << " kg." << endl;
 		cout << "La masse de tous les polluants de la rivière réunis est : " << somme_tot << " kg." << endl;
 	}
 }

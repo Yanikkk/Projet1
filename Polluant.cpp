@@ -35,7 +35,7 @@ void Polluant::setPolluant(std::string nom) {
 					
 			break; 
 		case ammoniac : 
-			nom_cmap_ = "copper";	
+			nom_cmap_ = "Oranges";	
 			coeff_dispersion_ = 1000.0;
 			
 			break; 

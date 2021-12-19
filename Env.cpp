@@ -51,9 +51,6 @@ void Env::initTableau(int hsol, int heau, double pente) {
 		cout << "Erreur de pente nulle, division infinie" << endl;
 	}	
 	palier_ = 1/(pente/100.0); ///< Si vous désirez un autre palier, vous pouvez décommenter et indiquer la valeur souhaitée à la ligne d'après.
-	palier_ = 1;
-	//std::cout << "Env2" << std::endl;
-	//std::cout << palier_pente << std::endl;
 	for(int i = 0; i < grandeur; i++){
 		//std::cout << "Env3"5 << std::endl;
 		y = i % (largeur_);

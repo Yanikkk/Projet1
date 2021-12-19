@@ -9,8 +9,7 @@ Eau::Eau(Env* env_param, std::string type, int profondeur, double vitesse, Pollu
 	:Matiere(env_param, type, vitesse), profondeur_(profondeur), polluant_(polluant)
 {
 	setVitesse();
-	setCouleur(); // il passe aussi dans le setCouleur de matière avant... 
-	// je sais pas comment faire dans le constructeur de matiere pour qu'il vienne dans le set couleur de la sous-classe en question
+	setCouleur(); 
 } 
 
 void Eau::setVitesse() {
@@ -20,31 +19,24 @@ void Eau::setVitesse() {
 	double P = getEnv2()->getLargeur() + 2 * (getEnv2()->getH_eau() - getEnv2()->getH_sol());
 	double R = S/P;
 	int pente_arrondie = getEnv2()->getPente();
-	double I = pente_arrondie/100.0; //tout en [m]
-	//formule de Manning Strickler 
-	vitesse_ = Ks * pow(R, 2.0/3.0) * pow(I, 1.0/2.0);
+	double I = pente_arrondie/100.0; ///< tout en [m] 
+	vitesse_ = Ks * pow(R, 2.0/3.0) * pow(I, 1.0/2.0); ///< formule de Manning Strickler 
 }
 /*
 double Eau::getVitesse() const{
 	return vitesse_;
 }s
 */
-
-// Pas le override en cpp ? 
+ 
 void Eau::setCouleur() {
 	int taille_eau = getEnv2()->getH_eau() - getEnv2()->getH_sol();
-	// int hauteur_case = getEnv2()->getZ() - getEnv2()->getH_sol(); -> on a profondeur maintenant 
-	// a la place de getEnv2()->getHauteur() c'est getZ non ? getHauteur c'est la hauteur de la simulation. comment chercher getZ ? this.getZ() ? 
-	
-	//remettre constexpr int si on trouve comment mettre c++11 ?
+
+	//remettre constexpr int si on trouve comment mettre c++11 ????????????????????????????????????????????????
 	int MIN; 
 	int MAX; 
 	std::random_device rd;
     std::default_random_engine eng(rd());
-    //std::cout << "setCouleur de eau" << std::endl;
 
-	// voir si les if joue vu que c'est des int sinon mettre des doubles ça sera quand même juste.
-	// vérifier aussi si quand c'est proche de 100 c'est foncé ou claire, au pire juste changer les chiffres.
 	if (profondeur_ >= 0.75*taille_eau) {
 		MIN = 25;
 		MAX = 50;
@@ -68,12 +60,6 @@ void Eau::setCouleur() {
 	} 
 }
 
-int Eau::getProfondeur() const{
-	return profondeur_;
-}
-void Eau::setProfondeur(int actuelle){
-	profondeur_ =	actuelle;
-}
 void Eau::setPolluant(std::string nom, double masse, int depot_x, double vitesse){
 	if(nom == "nullptr"){
 		polluant_ = nullptr;
@@ -81,6 +67,15 @@ void Eau::setPolluant(std::string nom, double masse, int depot_x, double vitesse
 		polluant_ = new Polluant(nom, masse, depot_x, vitesse);
 	}
 }
+
+void Eau::setProfondeur(int actuelle){
+	profondeur_ = actuelle;
+}
+
+int Eau::getProfondeur() const{
+	return profondeur_;
+}
+
 Polluant* Eau::getPolluant() const{
 	return polluant_;
 }

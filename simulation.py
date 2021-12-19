@@ -3,14 +3,14 @@ import sys
 import Noyau
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation, writers
 import keyboard
 import time
 import matplotlib.patches as mpatches
 
-largeur = 5
-hauteur = 5
-longueur = 3
+largeur = 10
+hauteur = 10
+longueur = 40
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -114,8 +114,8 @@ else :
 scatter_sol = ax.scatter(X_sol, Y_sol, Z_sol, c = couleur_sol, cmap = "copper", marker='s', s = S_sol, alpha=0.3, vmin = 0, vmax = 100)
 scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", marker='s', s = S_air, alpha=0.005, vmin = 0, vmax = 100) #voir comment on fait la couleur de l'air avec l'héritage -> alpha = 0,001 l'air disparait
 #scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = S_eau, alpha=0.2, vmin = 0, vmax = 100)
-scatter_eau_pure = ax.scatter(X_eau_pure, Y_eau_pure, Z_eau_pure, c = couleur_eau_pure, cmap = "Blues", marker='s', s = S_eau_pure, alpha=0.1, vmin = 0, vmax = 100)
-scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=1.0, vmin = 0, vmax = 100)
+scatter_eau_pure = ax.scatter(X_eau_pure, Y_eau_pure, Z_eau_pure, c = couleur_eau_pure, cmap = "Blues", marker='s', s = S_eau_pure, alpha=0.2, vmin = 0, vmax = 100)
+scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=0.8, vmin = 0, vmax = 100)
 
 '''
 DEUXIEME GRAPHIQUE
@@ -141,7 +141,7 @@ else :
 	cmap_pollue = "Greys"
 '''
 
-scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=1.0, vmin = 0, vmax = 100)
+scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=0.5, vmin = 0, vmax = 100)
 
 '''
 FIN DEUXIEME GRAPHIQUE
@@ -351,13 +351,7 @@ def animation_frame(i):
 	#pour pause -> enlever si on garde l'espace
 	fig.canvas.mpl_connect('button_press_event', onClick)
 	'''
-anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 100, 0.1), interval=100, blit=False)
-
-#tester si juste ça ça passe déjà
-#FFwriter = animation.FFMpegWriter()
-#anim.save('animation.mp4', writer = FFwriter, fps=10)
-
-#plt.show()
+anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
 
 '''
 DEUXIEME GRAPHIQUE
@@ -380,6 +374,12 @@ else :
 
 scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = cmap_pollue, marker='s', s = size_case, alpha=0.8, vmin = 0, vmax = 100)
 '''
-anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 100, 0.1), interval=100, blit=False)
+anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
 
+'''
+Writer = writers['ffmpeg']
+writer = Writer(fps=5, metadata={'artist': 'Me'}, bitrate=1800)
+anim.save('animation_polluant5.gif', writer)
+'''
 plt.show()
+

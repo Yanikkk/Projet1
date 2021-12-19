@@ -2,16 +2,16 @@
 #define AIR_HPP
 
 #pragma once
+
 #include "Matiere.hpp"
 #include "Env.hpp"
-
 
 /*!
  * @class Air
  * 
- * Sous-classe de la classe mère Matiere car l'air EST UNE matiere.
+ * Sous-classe de la Super-classe Matiere car l'air EST UNE matiere.
  * 
- * Cette classe doit redéfinir les fonctions suivantes : ........ -> elles seront override (précise qu'elles sont redéfinies)
+ * Cette classe n'a pas de fonctions à redéfinir. 
  */
 class Air : public Matiere {
 public : 
@@ -19,10 +19,13 @@ public :
     /*!
      * @brief constructeur
      *
-     * @param ..........
+     * @param env_param, type, vitesse; Ce sont les paramètres hérités de la super-classe.
      */
 	Air(Env* env_param = nullptr, std::string type = "AIR", double vitesse = 0.0);
 	
+	/*!
+     * @brief initie la couleur de l'air à une valeure constante de journée. 
+     */	
 	void setCouleur(); 
 			
 private : 

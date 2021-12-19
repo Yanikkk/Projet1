@@ -5,6 +5,8 @@
 
 /*!
  * @class Polluant
+ * 
+ * @brief C'est un attribut de le la classe Eau. L'eau peut contenir un polluant.
  */
 class Polluant{
 public : 
@@ -12,31 +14,41 @@ public :
     /*!
      * @brief constructeur
      *
-     * @param .........
+     * @param nom; nom du polluant
+     * @param masse; masse du polluant
+     * @param depot_x; case où débute le polluant
+     * @param vitesse; vitesse du polluant
      */
 	Polluant(std::string nom = "Inconnu", double masse = 0, int depot_x = 0, double vitesse = 0);
 	
-	void setPolluant(std::string nom);  
+    /*!
+     * @brief les setters (méthodes set) permettent de mettre à jour l'attribut de la classe en dehors de cette dernière
+     * 
+     * @param nom, nouvelle_m; sont les nouvelles valeurs attribuées aux attributs de Case.
+     */
+	void setPolluant(std::string nom); 
+	void setMasse(double nouvelle_m);
 	
-	double getDilution() const; 
-		
-	double getCoeffDispersion() const;
-	
+	/*!
+     * @brief initie la couleur du polluant par rapport à sa concentration. 
+     */	
+	void setCouleur(); 
+
+	/*!
+     * @brief Les getters (méthodes get) permettent d'accéder aux attributs privés de cette classe en dehors de cette dernière.
+     *
+     * Elles sont définies const car elles ne modifient pas d'attributs de la classe.
+     *
+     * @return Elles retournent les attributs privé de la classe
+     */	
 	double getMasse() const;
-	
-	void setMasse(double);
-	
-	double getVitesse() const;
-	
-	int getCaseDepart() const;
-	
-	void setCouleur();
-	
-	int getCouleur() const;
-	
+	double getVitesse() const;	
+	double getCoeffDispersion() const;
+	//double getDilution() const; 
 	std::string getNom() const; 
-	
 	std::string getNomCmap() const;
+	int getCaseDepart() const;
+	int getCouleur() const;
 	 		
 private : 
 /*!-------------------------------------
@@ -59,17 +71,13 @@ private :
 //U* = vitesse de cisaillement[m/s] 
 //(p.148) en const on va mettre entre 0.053+-0.031
 */
-double masse_; //[kg]
-double vitesse_; //[m/s]
-//coeff de dispersion 0-1
-//plus il est élevé moins il se disperse
-//dans des cases différentes(1-10)
-double coeff_dispersion_;
-std::string nom_;
-std::string nom_cmap_;
-//où le polluat est déposé en x
-int depot_x_;
-int couleur_;
+double masse_;				///< masse de polluant en [kg]
+double vitesse_; 			///< vitesse du polluant en [m/s] ???????????????????????????????????????? SERT A QQCH ?  VU QU'ELLE AVANCE COMME L'EAU ???????????????????????????????????
+double coeff_dispersion_;   ///< coefficient de dispersion du polluant entre 0 et 1 (plus il est élevé, moins il se disperse)
+std::string nom_;			///< nom du polluant
+std::string nom_cmap_;		///< gamme de couleur du polluant
+int depot_x_;				///< case d'entrée du polluant
+int couleur_;				///< coulezr du polluant
 
 }; 
 

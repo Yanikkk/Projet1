@@ -1,13 +1,16 @@
 #include <iostream>
-#include "Polluant.hpp"
 #include <random>
+
 using namespace std;
+
+#include "Polluant.hpp"
 
 Polluant::Polluant(std::string nom,double masse, int depot_x,double vitesse) 
 	: nom_(nom), masse_(masse), depot_x_(depot_x), vitesse_(vitesse)
 {
 	setPolluant(nom);
 	setCouleur();
+	
 }
 
 
@@ -45,24 +48,11 @@ void Polluant::setPolluant(std::string nom) {
 	*/
 	}
 }
-/*
-double Polluant::getDilution() const {
-	return etat_dilution_;
-} 
-*/
-double Polluant::getCoeffDispersion() const {
-	return coeff_dispersion_;
-} 
 
-double Polluant::getMasse() const{
-	return masse_;
-}
 void Polluant::setMasse(double nouvelle_m){
 	masse_ = nouvelle_m;
 }
-double Polluant::getVitesse() const{
-	return vitesse_;
-}
+
 void Polluant::setCouleur() {
 	//remettre constexpr int si on trouve comment mettre c++11  ?
 	int MIN; 
@@ -71,47 +61,60 @@ void Polluant::setCouleur() {
     std::default_random_engine eng(rd());
 
 
-	if (masse_ >= 1.0) {
-		MIN = 90;
+	if (masse_ >= 1.0) { 
+		MIN = 95;
 		MAX = 100;
-		std::uniform_int_distribution<int> distr(MIN, MAX);
+		std::uniform_int_distribution<int> distr(MIN, MAX); 
 		couleur_ = distr(eng);
-	} else if (masse_ > 0.1) {
+	} else if (masse_ > 0.1) { 
+		MIN = 90;
+		MAX = 94;
+		std::uniform_int_distribution<int> distr(MIN, MAX); 
+		couleur_ = distr(eng);
+	} else if (masse_ > 0.01) {
 		MIN = 80;
 		MAX = 89;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
-	} else if (masse_ > 0.01) {
+	} else if (masse_ > 0.001) { 
 		MIN = 70;
 		MAX = 79;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
-	} else if (masse_ > 0.001) {
-		MIN = 60;
+	} else if (masse_ > 0.0001){ 
+		MIN = 50;
 		MAX = 69;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
-		couleur_ = distr(eng);
-	} else if (masse_ > 0.0001){
-		MIN = 50;
-		MAX = 59;
+		couleur_ = distr(eng);	
+	} else if (masse_ > 0.00001){ 
+		MIN = 40;
+		MAX = 49;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);	
 	} else {
-		MIN = 15;
-		MAX = 49;
+		MIN = 30;
+		MAX = 39;
 		std::uniform_int_distribution<int> distr(MIN, MAX);
 		couleur_ = distr(eng);
 	}
 }
 
-int Polluant::getCouleur() const{
-	return couleur_;
+double Polluant::getMasse() const{
+	return masse_;
 }
 
-int Polluant::getCaseDepart() const{
-	return depot_x_;
+double Polluant::getVitesse() const{
+	return vitesse_;
 }
 
+double Polluant::getCoeffDispersion() const {
+	return coeff_dispersion_;
+} 
+/*
+double Polluant::getDilution() const {
+	return etat_dilution_;
+} 
+*/
 std::string Polluant::getNom() const {
 	return nom_;
 } 
@@ -119,3 +122,11 @@ std::string Polluant::getNom() const {
 std::string Polluant::getNomCmap() const {
 	return nom_cmap_;
 } 
+
+int Polluant::getCaseDepart() const{
+	return depot_x_;
+}
+
+int Polluant::getCouleur() const{
+	return couleur_;
+}

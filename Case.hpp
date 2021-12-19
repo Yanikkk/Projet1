@@ -12,8 +12,9 @@ class Env;
 
 /*!
  * @class Case
+ * 
+ * @brief La class Env a un tableau de cette classe. Ce sont les éléments individuel de l'environnement.
  */
-
 class Case {
 public : 
 
@@ -24,22 +25,42 @@ public :
      */
 	Case(int x = 0, int y = 0, int z = 0);
 	
-	
-	void setX(int x);
-	void setY(int y);
-	void setZ(int z);
-	
-	int getX() const;
-	int getY() const;
-	int getZ() const;
 	/*!
      * @brief Permet de définir la matiere par rapport aux coordonées
      */
 	void initMatiere();
-	void setMatiere(Matiere*);
-	Matiere* creation(int, int);
-	Matiere* getMatiere() const;
 	
+    /*!
+     * @brief permet de créer une nouvelle case d'eau
+     *
+     * @param w; indice de la case appelée.
+     * @param profondeur; profondeur de la case w.
+     * 
+     * @return une nouvelle matière de type Eau.
+     */
+	Matiere* creation(int w, int profondeur);
+	
+    /*!
+     * @brief les setters (méthodes set) permettent de mettre à jour l'attribut de la classe en dehors de cette dernière
+     *
+     * @param x, y, z, a; sont les nouvelles valeurs attribuées aux attributs de Case.
+     */
+	void setX(int x);
+	void setY(int y);
+	void setZ(int z);
+	void setMatiere(Matiere* a);
+	
+	/*!
+     * @brief Les getters (méthodes get) permettent d'accéder aux attributs privés de cette classe en dehors de cette dernière.
+     *
+     * Elles sont définies const car elles ne modifient pas d'attributs de la classe.
+     *
+     * @return Elles retournent les attributs privé de la classe
+     */
+	int getX() const;
+	int getY() const;
+	int getZ() const;
+	Matiere* getMatiere() const;
 	
 private :
 	

@@ -9,9 +9,41 @@ import matplotlib.patches as mpatches
 from matplotlib.animation import FuncAnimation, writers
 from mpl_toolkits.mplot3d import Axes3D
 
-largeur = 20
-hauteur = 30
-longueur = 40
+print("____________________________________________________________________\n")
+print("Bonjour,\n\n bienvenu dans cette simulation de rivière. Veuillez choisir des dimensions pour l'environnement. (bon exemple type : 20, 30, 40)\n")
+print(" - largeur : entier entre 0 et 25; \n - hauteur : entier entre 0 et 40; \n - longueur : entier entre 0 et 40; \n\n Bonne simulation !")
+print("____________________________________________________________________\n")
+
+largeur = 50
+hauteur = 50
+longueur = 50
+while(largeur > 25 or largeur < 0) :
+	while True:
+		try:
+			largeur = int(input("Entrez une largeur : "))
+		except ValueError:
+			print("Ce n'est pas un entier ! Réessayez")
+			continue
+		else:
+			break
+while(hauteur > 40 or hauteur < 0) :
+	while True:
+		try:
+			hauteur = int(input("Entrez une hauteur : "))
+		except ValueError:
+			print("Ce n'est pas un entier ! Réessayez")
+			continue
+		else:
+			break
+while(longueur > 40 or longueur < 0) :
+	while True:
+		try:
+			longueur = int(input("Entrez une longueur : "))
+		except ValueError:
+			print("Ce n'est pas un entier ! Réessayez")
+			continue
+		else:
+			break
 
 ''' initialise le tableau/environnement '''
 Noyau.initialisation(largeur, hauteur, longueur)

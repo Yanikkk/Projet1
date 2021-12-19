@@ -16,11 +16,9 @@ longueur = 24
 ''' initialise le tableau/environnement '''
 Noyau.initialisation(largeur, hauteur, longueur)
 
-
 ''' PREMIER GRAPHIQUE '''
 fig = plt.figure(1)
-plt.gcf().subplots_adjust(left = 0.03, bottom = 0.2,
-                       right = 0.90, top = 1.0, wspace = 0.3, hspace = 0)
+plt.gcf().subplots_adjust(left = 0.03, bottom = 0.2, right = 0.90, top = 1.0, wspace = 0.3, hspace = 0)
 ax = fig.add_subplot(121, projection='3d')
 
 ax.set_title('Rivière')

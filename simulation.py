@@ -58,11 +58,17 @@ Y_eau = np.array(Noyau.coord_Y("EAU"))
 Z_eau = np.array(Noyau.coord_Z("EAU"))
 couleur_eau = np.array(Noyau.getCouleur_eau())
 '''
+'''
+X_eau_pure = np.array(Noyau.coord_X("EAU", "Rien")))
+'''
 X_eau_pure = np.array(Noyau.coord_X("EAU"))
 Y_eau_pure = np.array(Noyau.coord_Y("EAU"))
 Z_eau_pure = np.array(Noyau.coord_Z("EAU"))
 couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU")) #on verra la couleur
 
+'''
+X_eau_pollue = np.array(Noyau.coord_X("EAU_POLLUE", "fer"))
+'''
 X_eau_pollue = np.array(Noyau.coord_X("EAU_POLLUE"))
 Y_eau_pollue = np.array(Noyau.coord_Y("EAU_POLLUE"))
 Z_eau_pollue = np.array(Noyau.coord_Z("EAU_POLLUE"))
@@ -472,4 +478,8 @@ writer = Writer(fps=5, metadata={'artist': 'Me'}, bitrate=1800)
 anim.save('animation_polluant5.gif', writer)
 '''
 plt.show()
+
+
+
+print("----------------------FIN----------------------")
 

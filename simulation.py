@@ -58,41 +58,47 @@ Y_eau = np.array(Noyau.coord_Y("EAU"))
 Z_eau = np.array(Noyau.coord_Z("EAU"))
 couleur_eau = np.array(Noyau.getCouleur_eau())
 '''
-'''
-X_eau_pure = np.array(Noyau.coord_X("EAU", "Rien")))
+
+X_eau_pure = np.array(Noyau.coord_X("EAU", "NO_POLLUANT"))
+Y_eau_pure = np.array(Noyau.coord_Y("EAU", "NO_POLLUANT"))
+Z_eau_pure = np.array(Noyau.coord_Z("EAU", "NO_POLLUANT"))
+couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU", "NO_POLLUANT")) #on verra la couleur
 '''
 X_eau_pure = np.array(Noyau.coord_X("EAU"))
 Y_eau_pure = np.array(Noyau.coord_Y("EAU"))
 Z_eau_pure = np.array(Noyau.coord_Z("EAU"))
 couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU")) #on verra la couleur
-
 '''
+
 X_eau_pollue = np.array(Noyau.coord_X("EAU_POLLUE", "fer"))
+Y_eau_pollue = np.array(Noyau.coord_Y("EAU_POLLUE", "fer"))
+Z_eau_pollue = np.array(Noyau.coord_Z("EAU_POLLUE", "fer"))
+couleur_eau_pollue = np.array(Noyau.getCouleur_eau("EAU_POLLUE", "fer"))
 '''
 X_eau_pollue = np.array(Noyau.coord_X("EAU_POLLUE"))
 Y_eau_pollue = np.array(Noyau.coord_Y("EAU_POLLUE"))
 Z_eau_pollue = np.array(Noyau.coord_Z("EAU_POLLUE"))
 couleur_eau_pollue = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
 '''
-X_eau_phosphore = np.array(Noyau.coord_X("EAU_POLLUE"))
-Y_eau_phosphore = np.array(Noyau.coord_Y("EAU_POLLUE"))
-Z_eau_phosphore = np.array(Noyau.coord_Z("EAU_POLLUE"))
-couleur_eau_phosphore = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
+X_eau_phosphore = np.array(Noyau.coord_X("EAU_POLLUE", "phosphore"))
+Y_eau_phosphore = np.array(Noyau.coord_Y("EAU_POLLUE", "phosphore"))
+Z_eau_phosphore = np.array(Noyau.coord_Z("EAU_POLLUE", "phosphore"))
+couleur_eau_phosphore = np.array(Noyau.getCouleur_eau("EAU_POLLUE", "phosphore"))
 
-X_eau_ammoniac = np.array(Noyau.coord_X("EAU_POLLUE"))
-Y_eau_ammoniac = np.array(Noyau.coord_Y("EAU_POLLUE"))
-Z_eau_ammoniac = np.array(Noyau.coord_Z("EAU_POLLUE"))
-couleur_eau_ammoniac = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
-'''
+X_eau_ammoniac = np.array(Noyau.coord_X("EAU_POLLUE", "ammoniac"))
+Y_eau_ammoniac = np.array(Noyau.coord_Y("EAU_POLLUE", "ammoniac"))
+Z_eau_ammoniac = np.array(Noyau.coord_Z("EAU_POLLUE", "ammoniac"))
+couleur_eau_ammoniac = np.array(Noyau.getCouleur_eau("EAU_POLLUE", "ammoniac"))
 
-X_sol = np.array(Noyau.coord_X("SOL"))
-Y_sol = np.array(Noyau.coord_Y("SOL"))
-Z_sol = np.array(Noyau.coord_Z("SOL"))
+
+X_sol = np.array(Noyau.coord_X("SOL", "NO_POLLUANT"))
+Y_sol = np.array(Noyau.coord_Y("SOL", "NO_POLLUANT"))
+Z_sol = np.array(Noyau.coord_Z("SOL", "NO_POLLUANT"))
 couleur_sol = np.array(Noyau.getCouleur_sol())
 
-X_air = np.array(Noyau.coord_X("AIR"))
-Y_air = np.array(Noyau.coord_Y("AIR"))
-Z_air = np.array(Noyau.coord_Z("AIR"))
+X_air = np.array(Noyau.coord_X("AIR", "NO_POLLUANT"))
+Y_air = np.array(Noyau.coord_Y("AIR", "NO_POLLUANT"))
+Z_air = np.array(Noyau.coord_Z("AIR", "NO_POLLUANT"))
 couleur_air = np.array(Noyau.getCouleur_air())
 
 size_case = 10
@@ -108,7 +114,7 @@ for i in range(len(X_eau_pollue)) :
 	s_eau_pollue.append(size_case)
 S_eau_pollue = np.array(s_eau_pollue)
 s_eau_pollue.clear()
-'''
+
 s_eau_phosphore = []
 for i in range(len(X_eau_phosphore)) :
 	s_eau_phosphore.append(size_case)
@@ -120,7 +126,7 @@ for i in range(len(X_eau_ammoniac)) :
 	s_eau_ammoniac.append(size_case)
 S_eau_ammoniac = np.array(s_eau_ammoniac)
 s_eau_ammoniac.clear()
-'''
+
 s_sol = []
 for i in range(len(X_sol)) :
 	s_sol.append(size_case)
@@ -146,10 +152,10 @@ scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", mar
 #scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = S_eau, alpha=0.2, vmin = 0, vmax = 100)
 scatter_eau_pure = ax.scatter(X_eau_pure, Y_eau_pure, Z_eau_pure, c = couleur_eau_pure, cmap = "Blues", marker='s', s = S_eau_pure, alpha=0.2, vmin = 0, vmax = 100)
 scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=0.8, vmin = 0, vmax = 100)
-'''
+
 scatter_eau_phosphore = ax.scatter(X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore, c = couleur_eau_phosphore, cmap = "Greens", marker='s', s = S_eau_phosphore, alpha=0.8, vmin = 0, vmax = 100)
 scatter_eau_ammoniac = ax.scatter(X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac, c = couleur_eau_ammoniac, cmap = "copper", marker='s', s = S_eau_ammoniac, alpha=0.8, vmin = 0, vmax = 100)
-'''
+
 '''
 DEUXIEME GRAPHIQUE
 '''
@@ -175,10 +181,10 @@ else :
 '''
 
 scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=0.6, vmin = 0, vmax = 100)
-'''
+
 scatter_eau_phosphore_bis = ax2.scatter(X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore, c = couleur_eau_phosphore, cmap = "Greens", marker='s', s = S_eau_phosphore, alpha=0.6, vmin = 0, vmax = 100)
 scatter_eau_ammoniac_bis = ax2.scatter(X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac, c = couleur_eau_ammoniac, cmap = "copper", marker='s', s = S_eau_ammoniac, alpha=0.6, vmin = 0, vmax = 100)
-'''
+
 '''
 FIN DEUXIEME GRAPHIQUE
 '''
@@ -225,12 +231,12 @@ def change_taille():
 			S_eau_pure[i] = size_case
 		for i in range(len(S_eau_pollue)) :
 			S_eau_pollue[i] = size_case
-			'''
+			
 		for i in range(len(S_eau_phosphore)) :
 			S_eau_phosphore[i] = size_case
 		for i in range(len(S_eau_ammoniac)) :
 			S_eau_ammoniac[i] = size_case
-			'''
+			
 		for i in range(len(S_air)) :
 			S_air[i] = size_case
 		time.sleep(0.1)
@@ -244,12 +250,12 @@ def change_taille():
 			S_eau_pure[i] = size_case
 		for i in range(len(S_eau_pollue)) :
 			S_eau_pollue[i] = size_case
-			'''
+			
 		for i in range(len(S_eau_phosphore)) :
 			S_eau_phosphore[i] = size_case
 		for i in range(len(S_eau_ammoniac)) :
 			S_eau_ammoniac[i] = size_case
-			'''
+			
 		for i in range(len(S_air)) :
 			S_air[i] = size_case
 		time.sleep(0.1)
@@ -291,14 +297,14 @@ def animation_frame(i):
 	if keyboard.is_pressed('1'):
 		Noyau.pollution(1)
 		time.sleep(0.15)
-		'''
+		
 	if keyboard.is_pressed('2'):
 		Noyau.pollution(2)
 		time.sleep(0.15)
 	if keyboard.is_pressed('3'):
 		Noyau.pollution(3)
 		time.sleep(0.15)
-		'''
+		
 	'''
 	if pollution_state == 1:
 		Noyau.pollution(pollution_state)
@@ -308,6 +314,7 @@ def animation_frame(i):
 	Noyau.ecoulement(i)
 	change_meteo()
 	change_taille()
+	'''
 	X_eau_pure = np.array(Noyau.coord_X("EAU"))
 	Y_eau_pure = np.array(Noyau.coord_Y("EAU"))
 	Z_eau_pure = np.array(Noyau.coord_Z("EAU"))
@@ -318,17 +325,26 @@ def animation_frame(i):
 	Z_eau_pollue = np.array(Noyau.coord_Z("EAU_POLLUE"))
 	couleur_eau_pollue = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
 	'''
-	X_eau_phosphore = np.array(Noyau.coord_X("EAU_POLLUE"))
-	Y_eau_phosphore = np.array(Noyau.coord_Y("EAU_POLLUE"))
-	Z_eau_phosphore = np.array(Noyau.coord_Z("EAU_POLLUE"))
-	couleur_eau_phosphore = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
-
-	X_eau_ammoniac = np.array(Noyau.coord_X("EAU_POLLUE"))
-	Y_eau_ammoniac = np.array(Noyau.coord_Y("EAU_POLLUE"))
-	Z_eau_ammoniac = np.array(Noyau.coord_Z("EAU_POLLUE"))
-	couleur_eau_ammoniac = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
-	'''
+	X_eau_pure = np.array(Noyau.coord_X("EAU", "NO_POLLUANT"))
+	Y_eau_pure = np.array(Noyau.coord_Y("EAU", "NO_POLLUANT"))
+	Z_eau_pure = np.array(Noyau.coord_Z("EAU", "NO_POLLUANT"))
+	couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU", "NO_POLLUANT")) #on verra la couleur
 	
+	X_eau_pollue = np.array(Noyau.coord_X("EAU_POLLUE", "fer"))
+	Y_eau_pollue = np.array(Noyau.coord_Y("EAU_POLLUE", "fer"))
+	Z_eau_pollue = np.array(Noyau.coord_Z("EAU_POLLUE", "fer"))
+	couleur_eau_pollue = np.array(Noyau.getCouleur_eau("EAU_POLLUE", "fer"))
+	
+	X_eau_phosphore = np.array(Noyau.coord_X("EAU_POLLUE", "phosphore"))
+	Y_eau_phosphore = np.array(Noyau.coord_Y("EAU_POLLUE", "phosphore"))
+	Z_eau_phosphore = np.array(Noyau.coord_Z("EAU_POLLUE", "phosphore"))
+	couleur_eau_phosphore = np.array(Noyau.getCouleur_eau("EAU_POLLUE", "phosphore"))
+
+	X_eau_ammoniac = np.array(Noyau.coord_X("EAU_POLLUE", "ammoniac"))
+	Y_eau_ammoniac = np.array(Noyau.coord_Y("EAU_POLLUE", "ammoniac"))
+	Z_eau_ammoniac = np.array(Noyau.coord_Z("EAU_POLLUE", "ammoniac"))
+	couleur_eau_ammoniac = np.array(Noyau.getCouleur_eau("EAU_POLLUE", "ammoniac"))
+	'''
 	X_sol = np.array(Noyau.coord_X("SOL"))
 	Y_sol = np.array(Noyau.coord_Y("SOL"))
 	Z_sol = np.array(Noyau.coord_Z("SOL"))
@@ -338,7 +354,17 @@ def animation_frame(i):
 	Y_air = np.array(Noyau.coord_Y("AIR"))
 	Z_air = np.array(Noyau.coord_Z("AIR"))
 	#couleur_air = Noyau.getCouleur_air()
-
+	'''
+	X_sol = np.array(Noyau.coord_X("SOL", "NO_POLLUANT"))
+	Y_sol = np.array(Noyau.coord_Y("SOL", "NO_POLLUANT"))
+	Z_sol = np.array(Noyau.coord_Z("SOL", "NO_POLLUANT"))
+	couleur_sol = np.array(Noyau.getCouleur_sol())
+	
+	X_air = np.array(Noyau.coord_X("AIR", "NO_POLLUANT"))
+	Y_air = np.array(Noyau.coord_Y("AIR", "NO_POLLUANT"))
+	Z_air = np.array(Noyau.coord_Z("AIR", "NO_POLLUANT"))
+	#couleur_air = Noyau.getCouleur_air()
+	
 	global size_case
 	s_eau_pure = []
 	for i in range(len(X_eau_pure)) :
@@ -351,7 +377,7 @@ def animation_frame(i):
 		s_eau_pollue.append(size_case)
 	S_eau_pollue = np.array(s_eau_pollue)
 	s_eau_pollue.clear()
-	'''
+	
 	s_eau_phosphore = []
 	for i in range(len(X_eau_phosphore)) :
 		s_eau_phosphore.append(size_case)
@@ -363,7 +389,7 @@ def animation_frame(i):
 		s_eau_ammoniac.append(size_case)
 	S_eau_ammoniac = np.array(s_eau_ammoniac)
 	s_eau_ammoniac.clear()
-	'''
+	
 	s_sol = []
 	for i in range(len(X_sol)) :
 		s_sol.append(size_case)
@@ -395,7 +421,7 @@ def animation_frame(i):
 	scatter_eau_pollue_bis._offsets3d = (X_eau_pollue, Y_eau_pollue, Z_eau_pollue)
 	scatter_eau_pollue_bis.set_array(couleur_eau_pollue)
 	scatter_eau_pollue_bis.set_sizes(S_eau_pollue)
-	'''
+	
 	scatter_eau_phosphore._offsets3d = (X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore)
 	scatter_eau_phosphore.set_array(couleur_eau_phosphore)
 	scatter_eau_phosphore.set_sizes(S_eau_phosphore)
@@ -409,7 +435,7 @@ def animation_frame(i):
 	scatter_eau_ammoniac_bis._offsets3d = (X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac)
 	scatter_eau_ammoniac_bis.set_array(couleur_eau_ammoniac)
 	scatter_eau_ammoniac_bis.set_sizes(S_eau_ammoniac)
-	'''
+	
 	'''
 	scatter_eau.stale = True
 	scatter_sol.stale = True
@@ -478,8 +504,6 @@ writer = Writer(fps=5, metadata={'artist': 'Me'}, bitrate=1800)
 anim.save('animation_polluant5.gif', writer)
 '''
 plt.show()
-
-
 
 print("----------------------FIN----------------------")
 

@@ -85,12 +85,12 @@ int alea_bis(int i){
 				y++;
 				if(riviere.getLargeur()-1 < y || x < 0){
 				  return -2;
-				}else if (riviere.getTableau()[i + 1 - 1*crossSection].getMatiere()->getType() == "EAU"){
-					return i+1 - crossSection;
-				}else{
-					y--;
-					x++;
 				}
+				if (riviere.getTableau()[i + 1 - 1*crossSection].getMatiere()->getType() == "EAU"){
+					return i+1 - crossSection;	
+				}	
+				y--;
+				x++;			
 				break;
 			case 2 : 
 				//! "right front"
@@ -98,12 +98,12 @@ int alea_bis(int i){
 				y--;
 				if(0 > y || x < 0){
 				 return -2;
-				}else if(riviere.getTableau()[i -1 - 1*crossSection].getMatiere()->getType() == "EAU"){
-						return i-1 -crossSection;
-				}else{
-					y++;
-					x++;
 				}
+				if(riviere.getTableau()[i -1 - 1*crossSection].getMatiere()->getType() == "EAU"){
+						return i-1 -crossSection;
+				}
+				y++;
+				x++;
 				break;
 			case 3 : 
 				//! "left front down"
@@ -112,13 +112,15 @@ int alea_bis(int i){
 				y++;
 				if(riviere.getLargeur()-1 < y || x < 0){
 					return -2;
-				}else if (riviere.getTableau()[i + 1 -1 * riviere.getLargeur() - crossSection].getMatiere()->getType() == "EAU"){
-					 return i + 1- riviere.getLargeur() -crossSection;
-				}else{
-					x++;
-					z++;
-					y--;
 				}
+				if(z >0){
+					if (riviere.getTableau()[i + 1 -1 * riviere.getLargeur() - crossSection].getMatiere()->getType() == "EAU"){
+						return i + 1- riviere.getLargeur() -crossSection;
+					}
+				}		
+				x++;
+				z++;
+				y--;
 				break;
 			case 4 : 
 				//! "right front down"	
@@ -127,13 +129,15 @@ int alea_bis(int i){
 				y--;
 				if(0 > y || x < 0){
 					return -2;
-				}else if(riviere.getTableau()[i -1 - 1*riviere.getLargeur() -crossSection].getMatiere()->getType() == "EAU"){
-					return i -1 - riviere.getLargeur() - crossSection;
-				}else{
-					x++;
-					z++;
-					y++;
 				}
+				if( z > 0){
+					if(riviere.getTableau()[i -1 - 1*riviere.getLargeur() -crossSection].getMatiere()->getType() == "EAU"){
+						return i -1 - riviere.getLargeur() - crossSection;
+					}
+				}
+				x++;
+				z++;
+				y++;			
 				break;
 			case 5:
 				//! "left front up"
@@ -142,15 +146,15 @@ int alea_bis(int i){
 				y++;
 				if(riviere.getLargeur()-1 < y || x < 0){
 					return -2;
-				}else if(z <= riviere.getHauteur()-1){ 
+				}
+				if(z <= riviere.getHauteur()-1){ 
 					if (riviere.getTableau()[i + 1 + 1 * riviere.getLargeur() - crossSection].getMatiere()->getType() == "EAU"){
 						return i + + riviere.getLargeur() -crossSection;
 					}
-				}else{
-					x++;
-					z--;
-					y--;
-				}
+				}		
+				x++;
+				z--;
+				y--;
 				break;
 			case 6:
 			//! "right front up"
@@ -159,26 +163,26 @@ int alea_bis(int i){
 				y--;
 				if(0 > y || x < 0){
 					return -2;
-				}else if(z <= riviere.getHauteur()-1){
+				}
+				if(z <= riviere.getHauteur()-1){
 					if(riviere.getTableau()[i -1 + 1*riviere.getLargeur() -crossSection].getMatiere()->getType() == "EAU"){
 						return i -1 + riviere.getLargeur() - crossSection;
 					}
-				}else{
-					x++;
-					z--;
-					y++;
 				}
+				x++;
+				z--;
+				y++;
 				break;
 			case 7:
 			//! "front"
 				x--;
 				if(x < 0){
 					return -2;
-				}else if(riviere.getTableau()[i - crossSection].getMatiere()->getType() == "EAU"){
-					return i - crossSection;
-				}else{
-					x++;
 				}
+				if(riviere.getTableau()[i - crossSection].getMatiere()->getType() == "EAU"){
+					return i - crossSection;
+				}
+				x++;
 				break;	
 		}
 	}

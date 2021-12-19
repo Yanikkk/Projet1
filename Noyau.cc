@@ -268,11 +268,10 @@ string code_to_string(int numero_pollu){
 //! pré-déclaration de la fonction
 //! verifie_disp
 void verifie_disp(vector<double> bis);
-void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*//* int type*/){
+void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*/int type){
 	//juste faire boucle for et tcheck les point de dispersion, si position = point de dispertion
 	//alors le polluant s'ajoute
 	//cout << "a" << endl;
-	int type = 1;
 	int position = 0;
 	double masse = 0;
 	vector<double> bis;
@@ -285,15 +284,20 @@ void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*//* int type*
 	 * 					3=>
 	 * la quatrième est la vitesse
 	 * */
-	 //cout << " size " << pollution_tab.size()<< endl;
+	 cout << " size " << pollution_tab.size()<< endl;
 	for(int i = 0 ; i < pollution_tab.size()-1; i += 4){
 		while(pollution_tab[i+1] >= 1e-5){
-			
-				if( type == (rand() %2 +1)){
+			if(type == 0){
+				if( 1 == (rand() %2 +1)){
 					position = alea_pos(round(pollution_tab[i]));
 				}else{
 					position = alea_bis(round(pollution_tab[i]));
 					}
+			}
+			if(type == 1){
+				cout << "type " << type << endl;
+				position = alea_bis(round(pollution_tab[i]));
+			}
 			/*!
 			* si la case sort du tableau, on enlève une fraction
 			* du polluant
@@ -304,27 +308,27 @@ void dispersion(/*vector<double*> pollution,*/ /*Polluant* tampon,*//* int type*
 			if(position == -1){
 					pollution_tab[i+1] = /* * */pollution_tab[i+1] - masse;
 			}else{
-	
 				Eau* eau_pollu =(Eau*)riviere.getTableau()[position].getMatiere();
 				 if(eau_pollu->getPolluant() != nullptr){
+					 cout << "case avec déjà du pollaunt " << position << endl;
 							eau_pollu->getPolluant()->setMasse(masse + eau_pollu->getPolluant()->getMasse());
 							//cout <<  pollution_tab[i+1]  << endl;
 							pollution_tab[i+1] = pollution_tab[i+1] - masse;	
 							//cout <<  pollution_tab[i+1]  << endl;		
 							eau_pollu->setCouleur();	
 				}else{
-						//cout << "Poluant qui est creer  est du : " << code_to_string(round(pollution_tab[i+2])) << endl;
+						cout << "Poluant qui est creer  est du : " << code_to_string(round(pollution_tab[i+2])) << endl;
 						eau_pollu->setPolluant(code_to_string(round(pollution_tab[i+2])),masse, position/crossSection, pollution_tab[i+3]);
 						eau_pollu->setCouleur();
-						//cout << "--------------"<< endl;
-						//cout << "Case avec polluant: "<< position << endl;
-						//cout << "Et leur concentrations: "<< eau_pollu->getPolluant()->getMasse() << endl;
-						//cout << "--------------"<< endl;
+						cout << "--------------"<< endl;
+						cout << "Case avec polluant: "<< position << endl;
+						cout << "Et leur concentrations: "<< eau_pollu->getPolluant()->getMasse() << endl;
+						cout << "--------------"<< endl;
 						pollution_tab[i+1] = pollution_tab[i+1] - masse;
 				}
 			}
 		}
-	}		
+	}cout << "fin? "<< endl;		
 }
 
 int last_eau(){
@@ -427,7 +431,7 @@ void ecoulementPlat(int w, double temps/*, vector<double*> pollution*/){
 				//! si toutes les cases ont avancées, alors on peut disperser les polluant
 		
 	//	cout << " avec: " << pollution_tab.size() << endl;
-		dispersion(/*pollution,*/ /*(tampon),*/ /*1*/);
+		dispersion(/*pollution,*/ /*(tampon),*/ 0);
 				//verifie_disp(/*tampon*/);
 		}
 	}
@@ -468,7 +472,12 @@ void ecoulementPalier(int w){
 			
 }
 
-void ecoulement_transversale(int w){
+void ecoulement_transversale(int w, double temps){
+	double conc;
+	double  reste;
+	double  point_dispersion;
+	int transvaser = 0;
+	
 		int profondeur = 0;
 		int profond_actuelle = 0;
 		int profond_suivante = 0;
@@ -492,9 +501,30 @@ void ecoulement_transversale(int w){
 				profond_suivante = calculeProfondeur((xprof+1)*crossSection + zmax*riviere.getLargeur()-1);
 				h_chgmnt_palier = profond_actuelle - profond_suivante;
 				position = w + h_chgmnt_palier *riviere.getLargeur() + (crossSection);
-				//cout << "case ajoutée : " << w << endl;
+				cout << "case ajoutée : " << w << endl;
 				//cout << "couleur de la case ajoutée: "<<riviere.getTableau()[position].getMatiere()->getCouleur()<< endl;	
 				//cout <<"type de la case ajoutée: " << riviere.getTableau()[w].getMatiere()->getType() << endl;	
+				Eau* eau_pollu =(Eau*)riviere.getTableau()[position].getMatiere();
+				if(eau_pollu->getPolluant() != nullptr){
+					cout << "Case avec  corps polluant: "<< position << endl;
+					//cout << "Et leur a concentrations: "<< eau_pollu->getPolluant()->getMasse() << endl;
+					//!calcule la concentration de la case devant
+					point_dispersion = position;
+					conc = C_polluant_x(eau_pollu, eau_pollu->getPolluant(),w - crossSection , temps, eau_pollu->getPolluant()->getCaseDepart());
+					if(conc <= 0.0){
+						conc = 0.0;
+						reste =0.0;
+					}
+					reste = eau_pollu->getPolluant()->getMasse() - conc;
+					if(reste >= 1e-6){
+						pollution_tab.push_back(point_dispersion);
+						pollution_tab.push_back(reste);
+						pollution_tab.push_back(string_to_code( eau_pollu->getPolluant()->getNom()));
+						pollution_tab.push_back(eau_pollu->getPolluant()->getVitesse());
+					}
+					transvaser = 1;
+					//!le reste est dispersé dans les cases d'eau environnante (en bas, en haut et gauche droite)
+				}
 				riviere.getTableau()[w].setMatiere(riviere.getTableau()[position].getMatiere());
 				profondeur = calculeProfondeur(w);
 				Eau* eau =(Eau*)riviere.getTableau()[w].getMatiere();
@@ -502,8 +532,23 @@ void ecoulement_transversale(int w){
 				//cout << "case enlevée : " << position << endl;
 				//cout << "couleur de la case enlevée: "<<riviere.getTableau()[w].getMatiere()->getCouleur()<< endl;
 				//cout <<"type de la case enlevée: " << riviere.getTableau()[position].getMatiere()->getType() << endl;		
+				if(transvaser == 1){
+					if(conc < 1e-6){
+						conc = 0;
+						delete eau->getPolluant();
+						eau->setPolluant("nullptr");
+					}else{
+						if(eau->getPolluant() != nullptr){
+							//cout << "Case avec  corps polluant: "<< w << endl;
+							//cout << "Et leur a concentrations: "<< eau->getPolluant()->getMasse() << endl;
+							eau->getPolluant()->setMasse(conc);
+							eau->getPolluant()->setCouleur();;
+							transvaser = 0;
+						}
+					}
+				}
 				riviere.getTableau()[position].setMatiere(nullptr);
-			}											
+			}									
 		}
 		if(w/(crossSection) == riviere.getLongueur()-1){
 
@@ -516,6 +561,23 @@ void ecoulement_transversale(int w){
 					//cout <<"type de la case remise: " << riviere.getTableau()[w].getMatiere()->getType() << endl;	
 				}
 			}
+	if(last_eau() == 0){
+		cout << "----------------------" << endl;
+		cout << "Erreur, il n'y a pas de" << endl;
+		cout << "case eau ." << endl;
+		cout << "----------------------" << endl;
+		exit(0);
+	}
+	if(pollution_tab.size() != 0){
+		if(w == last_eau() ){
+				//! si toutes les cases ont avancées, alors on peut disperser les polluant
+		
+	//cout << " avec: " << pollution_tab.size() << endl;
+		dispersion(/*pollution,*/ /*(tampon),*/ 1);
+				//verifie_disp(/*tampon*/);
+		}
+	}
+		
 }
 
 void parPalier(int q, int w, double temps, double seuil_cumule, double vitesse) {
@@ -673,9 +735,8 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 	 * 
 	 */
 	double temps;
-	double vitesse = 0;
+	double vitesse;
 	if (! PyArg_ParseTuple(args, "d", &temps)) return NULL;
-	
 	/*!
 	 * cas si la rivière est plus petite que un palier
 	 * donc si elle est plate
@@ -730,7 +791,24 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
      * cas palier = 1;
      * */
 		for(int w = 0; w < taille; w++ ){
-					ecoulement_transversale(w);
+			if(riviere.getTableau()[w].getMatiere() != nullptr){
+				if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
+					vitesse = riviere.getTableau()[w].getMatiere()->getVitesse();
+				}
+			}
+		}
+		if(seuil_cumule == 0.0){
+			seuil_cumule = seuil_cumule + 1/vitesse;
+		}
+		
+		for(int w = 0; w < taille; w++ ){
+				if(temps >= seuil_cumule){
+				ecoulement_transversale(w, temps);
+				}
+		}
+		pollution_tab.clear();
+		if(temps >= seuil_cumule){
+			seuil_cumule = seuil_cumule + 1/vitesse;
 		}
 	}else{ 
 			/*!
@@ -742,7 +820,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 			for(int w = 0; w <= taille - crossSection * riviere.getPalier(); w += crossSection * riviere.getPalier()){
 				for(int q = w; q < w+crossSection * riviere.getPalier(); q++){
 						if(riviere.getTableau()[q].getMatiere() != nullptr && riviere.getTableau()[q].getMatiere()->getType() == "EAU"){
-						vitesse = riviere.getTableau()[q].getMatiere()->getVitesse();
+							vitesse = riviere.getTableau()[q].getMatiere()->getVitesse();
 									if(seuil_cumule == 0){
 										seuil_cumule =  1/vitesse;
 									}
@@ -753,11 +831,11 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 				for(int w = taille - caseRestante; w < taille; w++){
 					if(riviere.getTableau()[w].getMatiere()== nullptr){;
 						if(temps >= seuil_cumule){
-	//!!!						//ecoulementPlat(w, temps);
+							ecoulementPlat(w, temps);
 						}
 					}else if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 						if(temps >= seuil_cumule){
-	//!!!						ecoulementPlat(w, temps);
+							ecoulementPlat(w, temps);
 						}
 					}
 				}

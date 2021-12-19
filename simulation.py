@@ -8,9 +8,9 @@ import keyboard
 import time
 import matplotlib.patches as mpatches
 
-largeur = 10
-hauteur = 10
-longueur = 40
+largeur = 2
+hauteur = 5
+longueur = 12
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200

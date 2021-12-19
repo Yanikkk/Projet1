@@ -154,7 +154,7 @@ scatter_eau_pure = ax.scatter(X_eau_pure, Y_eau_pure, Z_eau_pure, c = couleur_ea
 scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=0.8, vmin = 0, vmax = 100)
 
 scatter_eau_phosphore = ax.scatter(X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore, c = couleur_eau_phosphore, cmap = "Greens", marker='s', s = S_eau_phosphore, alpha=0.8, vmin = 0, vmax = 100)
-scatter_eau_ammoniac = ax.scatter(X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac, c = couleur_eau_ammoniac, cmap = "copper", marker='s', s = S_eau_ammoniac, alpha=0.8, vmin = 0, vmax = 100)
+scatter_eau_ammoniac = ax.scatter(X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac, c = couleur_eau_ammoniac, cmap = "Oranges", marker='s', s = S_eau_ammoniac, alpha=0.8, vmin = 0, vmax = 100)
 
 '''
 DEUXIEME GRAPHIQUE
@@ -182,8 +182,8 @@ else :
 
 scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=0.6, vmin = 0, vmax = 100)
 
-scatter_eau_phosphore_bis = ax2.scatter(X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore, c = couleur_eau_phosphore, cmap = "Greens", marker='s', s = S_eau_phosphore, alpha=0.6, vmin = 0, vmax = 100)
-scatter_eau_ammoniac_bis = ax2.scatter(X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac, c = couleur_eau_ammoniac, cmap = "copper", marker='s', s = S_eau_ammoniac, alpha=0.6, vmin = 0, vmax = 100)
+scatter_eau_phosphore_bis = ax2.scatter(X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore, c = couleur_eau_phosphore, cmap = "Greens", marker='s', s = S_eau_phosphore, alpha=1, vmin = 0, vmax = 100)
+scatter_eau_ammoniac_bis = ax2.scatter(X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac, c = couleur_eau_ammoniac, cmap = "Oranges", marker='s', s = S_eau_ammoniac, alpha=0.6, vmin = 0, vmax = 100)
 
 '''
 FIN DEUXIEME GRAPHIQUE

@@ -352,7 +352,7 @@ def animation_frame(i):
 anim = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
 anim2 = FuncAnimation(fig, func=animation_frame, frames=np.arange(0, 10, 0.1), interval=100, blit=False)
 
-''' ---------------> SI ON VEUT ENREGISTRER LA SIMULATION EN gif (OU mp4 EN CHANGEANT LE .gif  EN .mp4) '''
+''' ----------------> SI ON VEUT ENREGISTRER LA SIMULATION EN gif (OU mp4 EN CHANGEANT LE .gif  EN .mp4) '''
 '''
 Writer = writers['ffmpeg']
 writer = Writer(fps=5, metadata={'artist': 'Me'}, bitrate=1800)

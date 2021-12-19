@@ -89,7 +89,7 @@ Y_air = np.array(Noyau.coord_Y("AIR"))
 Z_air = np.array(Noyau.coord_Z("AIR"))
 couleur_air = np.array(Noyau.getCouleur_air())
 
-size_case = 20
+size_case = 10
 
 s_eau_pure = []
 for i in range(len(X_eau_pure)) :
@@ -305,15 +305,29 @@ def animation_frame(i):
 	X_eau_pure = np.array(Noyau.coord_X("EAU"))
 	Y_eau_pure = np.array(Noyau.coord_Y("EAU"))
 	Z_eau_pure = np.array(Noyau.coord_Z("EAU"))
+	couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU")) #on verra la couleur
+	
 	X_eau_pollue = np.array(Noyau.coord_X("EAU_POLLUE"))
 	Y_eau_pollue = np.array(Noyau.coord_Y("EAU_POLLUE"))
 	Z_eau_pollue = np.array(Noyau.coord_Z("EAU_POLLUE"))
-	couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU")) #on verra la couleur
 	couleur_eau_pollue = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
+	'''
+	X_eau_phosphore = np.array(Noyau.coord_X("EAU_POLLUE"))
+	Y_eau_phosphore = np.array(Noyau.coord_Y("EAU_POLLUE"))
+	Z_eau_phosphore = np.array(Noyau.coord_Z("EAU_POLLUE"))
+	couleur_eau_phosphore = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
+
+	X_eau_ammoniac = np.array(Noyau.coord_X("EAU_POLLUE"))
+	Y_eau_ammoniac = np.array(Noyau.coord_Y("EAU_POLLUE"))
+	Z_eau_ammoniac = np.array(Noyau.coord_Z("EAU_POLLUE"))
+	couleur_eau_ammoniac = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
+	'''
+	
 	X_sol = np.array(Noyau.coord_X("SOL"))
 	Y_sol = np.array(Noyau.coord_Y("SOL"))
 	Z_sol = np.array(Noyau.coord_Z("SOL"))
 	couleur_sol = np.array(Noyau.getCouleur_sol())
+	
 	X_air = np.array(Noyau.coord_X("AIR"))
 	Y_air = np.array(Noyau.coord_Y("AIR"))
 	Z_air = np.array(Noyau.coord_Z("AIR"))
@@ -331,7 +345,19 @@ def animation_frame(i):
 		s_eau_pollue.append(size_case)
 	S_eau_pollue = np.array(s_eau_pollue)
 	s_eau_pollue.clear()
-
+	'''
+	s_eau_phosphore = []
+	for i in range(len(X_eau_phosphore)) :
+		s_eau_phosphore.append(size_case)
+	S_eau_phosphore = np.array(s_eau_phosphore)
+	s_eau_phosphore.clear()
+	
+	s_eau_ammoniac = []
+	for i in range(len(X_eau_ammoniac)) :
+		s_eau_ammoniac.append(size_case)
+	S_eau_ammoniac = np.array(s_eau_ammoniac)
+	s_eau_ammoniac.clear()
+	'''
 	s_sol = []
 	for i in range(len(X_sol)) :
 		s_sol.append(size_case)
@@ -363,7 +389,21 @@ def animation_frame(i):
 	scatter_eau_pollue_bis._offsets3d = (X_eau_pollue, Y_eau_pollue, Z_eau_pollue)
 	scatter_eau_pollue_bis.set_array(couleur_eau_pollue)
 	scatter_eau_pollue_bis.set_sizes(S_eau_pollue)
-
+	'''
+	scatter_eau_phosphore._offsets3d = (X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore)
+	scatter_eau_phosphore.set_array(couleur_eau_phosphore)
+	scatter_eau_phosphore.set_sizes(S_eau_phosphore)
+	scatter_eau_phosphore_bis._offsets3d = (X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore)
+	scatter_eau_phosphore_bis.set_array(couleur_eau_phosphore)
+	scatter_eau_phosphore_bis.set_sizes(S_eau_phosphore)
+	
+	scatter_eau_ammoniac._offsets3d = (X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac)
+	scatter_eau_ammoniac.set_array(couleur_eau_ammoniac)
+	scatter_eau_ammoniac.set_sizes(S_eau_ammoniac)
+	scatter_eau_ammoniac_bis._offsets3d = (X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac)
+	scatter_eau_ammoniac_bis.set_array(couleur_eau_ammoniac)
+	scatter_eau_ammoniac_bis.set_sizes(S_eau_ammoniac)
+	'''
 	'''
 	scatter_eau.stale = True
 	scatter_sol.stale = True
@@ -371,6 +411,8 @@ def animation_frame(i):
 	'''
 	#if Noyau.Cmap("fer") != 0 :
 	scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pollue_bis, scatter_eau_pure, scatter_air]
+	#scatters = [scatter_sol, scatter_eau_pollue, scatter_eau_pollue_bis, scatter_eau_phosphore, scatter_eau_phosphore_bis,
+	#			scatter_eau_ammoniac, scatter_eau_ammoniac_bis, scatter_eau_pure, scatter_air]
 	#scatters = [scatter_sol, scatter_eau_pure, scatter_air]
 	'''
 	print("----DD-----")

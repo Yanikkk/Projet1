@@ -1030,6 +1030,7 @@ static PyObject * ecoulement(PyObject * self, PyObject * args){
 		}
 	return Py_BuildValue("i",0);
 }
+/*
 int zmax_eau(){
 	for(int w = taille -1; w >= taille - (riviere.getLargeur()*riviere.getLongueur()); w--){
 			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
@@ -1038,7 +1039,7 @@ int zmax_eau(){
 			}
 		}
 	return z_max;
-}
+}*/
 static PyObject * pollution(PyObject * self, PyObject * args){
 	int pollution_state;
 	int w = 0;
@@ -1046,14 +1047,14 @@ static PyObject * pollution(PyObject * self, PyObject * args){
 	int z_maxEau = 0;
 	int xmax = riviere.getLongueur()-1;
 	//cas du Fer par exemple
-	if(pollution_state == 1){/*
+	if(pollution_state == 1){
 		for(int w = taille -1; w >= taille - (riviere.getLargeur()*riviere.getLongueur()); w--){
 			if(riviere.getTableau()[w].getMatiere()->getType() == "EAU"){
 				z_maxEau = (w -xmax*riviere.getLargeur() * riviere.getHauteur())/riviere.getLargeur();
 				break;
 			}
-		}*/
-		z_maxEau = zmax_eau();
+		}
+		//z_maxEau = zmax_eau();
 		//génère un nombre sur la dernière ligne d'eau de la dernière crossSection de la simulation
 		w = rand() % riviere.getLargeur() + taille - (riviere.getHauteur()- z_maxEau) * riviere.getLargeur(); 
 		cout << "ad "<< w << endl;
@@ -1243,6 +1244,12 @@ static PyObject * Cmap(PyObject * self, PyObject * args){
 			}
 		}
 	}
+	/*if(polluant == "phosphore"){
+	 * 
+	 * 
+	 * 
+	 * 
+	 * */
 	return  Py_BuildValue("i",0);
 }
 

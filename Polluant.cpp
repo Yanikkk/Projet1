@@ -10,42 +10,38 @@ Polluant::Polluant(std::string nom,double masse, int depot_x,double vitesse)
 {
 	setPolluant(nom);
 	setCouleur();
-	
 }
 
 
 void Polluant::setPolluant(std::string nom) {
 	int type = 0;
-	enum pollution{fer = 1, phosphate = 2, amonia = 3};
-	if( nom == "fer"){
+	enum pollution{fer = 1, phosphore = 2, ammoniac = 3};
+	if(nom == "fer"){
 		type = 1;
-	}
-	switch (type) 
-	{
+	} else if (nom == "phosphore") {
+		type = 2;
+	} else if (nom == "ammoniac") {
+		type = 3;
+	} // ???????????????????????????????? else if inconnu ? ????????????????????????????????????????????????
+	switch (type) {
 		case fer : 
 			nom_cmap_ = "Reds";
 			coeff_dispersion_ = 4;
 				
 			break; 
-		/*case phosphate : 
+		case phosphore : 
 			nom_cmap_ = "Greens";	
 			coeff_dispersion_ = 2.0;
 					
 			break; 
-		case amonia : 
+		case ammoniac : 
 			nom_cmap_ = "copper";	
 			coeff_dispersion_ = 3.0;
-
-			break; 
-		case "petrole" : 
-			nom_cmap_ = "Greys"	
-			coeff_dispersion_ = 1.0;
-					
+			
 			break; 
 		default :  //polluant inconnue facteur de dilution aux hasards
 			nom_cmap_ = "binary"	
 			coeff_dispersion_ = 1.0;
-	*/
 	}
 }
 

@@ -9,6 +9,6 @@ Air::Air(Env* env_param, std::string type, double vitesse)
 }
 
 void Air::setCouleur() {
-	couleur_ = 30;
+	couleur_ = 35;
 }
 

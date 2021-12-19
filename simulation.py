@@ -8,9 +8,9 @@ import keyboard
 import time
 import matplotlib.patches as mpatches
 
-largeur = 2
-hauteur = 5
-longueur = 12
+largeur = 20
+hauteur = 30
+longueur = 40
 
 	#avec taille !!! 20,30,40 (ne marche pas au niveau de Case::setX(x) (il ne trouve pas l attribut privé
 	#40,60,200
@@ -27,7 +27,7 @@ plt.gcf().subplots_adjust(left = 0.03, bottom = 0.2,
                        right = 0.90, top = 1.0, wspace = 0.3, hspace = 0)
 ax = fig.add_subplot(121, projection='3d')
 
-ax.set_title('Belle rivière !')
+ax.set_title('Rivière')
 ax.set_xlabel('Longueur')
 ax.set_xlim(0,40)
 ax.set_ylabel('Largeur')
@@ -61,11 +61,23 @@ couleur_eau = np.array(Noyau.getCouleur_eau())
 X_eau_pure = np.array(Noyau.coord_X("EAU"))
 Y_eau_pure = np.array(Noyau.coord_Y("EAU"))
 Z_eau_pure = np.array(Noyau.coord_Z("EAU"))
+couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU")) #on verra la couleur
+
 X_eau_pollue = np.array(Noyau.coord_X("EAU_POLLUE"))
 Y_eau_pollue = np.array(Noyau.coord_Y("EAU_POLLUE"))
 Z_eau_pollue = np.array(Noyau.coord_Z("EAU_POLLUE"))
-couleur_eau_pure = np.array(Noyau.getCouleur_eau("EAU")) #on verra la couleur
 couleur_eau_pollue = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
+'''
+X_eau_phosphore = np.array(Noyau.coord_X("EAU_POLLUE"))
+Y_eau_phosphore = np.array(Noyau.coord_Y("EAU_POLLUE"))
+Z_eau_phosphore = np.array(Noyau.coord_Z("EAU_POLLUE"))
+couleur_eau_phosphore = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
+
+X_eau_ammoniac = np.array(Noyau.coord_X("EAU_POLLUE"))
+Y_eau_ammoniac = np.array(Noyau.coord_Y("EAU_POLLUE"))
+Z_eau_ammoniac = np.array(Noyau.coord_Z("EAU_POLLUE"))
+couleur_eau_ammoniac = np.array(Noyau.getCouleur_eau("EAU_POLLUE"))
+'''
 
 X_sol = np.array(Noyau.coord_X("SOL"))
 Y_sol = np.array(Noyau.coord_Y("SOL"))
@@ -77,7 +89,7 @@ Y_air = np.array(Noyau.coord_Y("AIR"))
 Z_air = np.array(Noyau.coord_Z("AIR"))
 couleur_air = np.array(Noyau.getCouleur_air())
 
-size_case = 10
+size_case = 20
 
 s_eau_pure = []
 for i in range(len(X_eau_pure)) :
@@ -90,7 +102,19 @@ for i in range(len(X_eau_pollue)) :
 	s_eau_pollue.append(size_case)
 S_eau_pollue = np.array(s_eau_pollue)
 s_eau_pollue.clear()
+'''
+s_eau_phosphore = []
+for i in range(len(X_eau_phosphore)) :
+	s_eau_phosphore.append(size_case)
+S_eau_phosphore = np.array(s_eau_phosphore)
+s_eau_phosphore.clear()
 
+s_eau_ammoniac = []
+for i in range(len(X_eau_ammoniac)) :
+	s_eau_ammoniac.append(size_case)
+S_eau_ammoniac = np.array(s_eau_ammoniac)
+s_eau_ammoniac.clear()
+'''
 s_sol = []
 for i in range(len(X_sol)) :
 	s_sol.append(size_case)
@@ -116,13 +140,16 @@ scatter_air = ax.scatter(X_air, Y_air, Z_air, c = couleur_air, cmap = "jet", mar
 #scatter_eau = ax.scatter(X_eau, Y_eau, Z_eau, c = couleur_eau, cmap = "Blues", marker='s', s = S_eau, alpha=0.2, vmin = 0, vmax = 100)
 scatter_eau_pure = ax.scatter(X_eau_pure, Y_eau_pure, Z_eau_pure, c = couleur_eau_pure, cmap = "Blues", marker='s', s = S_eau_pure, alpha=0.2, vmin = 0, vmax = 100)
 scatter_eau_pollue = ax.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=0.8, vmin = 0, vmax = 100)
-
+'''
+scatter_eau_phosphore = ax.scatter(X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore, c = couleur_eau_phosphore, cmap = "Greens", marker='s', s = S_eau_phosphore, alpha=0.8, vmin = 0, vmax = 100)
+scatter_eau_ammoniac = ax.scatter(X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac, c = couleur_eau_ammoniac, cmap = "copper", marker='s', s = S_eau_ammoniac, alpha=0.8, vmin = 0, vmax = 100)
+'''
 '''
 DEUXIEME GRAPHIQUE
 '''
 
 ax2 = fig.add_subplot(122, projection='3d')
-ax2.set_title('Beau Polluant !')
+ax2.set_title('Polluant')
 ax2.set_xlabel('Longueur')
 ax2.set_xlim(0,40)
 ax2.set_ylabel('Largeur')
@@ -130,9 +157,9 @@ ax2.set_ylim(-5,25)
 ax2.set_zlabel('Hauteur')
 ax2.set_zlim(0,40)
 red_patch = mpatches.Patch(color='red', label='Fer')
-orange_patch = mpatches.Patch(color='orange', label='Ammonium')
 green_patch = mpatches.Patch(color='green', label='Phosphore')
-ax2.legend(handles=[red_patch, orange_patch, green_patch], facecolor='skyblue', edgecolor='blue', handlelength =0.7)
+orange_patch = mpatches.Patch(color='orange', label='Ammoniac')
+ax2.legend(handles=[red_patch, green_patch, orange_patch], facecolor='skyblue', edgecolor='blue', handlelength =0.7)
 
 '''
 if Noyau.Cmap("fer") != 0 :
@@ -141,8 +168,11 @@ else :
 	cmap_pollue = "Greys"
 '''
 
-scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=0.5, vmin = 0, vmax = 100)
-
+scatter_eau_pollue_bis = ax2.scatter(X_eau_pollue, Y_eau_pollue, Z_eau_pollue, c = couleur_eau_pollue, cmap = "Reds", marker='s', s = S_eau_pollue, alpha=0.6, vmin = 0, vmax = 100)
+'''
+scatter_eau_phosphore_bis = ax2.scatter(X_eau_phosphore, Y_eau_phosphore, Z_eau_phosphore, c = couleur_eau_phosphore, cmap = "Greens", marker='s', s = S_eau_phosphore, alpha=0.6, vmin = 0, vmax = 100)
+scatter_eau_ammoniac_bis = ax2.scatter(X_eau_ammoniac, Y_eau_ammoniac, Z_eau_ammoniac, c = couleur_eau_ammoniac, cmap = "copper", marker='s', s = S_eau_ammoniac, alpha=0.6, vmin = 0, vmax = 100)
+'''
 '''
 FIN DEUXIEME GRAPHIQUE
 '''
@@ -189,10 +219,16 @@ def change_taille():
 			S_eau_pure[i] = size_case
 		for i in range(len(S_eau_pollue)) :
 			S_eau_pollue[i] = size_case
+			'''
+		for i in range(len(S_eau_phosphore)) :
+			S_eau_phosphore[i] = size_case
+		for i in range(len(S_eau_ammoniac)) :
+			S_eau_ammoniac[i] = size_case
+			'''
 		for i in range(len(S_air)) :
 			S_air[i] = size_case
-
 		time.sleep(0.1)
+		
 	if keyboard.is_pressed('down') and size_case > 5 :
 		size_case -= 5
 
@@ -202,9 +238,14 @@ def change_taille():
 			S_eau_pure[i] = size_case
 		for i in range(len(S_eau_pollue)) :
 			S_eau_pollue[i] = size_case
+			'''
+		for i in range(len(S_eau_phosphore)) :
+			S_eau_phosphore[i] = size_case
+		for i in range(len(S_eau_ammoniac)) :
+			S_eau_ammoniac[i] = size_case
+			'''
 		for i in range(len(S_air)) :
 			S_air[i] = size_case
-
 		time.sleep(0.1)
 
 
@@ -244,7 +285,14 @@ def animation_frame(i):
 	if keyboard.is_pressed('1'):
 		Noyau.pollution(1)
 		time.sleep(0.15)
-		#je suis chaud de faire qu'il se disperse plus si possible. si c'est juste changer une valeur limite ou quoi. ça rendrait mieux visuellement et physiquement. (la ça reste en petite boule)
+		'''
+	if keyboard.is_pressed('2'):
+		Noyau.pollution(2)
+		time.sleep(0.15)
+	if keyboard.is_pressed('3'):
+		Noyau.pollution(3)
+		time.sleep(0.15)
+		'''
 	'''
 	if pollution_state == 1:
 		Noyau.pollution(pollution_state)

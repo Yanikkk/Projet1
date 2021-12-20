@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Simulation d'une rivière</title>
+    <style>
+        body { background-image: url('res/blue_background.jpeg'); font-family: sans-serif; margin: 0; padding: 20px }
+        .justifier { padding-left: 35px; padding-right: 35px; text-align: justify; }
+    </style>
+</head>
+
+<body>
+
+	<div style = "padding-right: 35px"><img alt="EPFL" src="res/logo_EPFL.png" align="right"></div>
+	
+    <h1><u>Simulation d'une rivière</u></h1>
+    
+    <div style = "padding-left: 375px; font-family: Cursive;">
+		<font size = "6"> <img alt="Nicolas" src="res/nico.png" align="bottom"> <b>Nicolas Ibrahim</b> & <b>Yanik Haas</b> <img alt="Yanik" src="res/yanik.png" align="bottom"></font>
+    </div>
+
+    <div style = "padding-left: 20px">
+		<h2>• Introduction au projet</h2> 
+    </div>
+
+    <div class="justifier"> 
+		Nous avons réalisé ce projet dans le cadre du cours de programmation de deuxième 
+		année de Bachelor en <b>science et ingénierie de l'environnement</b> à l'EPFL.<br>
+		Nous avions comme objectif de créer un modèle au choix entre deux situations proposées, ou de réaliser un projet libre.
+		C'est cette dernière option que nous avons décidé de réaliser.
+		Nous sommes donc parti sur la modélisation en 3D d'une rivière. Nous voulions pouvoir observer une rivière en mouvement,
+		et pouvoir y incorporer différents phénomènes physiques.<br>
+		Ce projet mettait en oeuvre une combinaison de deux langages, le python et le C. Cependant, nous avions des plans en tête
+		qui nécessitait des classes et une certaine hiérarchie entre elles. Avec l'accord du professeur, nous avons changé la partie C en C++, 
+		qui permet ainsi, d'atteindre nos attentes.<br> 
+		Afin de facilité la lecture de notre code, et de comprendre son fonctionnement, nous avons réalisé un schéma représentant les différentes classes et fichiers 
+		de notre projet et les liens qui les lient. <br><br>
+    </div>
+    
+    <div style = "padding-left: 260px">
+		<img alt="Structure projet" src="res/schema.png">
+	</div>
+
+	<div style = "padding-left: 20px">
+		<h2>• Conception</h2> 
+    </div>  
+      
+    <div class="justifier">
+		Nous avions commencé par l'écriture d'un fichier csv afin de transférer nos valeurs de C++ au code python.
+		Cependant, nous avons rapidement remarqué que pour créer une rivière en mouvement, un nouveau 
+		fichier csv devrait être renvoyé chaque pas de temps avec des nouvelles valeurs.
+		De plus, nous voulions récupérer des valeurs de python en C++ tel que le temps de la simulation. 
+		C'est pourquoi, nous avons décidé d'abandonner le transfert de donnée à partir d'un fichier csv 
+		et avons créé un <b>module python</b> permettant de transférer des valeurs de C++ à python et inversement.<br>
+		Comme on peut le voir sur le schéma précédent, c'est le fichier <i>setup.py</i> qui s'occupe de compiler et installer le module. 
+		Il faut donc build et install <i>setup.py</i> avant de pouvoir lancer la simulation. On peut ensuite run <i>simulation.py</i> 
+		qui est le script de la simulation. Ce dernier permet de créer le graphique et de le faire 
+		tourner en faisant appel aux valeur calculée en C++ via noyau qui est le module C++. <br><br>
+		Avant de poursuivre, voici les trois commandes à écrire dans le terminal afin de lancer notre simulation. Une fois dans le dossier contenant les fichiers, écrire : <br>
+		$ python3 setup.py build <br>
+		$ python3 setup.py install --user <br>
+		$ python3 simulation.py <br>
+		De plus, nous n'avons pas crée de <i>Makefile</i>. À la place, nous avons directement changé la commande de construction dans notre éditeur de code. <br>
+		La voici : <i>g++ -Wall -o "Noyau" "Noyau.cc" "Env.cpp" "Matiere.cpp" "Case.cpp" "Air.cpp" "Eau.cpp" "Sol.cpp" "Polluant.cpp" -std=c++11 -lm</i> <br><br>
+		Maintenant que la partie python est présentée, voyons ce qu'il se passe du côté C++.
+		Nous avons donc le fichier <i>Noyau.cc</i> qui est le module C++. Il s'occupe du transfert des valeurs entre C++ et python, tout comme <i>simulation.py</i>
+		le fait en python.<br>
+		Nous avons ensuite différentes classes en C++. Chacune de ces classes contient un fichier <i>.hpp</i> et un <i>.cpp</i>. 
+		Les <i>.hpp</i> contiennent la classe avec ses attributs et le prototype de ses fonctions. Les <i>.cpp</i> contiennent
+		simplement les définitions des fonctions de la classe correspondante.<br>
+		La classe principal de notre code C++ est <i>Env</i>. Cette classe englobe tout l'environnement de la rivière. Elle définit sa taille, ses caractéristiques, etc.
+		Elle contient notamment un tableau de cases qui fait l'objet d'une classe elle aussi. <br>
+		La classe <i>case</i> représente les cellules de notre rivière. Chaque case de l'environnement contient différentes caractéristiques. 
+		Afin de représenter le plus possible une situation réel, nous avons décidé que, conceptuellement, chaque case représente un carré de 1 mètre de côté.
+		Chaque attribut case a donc des coordonnées (X, Y et Z) et une matière. Nous avons choisi X pour la longueur de l'environnement, Y sa largeur et Z sa hauteur. <br>
+		Nous venons de voir que chaque case possédait une matière, mais qu'est-ce qu'une matière ? <br>
+		<i>Matiere</i> est la classe suivante. Cette classe est une <b>classe virtuelle</b>. Une classe virtuelle est une classe qui a une ou plusieurs sous-classes
+		qui vont hériter des attributs et fonctions de la classe virtuelle, soit <i>Matiere</i>. Comme <i>Matiere</i> est en haut de cette hiérarchie de classe, on l'appel aussi <b>Super-Classe</b>. <br>
+		<i>Matiere</i> est donc la Super-classe de trois sous-classes : <i>Eau</i>, <i>Sol</i> et <i>Air</i>. La relation nécessaire pour implémenter une hiérarchie de ce type est la relation <b>EST-UN</b>.
+		En effet, l'eau est-une matière, tout comme le sol et l'air. Ces trois sous-classes possèdent donc toutes trois les caractéristiques héritées de <i>Matiere</i>
+		et peuvent se spécifier. <br>
+		La dernière classe est <i>Polluant</i>. C'est la classe <i>Eau</i> qui peut où non posséder un polluant. Ce dernier peut être de différents types, 
+		avoir un coefficient de dispersion différent, etc. <br><br>
+		Pour résumé, nous avons un environnement qui contient un ensemble de cases. Chacune d'elles possèdent une matière qui peut-être de l'eau du sol ou de l'air.
+		Finalement, l'eau peut également avoir un polluant. Les graphiques sont réalisés dans <i>Simulation</i> à l'aide des données transférées par module python.
+		
+		<br><br>
+    </div>
+    
+    <div style = "padding-left: 20px">
+		<h2>• Représentation</h2> 
+    </div><br>
+    
+    <div class="justifier">
+        Notre premier objectif était de réaliser une rivière en trois dimensions. Avec la conception détaillée précédente, vous avez compris 
+        que nous avons un ensemble de case qui représente notre environnement. Nous avons donc chercher un graphique qui représentait des cases,
+        et c'est comme cela que nous sommes arrivé à choisir un <b>scatter plot</b>. En serrant les points et en donnant certains paramètres adaptés, 
+        nous sommes arrivés à un graphique en nuage de points qui ressemblait à ça : 
+        <br><br>
+    </div>
+    
+    <div style = "padding-left: 350px">
+		<img alt="image rivière simple" src="res/riviere_arret.png">
+	</div><br><br>
+	
+    <div class="justifier">
+        À ce stade, il ne manquait plus qu'à mettre les <b>cases en mouvement</b> pour avoir notre base de rivière. 
+        Cependant, il n'a pas été facile de coder le déplacement de l'eau. De nombreux facteurs étaient à prendre en compte. 
+        Par exemple, le fait de bien supprimer l'eau qui sort du tableau, intégrer correctement celle qui arrive, gérer les transitions
+        lorsque le sol change de hauteur où encore faire en sorte que l'eau se déplace vraiment d'une case à une autre et non pas créer une 
+        nouvelle case d'eau à chaque fois.<br>
+        Finalement, nous avons réussi à réunir toutes ces conditions, et avons obtenu la rivière suivante : 
+        <br><br>
+    </div>
+    
+    <div style = "padding-left: 350px">
+		<img alt="vidéo rivière simple" src="res/riviere_simple.gif">
+	</div><br><br>
+	
+	<div class="justifier">
+		Voici maintenant le résultat lorsque nous lançons la simulation : 
+		<br><br>
+    </div>
+
+    <div style = "padding-left: 350px">
+		<img alt="vidéo rivière" src="res/riviere_sanspolluant.gif">
+	</div><br><br>
+
+
+	<div class="justifier">
+		En premier lieu, on peut voir que nous avons ajouté des légendes ainsi qu'un deuxième graphique qui semble vide.
+		En effet, il est vide, mais uniquement jusqu'à ce qu'on ajoute un polluant. Nous vous expliquons dans la prochaine section 
+		les touches utiles afin de contrôler des éléments de la simulation, dont l'ajout d'un polluant. <br>
+		Nous avons donc décidé d'ajouter un second graphique qui affiche uniquement le polluant. Les deux graphiques avances en même temps
+		et le polluant se trouve également sur le graphique de la rivière. Nous avons simplement ajouté ce graphique afin d'avoir une 
+		meilleure vision sur l'évolution du polluant. <br>
+		Voilà le résultat avec comme polluant du fer : 
+		<br><br>
+    </div> 
+
+    <div style = "padding-left: 350px">
+		<img alt="vidéo rivière avec polluant" src="res/riviere_avecpolluant.gif">
+	</div><br>
+	
+    <div style="padding-left: 350px">
+		D'autres polluants sont disponibles, à vous de lancer la simulation pour les observers... 
+		<br><br>
+    </div>
+    
+    <div style = "padding-left: 20px">
+		<h2>• La simulation</h2> 
+    </div>
+    
+    <div class="justifier">
+        Différents réglages ont été mis en place afin de pouvoir faciliter la manipulation de la simulation de la meilleure manière possible. <br>
+        Dans un premier temps, lorsque vous lancez la simulation, on vous demande d'entrer les dimensions de l'environnement que vous souhaitez. 
+        Des valeurs types sont données en exemple, mais libre à vous de tester différentes compositions.<br>
+        Une fois l'environnement crée, il est possible d'appuyer sur certaines touches du clavier afin de manipuler la simulation. Les légendes sont écrites sur la simulation, 
+        mais voyons ici les effets détaillés. <br>
+        Tout d'abord, la <b>flèche en haut</b> "up" permet d'augmenter la taille des cases. De la même manière, la <b>flèche du bas</b> "down" permet de la diminuer.
+        Jouer avec la taille des cases peut-être intéressant afin de visualiser plus facilement certains aspects de la simulation. <br>
+        Vient ensuite la météo. Il est possible de changer la météo de la simulation avec des touches tel que <b>p</b> pour la pluie, <b>b</b> pour le brouillard, 
+        <b>n</b> pour la nuit et d'autres à découvrir en simulation. <b>j</b> est le jour et correspond à la valeur par défaut.
+        Nous n'avons pas décidé d'explorer cette voie plus en détail, mis à part la couleur de l'air qui change. 
+        Cependant, on pourrait imaginer différents effet de cette météo. 
+        Par exemple la pluie sur la rivière peut créer des crues, le brouillard peut survenir suite à une certaine humidité, etc. <br>
+        Un classique mais indispensable, il est possible de mettre pause à la simulation avec la touche <b>espace</b> du clavier. 
+        La même touche est utilisée pour la remettre en action. <br>
+        Ensuite, il est possible d'ajouter un polluant dans la rivière. Il y a trois type de polluant : le fer, le phosphore et l'ammoniac. 
+        Afin d'en ajouter dans la rivière, les trois touches suivantes sont disponibles : 1, 2 et 3 respectivement. Cela aura pour effet
+        d'ajouter un polluant au début de la rivière. Il est ensuite possible d'observer son déplacement.
+        Nous avons mis un place un second graphique où le polluant est représenté tout seul, sans élément autour de lui. 
+        Il est ainsi plus simple de suivre son évolution et son comportement.
+        Finalement, il est possible d'appuyer sur la touche <b>c</b>. Cette touche va permettre de générer un csv
+        avec les coordonnées des polluants présents dans la rivière, ainsi que son type et sa masse [kg]. De plus, il est affiché sur le terminal 
+        la masse totale de chaque polluant présent à l'instant ou la touche c est pressée.
+        <br><br>
+    </div>
+    
+    <div style = "padding-left: 20px">
+		<h2>• Quelques concepts physiques</h2> 
+    </div>
+    
+    <div class="justifier">
+		Toujours en utilisant le fait qu'une case de notre rivière représente 1 mètre carré, nous avons pu
+		utiliser diverses valeurs et divers calculs dont certains sont des formules physiques reconnues. Les voici, ainsi que les liens pour accéder à leur référence.<br>
+		Pour la <b>vitesse de l'eau</b>, nous avons utilisé la <a href="https://fr.wikipedia.org/wiki/Formule_de_Manning-Strickler">formule de Manning Strickler</a>. 
+		Cette formule empirique permet d'estimer la vitesse d'un fluide dans une surface libre. De plus, nous avons fait en sorte que l'eau avance 
+		vraiment à sa vitesse donnée. Nous avons pris en compte le fait qu'une case fait 1 mètre de long (conceptuellement) ainsi que le temps auquel la simulation avance.
+		Malheureusement, il est compliqué d'observer la vitesse réel car beaucoup de calcul son nécessaire dans un temps trop cours pour nos ordinateurs.<br>
+        Ensuite, pour obtenir une <b>pente</b> réel de rivière, nous avons trouver un fichier csv sur le site des
+        <a href="https://ge.ch/sitg/sitg_catalog/sitg_donnees?keyword=bassins%20versants%20principaux&topic=tous&service=tous&datatype=tous&distribution=tous&sort=auto">sitg</a>.
+        Il y figure notamment la pente moyenne de différent fleuve/rivière genevois. Nous avons ensuite récupéré ces moyennes et fait une moyenne de ces dernières. 
+        Nous obtenons donc une pente d'environ 8%, ce qui correspond à une pente moyenne d'un cours d'eau genevois.<br>
+        En ce qui concerne la <b>propagation du polluant</b>, nous avons utilisé une formule empirique située dans une thèse de doctorat disponible
+        <a href="https://tel.archives-ouvertes.fr/tel-00218245v2/document">ici</a>. <i>(modèle unidimensionnel, page 49)</i>
+        
+        <br><br>
+    </div>
+    
+    <div style = "padding-left: 20px">
+		<h2>• Extensions</h2> 
+    </div>
+    
+    <div class="justifier">
+		Malheureusement, il n'a pas été possible de réaliser toutes les idées qui nous sont passées par l'esprit à cause du manque de temps.
+		Cependant, nous continuerons à étendre cette simulation dans le futur. Nous avons construit un code relativement général, nous permettant d'ajouter
+		certaines caractéristiques sans devoir supprimer et recommencer une grande partie du code. <br>
+		Voici quelques exemples d'extensions que nous voudrions apporter : <br>
+		- Afin d'observer l'évolution des polluants, nous pensons à introduire des <b>végétaux</b> ou des <b>microorganismes</b> qui pourrait absorber certains de ces polluants. 
+		En plus, créer un graphique en deux dimensions montrant la variation de polluant dans l'eau en fonction de la présence d'organismes.<br>
+		- Dans la même optique d'élimination des polluants, nous pensons à modéliser une <b>station d'épuration</b> qui pourrait récolter le polluant à un endroit précis et le relâcher
+		plus loin, une fois les traitements suivant le polluant effectués. <br>
+		- Si vous vous demandez encore pourquoi toutes les matières ont une vitesse, la réponse c'est maintenant. En ce qui concerne le sol, nous avons en tête
+		un phénomène d'<b>érosion</b>. Après un certains nombre de passage de l'eau sur une case de sol, cette dernière aurait une faible probabilité 
+		de s'éroder et d'être emporter par le courant de l'eau. Voilà pourquoi le sol pourrait avoir une vitesse. En ce qui concerne le vent,
+		il est plus simple à l'imaginer avec une vitesse. Nous avons en tête une idée plus visuel qu'utile. Ça serait que si le vent en contact direct
+		avec le haut de la rivière atteint une certaine vitesse, cela pourrait créer une <b>vague</b>. <br>
+		- Un dernier apport que nous avons déjà cité précédemment sont les effets de la <b>météo</b>. notamment l'augmentation de la hauteur de l'eau de la rivière
+		après un certain temps de <b>pluie</b>. <s>Bien entendu, l'arrivée de l'arc-en-ciel après la pluie pour le côté réaliste.</s> <br>
+		Encore plein d'idée nous parcours l'esprit, mais ce sont les principales. <br><br>
+		Toujours dans l'optique de créer une simulation réaliste, nous pourrions être bloqué par le fait que conceptuellement, nos cases carrées font 1 mètre de côté.
+		En effet, il faudrait une forte pluie pour augmenter la hauteur de l'eau de 1 mètre. 
+		Nous avons donc également la possibilité de changer l'interprétation de la taille des cases 
+		(par exemple qu'elles fassent 0,1 mètre au lieu de 1,0) et adapter les calculs nécessaires pour retrouver notre cohérence physique.
+		<br><br>
+    </div>
+    
+ 	<div style = "padding-left: 25px"><img alt="EPFL" src="res/EPFL_logo.png" align="left"></div>
+</body>
+
+</html>

@@ -63,7 +63,7 @@ ax.set_zlim(0,40)
 pause_patch = mpatches.Patch(color='black', label='Espace = Arrêt/Marche ;')
 up_down__patch = mpatches.Patch(color='black', label='up ↑ = augmente la taille des cases ;\ndown ↓ = diminue la taille des cases ;')
 meteo_patch = mpatches.Patch(color='black', label='Changer la météo :  j = jour (par défaut) ; n = nuit ; b = brouillard ; \np = pluie ; r = sunrise ; t = sunset ; w = rainbow ;')
-polluant_patch = mpatches.Patch(color='black', label='1 = ajoute fer ;  2 = ajoute ammoniac ;  3 = ajoute phosphore ;')
+polluant_patch = mpatches.Patch(color='black', label='1 = ajoute fer ;  2 = ajoute phosphore ;  3 = ajoute ammoniac ;')
 csv_patch = mpatches.Patch(color='black', label= "c = relever les polluants présents à l'instant ;")
 ax.legend(handles=[pause_patch, up_down__patch, meteo_patch, polluant_patch, csv_patch],
 handleheight =0.01, handlelength = 1.0, loc ='lower left', bbox_to_anchor=(0.0, -0.6), facecolor='skyblue', edgecolor='black', fontsize = 8)
